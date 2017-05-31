@@ -2616,3 +2616,110 @@ void bajas_categorias() {
 	}
 	fclose(canal);
 }
+
+void bajas_fichas() {
+	FILE *canal,*canal2;
+	long N_fichas,desplazamiento,cen,der,izq,ficha,i;
+	char eleccion;
+	int sw;
+
+	canal=fopen(FICHERO_fichas,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_fichas,sizeof(registro0_fichas),1,canal);
+ 	N_fichas=registro0_fichas.num_registros;
+
+	if(N_fichas>=1) {
+		do{
+			clrscr();
+			printf("Introduce Codigo de Ficha a dar de Baja (Salir='0') => ");
+			scanf("%ld",&ficha);fflush(stdin);clrscr();
+
+			if(ficha!=0) {
+				sw=0;izq=1;der=N_fichas;
+				do{              				
+					cen=(izq+der)/2;                                                     
+				  	desplazamiento=cen*sizeof(registro_fichas);
+					fseek(canal,desplazamiento,0);
+					fread(&registro_fichas,sizeof(registro_fichas),1,canal);
+
+					if(ficha==registro_fichas.cod_ficha || izq>=der) {
+						sw=1;
+						if(ficha==registro_fichas.cod_ficha) {
+							gotoxy(1,1);printf("Ficha");
+							gotoxy(8,1);printf("DNI");
+							gotoxy(20,1);printf("Fecha");
+							gotoxy(32,1);printf("H.Inicio");
+							gotoxy(44,1);printf("H.Final");
+							gotoxy(56,1);printf("Obra");
+							gotoxy(3,3);printf("%ld",registro_fichas.cod_ficha);
+							gotoxy(8,3);printf("%s",registro_fichas.dni);
+							gotoxy(20,3);printf("%s",registro_fichas.fecha);
+							gotoxy(32,3);
+							if(strcmp(registro_fichas.h_inicio,"")!=0)
+								printf("%s",registro_fichas.h_inicio);
+							else
+								printf("  *");
+							gotoxy(48,3);
+							if(strcmp(registro_fichas.h_final,"")!=0)
+								printf("%s",registro_fichas.h_final);
+							else
+								printf("  *");
+							gotoxy(66,3);printf("%d",registro_fichas.tiempo);
+							gotoxy(57,3);printf("%ld",registro_fichas.cod_obra);
+
+							printf("\n\n¿Desea dar de Baja el Registro? (s/n): ");
+							scanf("%c",&eleccion);fflush(stdin);
+							if(eleccion=='s') {
+								desplazamiento=N_fichas*sizeof(registro_fichas);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_fichas,sizeof(registro_fichas),1,canal);
+
+								desplazamiento=cen*sizeof(registro_fichas);
+								fseek(canal,desplazamiento,0);
+								fwrite(&registro_fichas,sizeof(registro_fichas),1,canal);
+
+								N_fichas--;
+								fseek(canal,0L,0);
+								registro0_fichas.num_registros=N_fichas;
+								for(i=0;i<sizeof(registro_fichas)-4;i++)
+									registro0_fichas.blancos[i]=' ';
+								fwrite(&registro0_fichas,sizeof(registro0_fichas),1,canal);
+
+								canal2=fopen(FICHERO_fichas,"r+b");
+								for(i=cen;i<=N_fichas;i++)  {   	  						  	  //reducimos en 1 codigos de Obras
+									desplazamiento=i*sizeof(registro_fichas);
+									fseek(canal2,desplazamiento,0);
+									fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
+									registro_fichas.cod_ficha--;
+									desplazamiento=i*sizeof(registro_fichas);
+									fseek(canal2,desplazamiento,0);
+									fwrite(&registro_fichas,sizeof(registro_fichas),1,canal2);
+								}
+								fclose(canal2);
+								printf("\nRegistro dado de Baja correctamente");
+								printf("\n\nPulse una tecla para continuar..");getch();
+                        
+								if(N_fichas>1)      												  //si eliminamos ficha y existe mas de una realizamos ordenacion
+									ordenacion_fichas();
+							}
+						} else {
+							printf("Codigo de Ficha no encontrado");
+							printf("\n\nPulse una tecla para continuar..");
+							getch();
+						}
+					} else {
+						if(ficha<registro_fichas.cod_ficha)
+							der=cen-1;
+						else
+							izq=cen+1;
+					}
+				}while(!sw);
+			}
+		}while(ficha!=0);
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_fichas);
+		getch();
+	}
+	fclose(canal);
+}
