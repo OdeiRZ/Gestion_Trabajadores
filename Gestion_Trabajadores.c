@@ -124,3 +124,65 @@ void obtener_fecha(char []);                            //
 void creacion_ficheros(void);                           //
  														//
 //////////////////////////////////////////////////////////
+
+int main() {
+	char pass[5];
+	int seleccion=1, seleccion2, i;
+	creacion_ficheros();
+
+	while (seleccion != 0) {
+		clrscr();
+		seleccion2 = 1;
+		gotoxy(68, 1);
+		printf("Log: Usuario");
+		printf("\n\n\n\n\n\n\t\t\t\tMenu Usuario\n\n");
+		printf("\t\t\t\t1. Gestion de Fichas\n");
+		printf("\t\t\t\t2. Menu Administrador\n");
+		printf("\t\t\t\t0. Salir\n\n");
+		printf("\t\t\t\tOpcion => ");
+		scanf("%d", &seleccion);
+		fflush(stdin);
+		switch(seleccion) {
+			case 1 : {
+				while (seleccion2 != 0) {
+					clrscr();
+					gotoxy(68, 1);
+					printf("Log: Usuario");
+					printf("\n\n\n\n\n\n\t\t\t\tGestion de Fichas\n\n");
+					printf("\t\t\t\t1. Altas\n");
+					printf("\t\t\t\t2. Listado\n");
+					printf("\t\t\t\t3. Consultas\n");
+					printf("\t\t\t\t4. Modificaciones\n");
+					printf("\t\t\t\t5. Bajas\n");
+					printf("\t\t\t\t0. Volver\n\n");
+					printf("\t\t\t\tOpcion => ");
+					scanf("%d", &seleccion2);
+					fflush(stdin);
+					switch (seleccion2) {
+						case 1 : altas_fichas();						break;
+						case 2 : listados_fichas();     				break;
+						case 3 : consultas_fichas();     				break;
+						case 4 : modificaciones_fichas();				break;
+						case 5 : bajas_fichas();     					break;
+						case 0 : printf("\n\t\t\t\tAdios");   			break;
+						default: printf("\n\t\t\t\tElija entre 0 - 5");	getch();
+					}
+				}
+			}	break;
+			case 2 : {
+				printf("\n\t\t\t\tClave => ");
+				for (i=0; i<5; i++) {
+					pass[i] = getch();
+					printf("*");
+				}
+				if (strncmp(pass,"admin",5) == 0) {
+					menu_admin();
+					return 0;
+				}
+			}	break;
+			case 0 : printf("\n\t\t\t\tAdios");   						break;
+			default: printf("\n\t\t\t\tElija entre 0 - 2");				getch();
+		}
+	}
+	return 0;
+}
