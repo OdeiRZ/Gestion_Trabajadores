@@ -2723,3 +2723,138 @@ void bajas_fichas() {
 	}
 	fclose(canal);
 }
+
+void bajas_obras() {
+	FILE *canal,*canal2;
+	long N_obras,N_aux,desplazamiento,cen,der,izq,obra,i;
+	char eleccion;
+	int sw,sw2;
+
+	canal=fopen(FICHERO_obras,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_obras,sizeof(registro0_obras),1,canal);
+ 	N_obras=registro0_obras.num_registros;
+
+	if(N_obras>=1) {
+	   do{
+			clrscr();
+			canal=fopen(FICHERO_obras,"r+b");
+			printf("Introduce Codigo de Obra a dar de Baja (Salir='0') => ");
+			scanf("%ld",&obra);fflush(stdin);clrscr();
+
+			if(obra!=0) {
+				sw=0;izq=1;der=N_obras;
+				do{
+					cen=(izq+der)/2;
+				  	desplazamiento=cen*sizeof(registro_obras);
+					fseek(canal,desplazamiento,0);
+					fread(&registro_obras,sizeof(registro_obras),1,canal);
+
+					if(obra==registro_obras.cod_obra || izq>=der) {
+						sw=1;
+						if(obra==registro_obras.cod_obra) {
+							gotoxy(1,1);printf("Ficha");
+							gotoxy(8,1);printf("F.Inicio");
+							gotoxy(21,1);printf("F.Final");
+							gotoxy(34,1);printf("Estado");
+							gotoxy(54,1);printf("Capataz");
+							gotoxy(3,3);printf("%ld",registro_obras.cod_obra);
+							gotoxy(8,3);printf("%s",registro_obras.f_inicio);
+							gotoxy(21,3);printf("%s",registro_obras.f_final);
+							gotoxy(34,3);printf("%s",registro_obras.estado);
+							gotoxy(55,3);printf("%s",registro_obras.dni);
+
+							printf("\n\n¿Desea dar de Baja el Registro? (s/n): ");
+							scanf("%c",&eleccion);fflush(stdin);
+							if(eleccion=='s') {
+								sw2=0;
+								canal2=fopen(FICHERO_fichas,"rb");
+								fseek(canal2,0L,0);
+								fread(&registro0_fichas,sizeof(registro0_fichas),1,canal2);
+								N_aux=registro0_fichas.num_registros;
+
+								for(i=1;i<=N_aux;i++) {  				  						  //comprobamos si la categoria existe en fichero trabajadores
+									desplazamiento=i*sizeof(registro_fichas);
+									fseek(canal2,desplazamiento,0);
+									fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
+
+									if(registro_fichas.cod_obra==obra) {
+										printf("\nError. Obra existente en Fichero Fichas");
+										getch();sw2=1;break;
+									}
+								}
+								fclose(canal2);
+                        
+								if(!sw2) {
+									desplazamiento=N_obras*sizeof(registro_obras);
+									fseek(canal,desplazamiento,0);
+									fread(&registro_obras,sizeof(registro_obras),1,canal);
+
+									desplazamiento=cen*sizeof(registro_obras);
+									fseek(canal,desplazamiento,0);
+									fwrite(&registro_obras,sizeof(registro_obras),1,canal);
+
+									N_obras--;
+									fseek(canal,0L,0);
+									registro0_obras.num_registros=N_obras;
+									for(i=0;i<sizeof(registro_obras)-4;i++)
+										registro0_obras.blancos[i]=' ';
+									fwrite(&registro0_obras,sizeof(registro0_obras),1,canal);
+
+									for(i=cen;i<=N_obras;i++) {    	  						  	  //reducimos en 1 codigos de Obras
+										desplazamiento=i*sizeof(registro_obras);
+										fseek(canal,desplazamiento,0);
+										fread(&registro_obras,sizeof(registro_obras),1,canal);
+										registro_obras.cod_obra--;
+										desplazamiento=i*sizeof(registro_obras);
+										fseek(canal,desplazamiento,0);
+										fwrite(&registro_obras,sizeof(registro_obras),1,canal);
+									}
+									fclose(canal);
+                           
+									canal2=fopen(FICHERO_fichas,"r+b");
+									fseek(canal2,0L,0);
+									fread(&registro0_fichas,sizeof(registro0_fichas),1,canal2);
+									N_aux=registro0_fichas.num_registros;
+
+									for(i=1;i<=N_aux;i++) {   	  						  	  	  //reducimos en 1 obras en Fichas (registros asociados)
+										desplazamiento=i*sizeof(registro_fichas);
+										fseek(canal2,desplazamiento,0);
+										fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
+
+										if(registro_fichas.cod_obra>=cen) {
+											registro_fichas.cod_obra--;
+											desplazamiento=i*sizeof(registro_fichas);
+											fseek(canal2,desplazamiento,0);
+											fwrite(&registro_fichas,sizeof(registro_fichas),1,canal2);
+										}
+									}
+									fclose(canal2);
+									printf("\nRegistro dado de Baja correctamente");
+									printf("\n\nPulse una tecla para continuar..");getch();
+
+									if(N_obras>1)   							  		  			  //si eliminamos obra y existe mas de una realizamos ordenacion
+										ordenacion_obras();
+								}
+							}
+						} else {
+							printf("Codigo de Obra no encontrado");
+							printf("\n\nPulse una tecla para continuar..");
+							getch();
+						}
+					} else {
+						if(obra<registro_obras.cod_obra)
+							der=cen-1;
+						else
+							izq=cen+1;
+					}
+				}while(!sw);
+			}
+		}while(obra!=0);
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_obras);
+		getch();
+	}
+	fclose(canal);
+}
