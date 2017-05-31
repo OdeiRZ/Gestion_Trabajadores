@@ -1168,3 +1168,333 @@ void consultas_categorias() {
 	}
 	fclose(canal);
 }
+
+void consultas_fichas() {
+	FILE *canal,*canal2;
+	int seleccion=1,sw,i,j,a,a_f,k;
+	long N_fichas,N_aux,desplazamiento,obra,categoria;
+	float total_min,total_obra;
+	char dni[10],aux[4];
+
+	canal=fopen(FICHERO_fichas,"rb");
+	fseek(canal,0L,0);
+	fread(&registro0_fichas,sizeof(registro0_fichas),1,canal);
+ 	N_fichas=registro0_fichas.num_registros;
+
+	if(N_fichas>=1) {
+		while(seleccion!=0) {
+			clrscr();
+			printf("\n\n\n\n\n\n\n\t\t\t\tConsultas de Fichas\n\n");
+			printf("\t\t\t\t1. Año\n");
+			printf("\t\t\t\t2. Obra\n");
+			printf("\t\t\t\t3. Trabajador\n");
+			printf("\t\t\t\t0. Volver\n\n");
+			printf("\t\t\t\tOpcion => ");
+			scanf("%d",&seleccion);fflush(stdin);
+			switch(seleccion) {
+				case 1 : {
+					do{
+						clrscr();
+						printf("Introduce Año a Consultar ('0'=Salir) => ");
+						scanf("%d",&a);fflush(stdin);clrscr();
+
+						if(a!=0) {
+							sw=0;j=1;total_min=0,total_obra=0;;
+							canal=fopen(FICHERO_fichas,"rb");
+							for(i=1;i<=N_fichas;i++) {
+								desplazamiento=i*sizeof(registro_fichas);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_fichas,sizeof(registro_fichas),1,canal);
+
+								aux[0]=registro_fichas.fecha[6];
+								aux[1]=registro_fichas.fecha[7];
+								aux[2]=registro_fichas.fecha[8];
+								aux[3]=registro_fichas.fecha[9];
+								aux[4]='\0';      a_f=atoi(aux);               //Extracion de año
+
+								if(a==a_f) {
+									if(j%17==0) { 										  //tabulador de registros en pantalla
+										gotoxy(1,1);printf("Ficha");
+										gotoxy(12,1);printf("DNI");
+										gotoxy(20,1);printf("Fecha");
+										gotoxy(32,1);printf("H.Inicio");
+										gotoxy(48,1);printf("H.Final");
+										gotoxy(65,1);printf("Tiempo");
+										gotoxy(72,1);printf("Obra");
+										gotoxy(1,j+1);printf("\n\nPulse una tecla para continuar..");
+										getch();clrscr();j=1;
+									}
+									gotoxy(3,j+2);printf("%ld",registro_fichas.cod_ficha);
+									gotoxy(8,j+2);printf("%s",registro_fichas.dni);
+									gotoxy(20,j+2);printf("%s",registro_fichas.fecha);
+									gotoxy(32,j+2);
+									if(strcmp(registro_fichas.h_inicio,"")!=0)
+										printf("%s",registro_fichas.h_inicio);
+									else
+										printf("  *");
+									gotoxy(48,j+2);
+									if(strcmp(registro_fichas.h_final,"")!=0)
+										printf("%s",registro_fichas.h_final);
+									else
+										printf("  *");
+									gotoxy(66,j+2);printf("%d",registro_fichas.tiempo);
+									gotoxy(73,j+2);printf("%ld",registro_fichas.cod_obra);
+									strcpy(dni,registro_fichas.dni);
+									sw=1;j++;total_min+=registro_fichas.tiempo;
+
+									canal2=fopen(FICHERO_trabajadores,"rb");
+									fseek(canal2,0L,0);
+									fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
+									N_aux=registro0_trabajadores.num_registros;
+
+									for(k=1;k<=N_aux;k++) {
+										desplazamiento=k*sizeof(registro_trabajadores);
+										fseek(canal2,desplazamiento,0);
+										fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+
+										if(strcmp(registro_trabajadores.dni,dni)==0) {
+											categoria=registro_trabajadores.cod_categoria;
+											fclose(canal2);
+											canal2=fopen(FICHERO_categorias,"rb");
+											fseek(canal2,0L,0);          
+											fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
+											N_aux=registro0_categorias.num_registros;
+
+											for(k=1;k<=N_aux;k++) {
+												desplazamiento=k*sizeof(registro_categorias);
+												fseek(canal2,desplazamiento,0);
+												fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
+
+												if(registro_categorias.cod_categoria==categoria) {
+													total_obra+=registro_fichas.tiempo/60*registro_categorias.precio_hora;
+													break;
+												}
+											}
+											break;
+										}
+									}
+									fclose(canal2);
+								}
+							}
+							if(sw) {
+								gotoxy(1,1);printf("Ficha");
+								gotoxy(12,1);printf("DNI");
+								gotoxy(20,1);printf("Fecha");
+								gotoxy(32,1);printf("H.Inicio");
+								gotoxy(48,1);printf("H.Final");
+								gotoxy(65,1);printf("Tiempo");
+								gotoxy(72,1);printf("Obra");
+								gotoxy(65,j+2);printf("_____");
+								gotoxy(57,j+4);printf("Total => %.0f (%.1fh)",total_min,total_min/60);
+								gotoxy(65,j+5);printf("_____");
+								gotoxy(57,j+7);printf("Euros => %.1f (Año)",total_obra);
+							} else
+								printf("Año de Ficha no encontrado");
+							gotoxy(1,j+3);printf("Pulse una tecla para continuar..");
+							getch();fclose(canal);
+						}
+					}while(a!=0);
+				}	break;
+				case 2 : {
+					do{
+						clrscr();
+						printf("Introduce Nº de Obra a Consultar ('0'=Salir) => ");
+						scanf("%ld",&obra);fflush(stdin);clrscr();
+
+						if(obra!=0) {
+							sw=0;j=1;total_min=0,total_obra=0;;
+							canal=fopen(FICHERO_fichas,"rb");
+							for(i=1;i<=N_fichas;i++) {
+								desplazamiento=i*sizeof(registro_fichas);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_fichas,sizeof(registro_fichas),1,canal);
+
+								if(obra==registro_fichas.cod_obra) {
+									if(j%17==0) {  										  //tabulador de registros en pantalla
+										gotoxy(1,1);printf("Ficha");
+										gotoxy(12,1);printf("DNI");
+										gotoxy(20,1);printf("Fecha");
+										gotoxy(32,1);printf("H.Inicio");
+										gotoxy(48,1);printf("H.Final");
+										gotoxy(65,1);printf("Tiempo");
+										gotoxy(72,1);printf("Obra");
+										gotoxy(1,j+1);printf("\n\nPulse una tecla para continuar..");
+										getch();clrscr();j=1;
+									}
+									gotoxy(3,j+2);printf("%ld",registro_fichas.cod_ficha);
+									gotoxy(8,j+2);printf("%s",registro_fichas.dni);
+									gotoxy(20,j+2);printf("%s",registro_fichas.fecha);
+									gotoxy(32,j+2);
+									if(strcmp(registro_fichas.h_inicio,"")!=0)
+										printf("%s",registro_fichas.h_inicio);
+									else
+										printf("  *");
+									gotoxy(48,j+2);
+									if(strcmp(registro_fichas.h_final,"")!=0)
+										printf("%s",registro_fichas.h_final);
+									else
+										printf("  *");
+									gotoxy(66,j+2);printf("%d",registro_fichas.tiempo);
+									gotoxy(73,j+2);printf("%ld",registro_fichas.cod_obra);
+									strcpy(dni,registro_fichas.dni);
+									sw=1;j++;total_min+=registro_fichas.tiempo;
+
+									canal2=fopen(FICHERO_trabajadores,"rb");
+									fseek(canal2,0L,0);
+									fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
+									N_aux=registro0_trabajadores.num_registros;
+
+									for(k=1;k<=N_aux;k++) {
+										desplazamiento=k*sizeof(registro_trabajadores);
+										fseek(canal2,desplazamiento,0);
+										fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+
+										if(strcmp(registro_trabajadores.dni,dni)==0) {
+											categoria=registro_trabajadores.cod_categoria;
+											fclose(canal2);
+											canal2=fopen(FICHERO_categorias,"rb");
+											fseek(canal2,0L,0);          
+											fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
+											N_aux=registro0_categorias.num_registros;
+
+											for(k=1;k<=N_aux;k++) {
+												desplazamiento=k*sizeof(registro_categorias);
+												fseek(canal2,desplazamiento,0);
+												fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
+
+												if(registro_categorias.cod_categoria==categoria) {
+													total_obra+=registro_fichas.tiempo/60*registro_categorias.precio_hora;
+													break;
+												}
+											}
+											break;
+										}
+									}
+									fclose(canal2);
+								}
+							}
+							if(sw) {
+								gotoxy(1,1);printf("Ficha");
+								gotoxy(12,1);printf("DNI");
+								gotoxy(20,1);printf("Fecha");
+								gotoxy(32,1);printf("H.Inicio");
+								gotoxy(48,1);printf("H.Final");
+								gotoxy(65,1);printf("Tiempo");
+								gotoxy(72,1);printf("Obra");
+								gotoxy(65,j+2);printf("_____");
+								gotoxy(57,j+4);printf("Total => %.0f (%.1fh)",total_min,total_min/60);
+								gotoxy(65,j+5);printf("_____");
+								gotoxy(57,j+7);printf("Euros => %.1f (Obra)",total_obra);
+							} else
+								printf("No hay Registros para esta Obra");
+							gotoxy(1,j+3);printf("Pulse una tecla para continuar..");getch();
+							fclose(canal);
+						}
+					}while(obra!=0);
+				}	break;
+				case 3 : {
+					do{
+						clrscr();
+						printf("Introduce DNI a Consultar ('Fin'=Salir) => ");
+						gets(dni);fflush(stdin);clrscr();
+
+						if(strncmp(dni,"Fin",strlen(dni))!=0) {
+							sw=0;j=1;total_min=0;
+							canal=fopen(FICHERO_fichas,"rb");
+							for(i=1;i<=N_fichas;i++) {
+								desplazamiento=i*sizeof(registro_fichas);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_fichas,sizeof(registro_fichas),1,canal);
+
+								if(strncmp(dni,registro_fichas.dni,strlen(dni))==0) {
+									if(j%17==0) { 										  //tabulador de registros en pantalla
+										gotoxy(1,1);printf("Ficha");
+										gotoxy(12,1);printf("DNI");
+										gotoxy(20,1);printf("Fecha");
+										gotoxy(32,1);printf("H.Inicio");
+										gotoxy(48,1);printf("H.Final");
+										gotoxy(65,1);printf("Tiempo");
+										gotoxy(72,1);printf("Obra");
+										gotoxy(1,j+1);printf("\n\nPulse una tecla para continuar..");
+										getch();clrscr();j=1;
+									}
+									gotoxy(3,j+2);printf("%ld",registro_fichas.cod_ficha);
+									gotoxy(8,j+2);printf("%s",registro_fichas.dni);
+									gotoxy(20,j+2);printf("%s",registro_fichas.fecha);
+									gotoxy(32,j+2);
+									if(strcmp(registro_fichas.h_inicio,"")!=0)
+										printf("%s",registro_fichas.h_inicio);
+									else
+										printf("  *");
+									gotoxy(48,j+2);
+									if(strcmp(registro_fichas.h_final,"")!=0)
+										printf("%s",registro_fichas.h_final);
+									else
+										printf("  *");
+									gotoxy(66,j+2);printf("%d",registro_fichas.tiempo);
+									gotoxy(73,j+2);printf("%ld",registro_fichas.cod_obra);
+									strcpy(dni,registro_fichas.dni);
+									sw=1;j++;total_min+=registro_fichas.tiempo;
+								}
+							}
+							if(sw) {
+								gotoxy(1,1);printf("Ficha");
+								gotoxy(12,1);printf("DNI");
+								gotoxy(20,1);printf("Fecha");
+								gotoxy(32,1);printf("H.Inicio");
+								gotoxy(48,1);printf("H.Final");
+								gotoxy(65,1);printf("Tiempo");
+								gotoxy(72,1);printf("Obra");
+
+								canal2=fopen(FICHERO_trabajadores,"rb");
+								fseek(canal2,0L,0);
+								fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
+								N_aux=registro0_trabajadores.num_registros;
+
+								for(k=1;k<=N_aux;k++) {
+									desplazamiento=k*sizeof(registro_trabajadores);
+									fseek(canal2,desplazamiento,0);
+									fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+						
+									if(strcmp(registro_trabajadores.dni,dni)==0) {
+										categoria=registro_trabajadores.cod_categoria;
+										canal2=fopen(FICHERO_categorias,"rb");
+										fseek(canal2,0L,0);
+										fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
+										N_aux=registro0_categorias.num_registros;
+
+										for(k=1;k<=N_aux;k++) {
+											desplazamiento=k*sizeof(registro_categorias);
+											fseek(canal2,desplazamiento,0);
+											fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
+
+											if(registro_categorias.cod_categoria==categoria) {
+												gotoxy(65,j+2);printf("_____");
+												gotoxy(57,j+4);printf("Total => %.0f (%.1fh)",total_min,total_min/60);
+												gotoxy(65,j+5);printf("_____");
+												gotoxy(57,j+7);printf("Euros => %.1f (%.0fE/h)",total_min/60*registro_categorias.precio_hora,registro_categorias.precio_hora);
+												break;
+											}
+										}
+										break;
+									}
+								}
+								fclose(canal2);
+							} else
+								printf("DNI no encontrado");
+							gotoxy(1,j+3);printf("Pulse una tecla para continuar..");
+							getch();fclose(canal);
+						}
+					}while(strncmp(dni,"Fin",strlen(dni))!=0);
+				}	break;
+				case 0 : 	break;
+				default: 	printf("\n\t\t\t\tElija entre 0 - 3");	getch();
+			}
+	   }
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_trabajadores);
+		getch();
+	}
+	fclose(canal);
+}
