@@ -878,3 +878,47 @@ void listados_fichas() {
 	printf("\n\nPulse una tecla para continuar..");getch();
 	fclose(canal);
 }
+
+void listados_obras() {
+	FILE *canal;
+	int i,j=1;
+	long N,desplazamiento;
+
+	clrscr();
+	canal=fopen(FICHERO_obras,"rb");
+	fseek(canal,0L,0);
+	fread(&registro0_obras,sizeof(registro0_obras),1,canal);
+	N=registro0_obras.num_registros;
+
+	if(N>=1) {
+		gotoxy(1,1);printf("Ficha");
+		gotoxy(8,1);printf("F.Inicio");
+		gotoxy(21,1);printf("F.Final");
+		gotoxy(34,1);printf("Estado");
+		gotoxy(54,1);printf("Capataz");
+
+		for(i=1;i<=N;i++) {
+			desplazamiento=i*sizeof(registro_obras);
+			fseek(canal,desplazamiento,0);
+			fread(&registro_obras,sizeof(registro_obras),1,canal);
+			if(j%21==0) {  																			  //tabulador de registros en pantalla
+				printf("\n\nPulse una tecla para continuar..");
+				getch();clrscr();j=1;
+				gotoxy(1,1);printf("Ficha");
+				gotoxy(8,1);printf("F.Inicio");
+				gotoxy(21,1);printf("F.Final");
+				gotoxy(34,1);printf("Estado");
+				gotoxy(54,1);printf("Capataz");
+			}
+			gotoxy(3,j+2);printf("%ld",registro_obras.cod_obra);
+			gotoxy(8,j+2);printf("%s",registro_obras.f_inicio);
+			gotoxy(21,j+2);printf("%s",registro_obras.f_final);
+			gotoxy(34,j+2);printf("%s",registro_obras.estado);
+			gotoxy(54,j+2);printf("%s",registro_obras.dni);
+			j++;
+		}
+	}else
+		printf("El fichero '%s' esta vacio",FICHERO_obras);
+	printf("\n\nPulse una tecla para continuar..");getch();
+	fclose(canal);
+}
