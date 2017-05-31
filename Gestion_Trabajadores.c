@@ -2354,3 +2354,134 @@ void modificaciones_obras() {
 	}
 	fclose(canal);
 }
+
+void bajas_trabajadores() {
+	FILE *canal,*canal2;
+	long N_trabajadores,N_aux,desplazamiento,cen,der,izq;
+	char dni[10],eleccion;
+	int sw,sw2,i;
+
+	canal=fopen(FICHERO_trabajadores,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_trabajadores, sizeof(registro0_trabajadores),1,canal);
+ 	N_trabajadores=registro0_trabajadores.num_registros;
+
+	if(N_trabajadores>=1) {
+		do{
+			clrscr();
+			canal=fopen(FICHERO_trabajadores,"r+b");
+			printf("Introduce el DNI del Trabajador a dar de Baja (Salir='Fin') => ");
+			gets(dni);fflush(stdin);clrscr();
+
+			if(strncmp(dni,"Fin",strlen(dni))!=0) {
+				sw=0;izq=1;der=N_trabajadores;
+				do{
+					cen=(izq+der)/2;
+				  	desplazamiento=cen*sizeof(registro_trabajadores);
+					fseek(canal,desplazamiento,0);
+					fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+
+					if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0 || izq>=der) {
+						sw=1;
+						if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0) {
+							gotoxy(1,1);printf("Ficha");
+							gotoxy(8,1);printf("DNI");
+							gotoxy(20,1);printf("Nombre");
+							gotoxy(42,1);printf("F.Nacim.");
+							gotoxy(55,1);printf("Telefono");
+							gotoxy(67,1);printf("Categoria");
+							gotoxy(3,3);printf("%ld",cen);
+							gotoxy(8,3);printf("%s",registro_trabajadores.dni);
+							gotoxy(20,3);printf("%s",registro_trabajadores.nombre);
+							gotoxy(42,3);printf("%s",registro_trabajadores.f_nacimiento);
+							gotoxy(55,3);printf("%s",registro_trabajadores.telefono);
+							gotoxy(70,3);printf("%ld",registro_trabajadores.cod_categoria);
+
+							printf("\n\n¿Desea dar de Baja el Registro? (s/n): ");
+							scanf("%c",&eleccion);fflush(stdin);
+							if(eleccion=='s') {
+								sw2=0;
+								canal2=fopen(FICHERO_fichas,"rb");
+								fseek(canal2,0L,0);
+								fread(&registro0_fichas,sizeof(registro0_fichas),1,canal2);
+								N_aux=registro0_fichas.num_registros;
+
+								for(i=1;i<=N_aux;i++) {  				  						  //comprobamos si el trabajador tiene fichas asociadas
+									desplazamiento=i*sizeof(registro_fichas);
+									fseek(canal2,desplazamiento,0);
+									fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
+
+									if(strcmp(registro_fichas.dni,registro_trabajadores.dni)==0) {
+										printf("\nError. DNI existente en Fichero Fichas");
+										getch();sw2=1;break;
+									}
+								}
+								fclose(canal2);
+
+								if(sw2)
+									break;
+
+								sw2=0;
+								canal2=fopen(FICHERO_obras,"rb");
+								fseek(canal2,0L,0);
+								fread(&registro0_obras,sizeof(registro0_obras),1,canal2);
+								N_aux=registro0_obras.num_registros;
+
+								for(i=1;i<=N_aux;i++) {  				  						  //comprobamos si el trabajador es capataz de obra
+									desplazamiento=i*sizeof(registro_obras);
+									fseek(canal2,desplazamiento,0);
+									fread(&registro_obras,sizeof(registro_obras),1,canal2);
+
+									if(strcmp(registro_obras.dni,registro_trabajadores.dni)==0) {
+										printf("\nError. DNI existente en Fichero Obras");
+										getch();sw2=1;break;
+									}
+								}
+								fclose(canal2);
+
+								if(sw2)
+									break;
+
+								desplazamiento=N_trabajadores*sizeof(registro_trabajadores);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+
+								desplazamiento=cen*sizeof(registro_trabajadores);
+								fseek(canal,desplazamiento,0);
+								fwrite(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+
+								N_trabajadores--;
+								fseek(canal,0L,0);
+								registro0_trabajadores.num_registros=N_trabajadores;
+								for(i=0;i<sizeof(registro_trabajadores)-4;i++)
+									registro0_trabajadores.blancos[i]=' ';
+								fwrite(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal);
+								fclose(canal);
+
+								printf("\nRegistro dado de Baja correctamente");
+								printf("\n\nPulse una tecla para continuar..");getch();
+
+								if(N_trabajadores>1)           								  //si eliminamos trabajador y existe mas de uno realizamos ordenacion
+									ordenacion_trabajadores();
+							}
+						} else {
+							printf("DNI de Trabajador no encontrado");
+							printf("\n\nPulse una tecla para continuar..");
+							getch();
+						}
+					} else {
+						if(strncmp(dni,registro_trabajadores.dni,strlen(dni))<0)
+							der=cen-1;
+						else
+							izq=cen+1;
+					}
+				}while(!sw);
+			}
+		}while(strncmp(dni,"Fin",strlen(dni))!=0);
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_trabajadores);
+		getch();
+	}
+	fclose(canal);
+}
