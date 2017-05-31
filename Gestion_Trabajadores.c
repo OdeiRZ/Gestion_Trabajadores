@@ -645,3 +645,93 @@ void altas_fichas() {
 		printf("\n¿Quiere seguir dando de alta Fichas? (s/n): ");
 	}while(getchar()=='s');
 }
+
+void altas_obras() {
+	FILE *canal,*canal2;
+	int i,sw;
+	char eleccion;
+	long N_obras,N_aux,desplazamiento;
+
+	do{
+		sw=0;clrscr();fflush(stdin);
+		canal=fopen(FICHERO_obras,"r+b");
+		fseek(canal,0L,0);
+		fread(&registro0_obras,sizeof(registro0_obras),1,canal);
+		N_obras=registro0_obras.num_registros;
+		N_obras++;
+      
+		gotoxy(1,1);printf("Ficha");
+		gotoxy(8,1);printf("F.Inicio");
+		gotoxy(21,1);printf("F.Final");
+		gotoxy(34,1);printf("Estado");
+		gotoxy(54,1);printf("Capataz");
+		gotoxy(3,3);printf("%ld",N_obras);registro_obras.cod_obra=N_obras;
+
+		do{                                                                    	  	//nos aseguramos que el tamaño de la fecha es correcto
+        	if(sw) {
+				gotoxy(8,3);
+				printf("           ");
+			}
+			gotoxy(8,3);gets(registro_obras.f_inicio);
+			sw=1;
+		}while(strlen(registro_obras.f_inicio)!=10);
+
+		sw=0;
+		do{                                                                    	  	//nos aseguramos que el tamaño de la fecha es correcto
+        	if(sw) {
+				gotoxy(21,3);
+				printf("           ");
+			}
+			gotoxy(21,3);gets(registro_obras.f_final);
+			sw=1;
+		}while(strlen(registro_obras.f_final)!=10);
+
+		gotoxy(34,3);gets(registro_obras.estado);
+      
+		sw=0;
+		do{                                                                    	  	//nos aseguramos que el tamaño del dni es correcto
+        	if(sw) {
+				gotoxy(54,3);
+				printf("           ");
+			}
+			gotoxy(54,3);gets(registro_obras.dni);
+			sw=1;
+		}while(strlen(registro_obras.dni)!=9);
+
+		sw=0;
+		canal2=fopen(FICHERO_trabajadores,"r+b");
+		fseek(canal2,0L,0);
+		fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
+		N_aux=registro0_trabajadores.num_registros;
+
+		for(i=1;i<=N_aux;i++) {  													//comprobamos si el codigo existe secuencialmente
+			desplazamiento=i*sizeof(registro_trabajadores);
+			fseek(canal2,desplazamiento,0);
+			fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+
+			if(strcmp(registro_trabajadores.dni,registro_obras.dni)==0) {
+				desplazamiento=N_obras*sizeof(registro_obras);
+				fseek(canal,desplazamiento,0);
+				fwrite(&registro_obras,sizeof(registro_obras),1,canal);
+
+				desplazamiento=0L*sizeof(registro0_obras);
+				fseek(canal,desplazamiento,0);
+				registro0_obras.num_registros=N_obras;
+				for(i=0;i<sizeof(registro0_obras)-4;i++)
+					registro0_obras.blancos[i]=' ';
+				fwrite(&registro0_obras,sizeof(registro0_obras),1,canal);
+
+				sw=1;break;
+			}
+		}
+		if(!sw) {
+			printf("\n\nCapataz no encontrado");
+			printf("\n¿Desea dar de Alta al Trabajador? (s/n) ");
+			scanf("%c",&eleccion);fflush(stdin);
+			if(eleccion=='s')
+				altas_trabajadores(registro_obras.dni);
+		}		
+		fclose(canal2);fclose(canal);fflush(stdin);
+		printf("\n¿Quiere seguir dando de alta Obras? (s/n): ");
+	}while(getchar()=='s');
+}
