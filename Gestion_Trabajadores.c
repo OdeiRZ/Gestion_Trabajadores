@@ -3083,3 +3083,9 @@ void creacion_ficheros() {
 	}
 	fclose(canal);
 }
+
+void obtener_fecha(char fecha[]) {
+	time_t tiempo=time(0);
+	struct tm *tlocal=localtime(&tiempo);
+	strftime(fecha,11,"%d/%m/%Y",tlocal);//strftime(fecha,18,"%d/%m/%y %H:%M:%S",tlocal);
+}
