@@ -186,3 +186,131 @@ int main() {
 	}
 	return 0;
 }
+
+void menu_admin() {
+	int seleccion=1, seleccion2;
+	creacion_ficheros();
+                           
+	while (seleccion!=0) {
+		clrscr();
+		seleccion2 = 1;
+		gotoxy(68,1);
+		printf("Log: Admin");
+		printf("\n\n\n\n\n\n\t\t\t\tMenu Administrador\n\n");
+		printf("\t\t\t\t1. Gestion de Trabajadores\n");
+		printf("\t\t\t\t2. Gestion de Categorias\n");
+		printf("\t\t\t\t3. Gestion de Fichas\n");
+		printf("\t\t\t\t4. Gestion de Obras\n");
+		printf("\t\t\t\t0. Salir\n\n");
+		printf("\t\t\t\tOpcion => ");
+		scanf("%d", &seleccion);
+		fflush(stdin);
+		switch (seleccion) {
+			case 1 : {
+				while (seleccion2 != 0) {
+					clrscr();
+					gotoxy(68, 1);
+					printf("Log: Admin");
+					printf("\n\n\n\n\n\n\t\t\t\tGestion de Trabajadores\n\n");
+					printf("\t\t\t\t1. Altas\n");
+					printf("\t\t\t\t2. Listado\n");
+					printf("\t\t\t\t3. Consultas\n");
+					printf("\t\t\t\t4. Modificaciones\n");
+					printf("\t\t\t\t5. Bajas\n");
+					printf("\t\t\t\t0. Volver\n\n");
+					printf("\t\t\t\tOpcion => ");
+					scanf("%d", &seleccion2);
+					fflush(stdin);
+					switch (seleccion2) {
+						case 1 : altas_trabajadores("");				break;
+						case 2 : listados_trabajadores();     			break;
+						case 3 : consultas_trabajadores();     			break;
+						case 4 : modificaciones_trabajadores();			break;
+						case 5 : bajas_trabajadores();     				break;
+						case 0 : printf("\n\t\t\t\tAdios");   			break;
+						default: printf("\n\t\t\t\tElija entre 0 - 5");	getch();
+					}
+				}
+			}	break;
+			case 2 : {
+				while (seleccion2 != 0) {
+					clrscr();
+					gotoxy(68, 1);
+					printf("Log: Admin");
+					printf("\n\n\n\n\n\n\t\t\t\tGestion de Categorias\n\n");
+					printf("\t\t\t\t1. Altas\n");
+					printf("\t\t\t\t2. Listado\n");
+					printf("\t\t\t\t3. Consultas\n");
+					printf("\t\t\t\t4. Modificaciones\n");
+					printf("\t\t\t\t5. Bajas\n");
+					printf("\t\t\t\t0. Volver\n\n");
+					printf("\t\t\t\tOpcion => ");
+					scanf("%d", &seleccion2);
+					fflush(stdin);
+					switch (seleccion2) {
+						case 1 : altas_categorias();					break;
+						case 2 : listados_categorias();     			break;
+						case 3 : consultas_categorias();     			break;
+						case 4 : modificaciones_categorias();			break;
+						case 5 : bajas_categorias();     				break;
+						case 0 : printf("\n\t\t\t\tAdios");   			break;
+						default: printf("\n\t\t\t\tElija entre 0 - 5");	getch();
+					}
+				}
+			}	break;
+			case 3 : {
+				while(seleccion2 != 0) {
+					clrscr();
+					gotoxy(68, 1);
+					printf("Log: Admin");
+					printf("\n\n\n\n\n\n\t\t\t\tGestion de Fichas\n\n");
+					printf("\t\t\t\t1. Altas\n");
+					printf("\t\t\t\t2. Listado\n");
+					printf("\t\t\t\t3. Consultas\n");
+					printf("\t\t\t\t4. Modificaciones\n");
+					printf("\t\t\t\t5. Bajas\n");
+					printf("\t\t\t\t0. Volver\n\n");
+					printf("\t\t\t\tOpcion => ");
+					scanf("%d", &seleccion2);
+					fflush(stdin);
+					switch (seleccion2) {
+						case 1 : altas_fichas();						break;
+						case 2 : listados_fichas();     				break;
+						case 3 : consultas_fichas();     				break;
+						case 4 : modificaciones_fichas();				break;
+						case 5 : bajas_fichas();     					break;
+						case 0 : printf("\n\t\t\t\tAdios");   			break;
+						default: printf("\n\t\t\t\tElija entre 0 - 5");	getch();
+					}
+				}
+			}	break;
+			case 4 : {
+				while (seleccion2 != 0) {
+					clrscr();
+					gotoxy(70, 1);printf("Log: Admin");
+					printf("\n\n\n\n\n\n\t\t\t\tGestion de Obras\n\n");
+					printf("\t\t\t\t1. Altas\n");
+					printf("\t\t\t\t2. Listado\n");
+					printf("\t\t\t\t3. Consultas\n");
+					printf("\t\t\t\t4. Modificaciones\n");
+					printf("\t\t\t\t5. Bajas\n");
+					printf("\t\t\t\t0. Volver\n\n");
+					printf("\t\t\t\tOpcion => ");
+					scanf("%d", &seleccion2);
+					fflush(stdin);
+					switch (seleccion2) {
+						case 1 : altas_obras();							break;
+						case 2 : listados_obras();     					break;
+						case 3 : consultas_obras();     				break;
+						case 4 : modificaciones_obras();				break;
+						case 5 : bajas_obras();     					break;
+						case 0 : printf("\n\t\t\t\tAdios");   			break;
+						default: printf("\n\t\t\t\tElija entre 0 - 5");	getch();
+					}
+				}
+			}	break;                  
+			case 0 : printf("\n\t\t\t\tAdios");   						break;
+			default: printf("\n\t\t\t\tElija entre 0 - 4");				getch();
+		}
+	}
+}
