@@ -922,3 +922,176 @@ void listados_obras() {
 	printf("\n\nPulse una tecla para continuar..");getch();
 	fclose(canal);
 }
+
+void consultas_trabajadores() {
+	FILE *canal;
+	int seleccion=1,sw,i,j;
+	long N,desplazamiento,cen,der,izq,categoria;
+	char dni_trabajador[10],nom_trabajador[25];
+
+	canal=fopen(FICHERO_trabajadores,"rb");
+	fseek(canal,0L,0);
+	fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal);
+ 	N=registro0_trabajadores.num_registros;
+
+	if(N>=1) {
+		while(seleccion!=0){
+			clrscr();
+			printf("\n\n\n\n\n\n\n\t\t\t\tConsultas de Trabajador\n\n");
+			printf("\t\t\t\t1. DNI\n");
+			printf("\t\t\t\t2. Nombre\n");
+			printf("\t\t\t\t3. Categoria\n");
+			printf("\t\t\t\t0. Volver\n\n");
+			printf("\t\t\t\tOpcion => ");
+			scanf("%d",&seleccion);fflush(stdin);
+			switch(seleccion) {
+				case 1 : {
+					do{
+						clrscr();
+						printf("Introduce DNI a Consultar ('Fin'=Salir) => ");
+						gets(dni_trabajador);fflush(stdin);clrscr();
+
+						if(strncmp(dni_trabajador,"Fin",strlen(dni_trabajador))!=0) {
+							sw=0;izq=1;der=N;
+							do{
+								cen=(izq+der)/2;
+								desplazamiento=cen*sizeof(registro_trabajadores);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+
+								if(strncmp(dni_trabajador,registro_trabajadores.dni,strlen(dni_trabajador))==0 || izq>=der) {
+									sw=1;
+									if(strncmp(dni_trabajador,registro_trabajadores.dni,strlen(dni_trabajador))==0) {
+										gotoxy(1,1);printf("Ficha");
+										gotoxy(8,1);printf("DNI");
+										gotoxy(20,1);printf("Nombre");
+										gotoxy(42,1);printf("F.Nacim.");
+										gotoxy(55,1);printf("Telefono");
+										gotoxy(67,1);printf("Categoria");
+										gotoxy(3,3);printf("%ld",cen);
+										gotoxy(8,3);printf("%s",registro_trabajadores.dni);
+										gotoxy(20,3);printf("%s",registro_trabajadores.nombre);
+										gotoxy(42,3);printf("%s",registro_trabajadores.f_nacimiento);
+										gotoxy(55,3);printf("%s",registro_trabajadores.telefono);
+										gotoxy(70,3);printf("%ld",registro_trabajadores.cod_categoria);
+									} else
+										printf("DNI de Trabajador no encontrado");
+									printf("\n\nPulse una tecla para continuar..");
+									getch();
+								} else {
+									if(strncmp(dni_trabajador,registro_trabajadores.dni,strlen(dni_trabajador))<0)
+										der=cen-1;
+									else
+										izq=cen+1;
+								}
+							}while(!sw);
+						}
+					}while(strncmp(dni_trabajador,"Fin",strlen(dni_trabajador))!=0);
+				}	break;
+				case 2 : {
+					do{
+						clrscr();
+						printf("Introduce Nombre a Consultar ('Fin'=Salir) => ");
+						gets(nom_trabajador);fflush(stdin);clrscr();
+
+						if(strncmp(nom_trabajador,"Fin",strlen(nom_trabajador))!=0) {
+							sw=0;j=1;
+							canal=fopen(FICHERO_trabajadores,"rb");
+							for(i=1;i<=N;i++) {
+								desplazamiento=i*sizeof(registro_trabajadores);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+
+								if(strncmp(nom_trabajador,registro_trabajadores.nombre,strlen(nom_trabajador))==0) {
+									if(j%21==0) { 										  //tabulador de registros en pantalla
+										gotoxy(1,1);printf("Ficha");
+										gotoxy(8,1);printf("DNI");
+										gotoxy(20,1);printf("Nombre");
+										gotoxy(42,1);printf("F.Nacim.");
+										gotoxy(55,1);printf("Telefono");
+										gotoxy(67,1);printf("Categoria");
+										gotoxy(1,j+1);printf("\n\nPulse una tecla para continuar..");
+										getch();clrscr();j=1;
+									}
+									gotoxy(3,j+2);printf("%d",i);
+									gotoxy(8,j+2);printf("%s",registro_trabajadores.dni);
+									gotoxy(20,j+2);printf("%s",registro_trabajadores.nombre);
+									gotoxy(42,j+2);printf("%s",registro_trabajadores.f_nacimiento);
+									gotoxy(55,j+2);printf("%s",registro_trabajadores.telefono);
+									gotoxy(70,j+2);printf("%ld",registro_trabajadores.cod_categoria);
+									sw=1;j++;
+								}
+							}
+							if(sw) {
+								gotoxy(1,1);printf("Ficha");
+								gotoxy(8,1);printf("DNI");
+								gotoxy(20,1);printf("Nombre");
+								gotoxy(42,1);printf("F.Nacim.");
+								gotoxy(55,1);printf("Telefono");
+								gotoxy(67,1);printf("Categoria");
+							} else
+								printf("Nombre no encontrado");
+							gotoxy(1,j+3);printf("Pulse una tecla para continuar..");
+							getch();fclose(canal);
+						}
+					}while(strncmp(nom_trabajador,"Fin",strlen(nom_trabajador))!=0);
+				}	break;
+				case 3 : {
+					do{
+						clrscr();
+						printf("Introduce Categoria a Consultar ('0'=Salir) => ");
+						scanf("%ld",&categoria);fflush(stdin);clrscr();
+
+						if(categoria!=0) {
+							sw=0;j=1;
+							canal=fopen(FICHERO_trabajadores,"rb");
+							for(i=1;i<=N;i++) {
+								desplazamiento=i*sizeof(registro_trabajadores);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+
+								if(categoria==registro_trabajadores.cod_categoria) {
+									if(j%21==0) {  										  //tabulador de registros en pantalla
+										gotoxy(1,1);printf("Ficha");
+										gotoxy(8,1);printf("DNI");
+										gotoxy(20,1);printf("Nombre");
+										gotoxy(42,1);printf("F.Nacim.");
+										gotoxy(55,1);printf("Telefono");
+										gotoxy(67,1);printf("Categoria");
+										gotoxy(1,j+1);printf("\n\nPulse una tecla para continuar..");
+										getch();clrscr();j=1;
+									}
+									gotoxy(3,j+2);printf("%d",i);
+									gotoxy(8,j+2);printf("%s",registro_trabajadores.dni);
+									gotoxy(20,j+2);printf("%s",registro_trabajadores.nombre);
+									gotoxy(42,j+2);printf("%s",registro_trabajadores.f_nacimiento);
+									gotoxy(55,j+2);printf("%s",registro_trabajadores.telefono);
+									gotoxy(70,j+2);printf("%ld",registro_trabajadores.cod_categoria);
+									sw=1;j++;
+								}
+							}
+							if(sw) {
+								gotoxy(1,1);printf("Ficha");
+								gotoxy(8,1);printf("DNI");
+								gotoxy(20,1);printf("Nombre");
+								gotoxy(42,1);printf("F.Nacim.");
+								gotoxy(55,1);printf("Telefono");
+								gotoxy(67,1);printf("Categoria");
+							} else
+								printf("Categoria no encontrada");
+							gotoxy(1,j+3);printf("Pulse una tecla para continuar..");getch();
+							fclose(canal);
+						}
+					}while(categoria!=0);
+				}	break;
+				case 0 : 	break;
+				default: 	printf("\n\t\t\t\tElija entre 0 - 3");	getch();
+			}
+		}
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_trabajadores);
+		getch();
+	}
+	fclose(canal);                                    
+}
