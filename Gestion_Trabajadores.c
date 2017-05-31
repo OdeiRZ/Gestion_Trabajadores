@@ -2198,3 +2198,159 @@ void modificaciones_fichas() {
 	}
 	fclose(canal);
 }
+
+void modificaciones_obras() {
+	FILE *canal,*canal2;
+	long N_obras,N_aux,desplazamiento,cen,der,izq,cod;
+	char eleccion,dni[10];
+	int seleccion=1,sw,sw2,i;
+
+	canal=fopen(FICHERO_obras,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_obras, sizeof(registro0_obras),1,canal);
+ 	N_obras=registro0_obras.num_registros;
+
+	if(N_obras>=1) {
+		do{
+			clrscr();
+			printf("Introduce Codigo de Obra a Modificar ('0'=Salir) => ");
+			scanf("%ld",&cod);fflush(stdin);clrscr();
+
+			if(cod!=0) {
+				sw=0;izq=1;der=N_obras;
+				do{
+					cen=(izq+der)/2;
+				  	desplazamiento=cen*sizeof(registro_obras);
+					fseek(canal,desplazamiento,0);
+					fread(&registro_obras,sizeof(registro_obras),1,canal);
+
+					if(cod==registro_obras.cod_obra || izq>=der) {
+						sw=1;
+						if(cod==registro_obras.cod_obra) {
+							gotoxy(1,1);printf("Ficha");
+							gotoxy(8,1);printf("F.Inicio");
+							gotoxy(21,1);printf("F.Final");
+							gotoxy(34,1);printf("Estado");
+							gotoxy(54,1);printf("Capataz");
+							gotoxy(3,3);printf("%ld",registro_obras.cod_obra);
+							gotoxy(8,3);printf("%s",registro_obras.f_inicio);
+							gotoxy(21,3);printf("%s",registro_obras.f_final);
+							gotoxy(34,3);printf("%s",registro_obras.estado);
+							gotoxy(54,3);printf("%s",registro_obras.dni);
+
+							printf("\n\n¿Desea Modificar el Registro? (s/n): ");
+							scanf("%c",&eleccion);fflush(stdin);
+							if(eleccion=='s') {
+								do{
+									clrscr();sw2=0;
+									gotoxy(1,1);printf("Ficha");
+									gotoxy(8,1);printf("F.Inicio");
+									gotoxy(21,1);printf("F.Final");
+									gotoxy(34,1);printf("Estado");
+									gotoxy(54,1);printf("Capataz");
+									gotoxy(3,3);printf("%ld",registro_obras.cod_obra);
+									gotoxy(8,3);printf("%s",registro_obras.f_inicio);
+									gotoxy(21,3);printf("%s",registro_obras.f_final);
+									gotoxy(34,3);printf("%s",registro_obras.estado);
+									gotoxy(54,3);printf("%s",registro_obras.dni);
+
+									printf("\n\n1. Modificar F.Inicio\n");
+									printf("2. Modificar F.Final\n");
+									printf("3. Modificar Estado\n");
+									printf("4. Modificar Capataz\n");
+									printf("0. Volver\n\n");
+									printf("Opcion => ");
+									scanf("%d",&seleccion);fflush(stdin);
+									switch(seleccion) {
+										case 1 : {
+                                    		do{                                	  //nos aseguramos que el tamaño de la fecha es correcto
+												if(sw2)
+													printf("Error. Formato incorrecto (dd/mm/aaaa)\n");
+												printf("\nInserte nueva F.Inicio => ");
+												gets(registro_obras.f_inicio);
+												fflush(stdin);sw2=1;
+											}while(strlen(registro_obras.f_inicio)!=10);
+											sw=2;
+										}	break;
+										case 2 : {
+                                    		do{                                	  //nos aseguramos que el tamaño de la fecha es correcto
+												if(sw2)
+													printf("Error. Formato incorrecto (dd/mm/aaaa)\n");
+												printf("\nInserte nueva F.Final => ");
+												gets(registro_obras.f_final);
+												fflush(stdin);sw2=1;
+											}while(strlen(registro_obras.f_final)!=10);
+											sw=2;
+										}	break;
+										case 3 : {
+											fflush(stdin);
+											printf("\nInserte nuevo Estado => ");
+											gets(registro_obras.estado);
+		                                    sw=2;
+										}	break;
+										case 4 : {
+											do{              							  //nos aseguramos que el tamaño de DNI es correcto
+												if(sw2)
+													printf("Error. Tamaño incorrecto\n");
+												printf("\nInserte nuevo Capataz => ");
+												gets(dni);
+												fflush(stdin);sw2=1;
+											}while(strlen(dni)!=9);
+
+											sw2=0;
+											canal2=fopen(FICHERO_trabajadores,"rb");
+											fseek(canal2,0L,0);
+											fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
+											N_aux=registro0_trabajadores.num_registros;
+
+											for(i=1;i<=N_aux;i++) {  				  //comprobamos si el dni existe secuencialmente
+												desplazamiento=i*sizeof(registro_trabajadores);
+												fseek(canal2,desplazamiento,0);
+												fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+								 
+												if(strcmp(registro_trabajadores.dni,dni)==0) {
+													strcpy(registro_obras.dni,dni);
+													sw2=1;sw=2;break;
+												}
+											}
+											if(!sw2) {
+												printf("\nDNI de Capataz no encontrado");
+												getch();
+											}
+											fclose(canal2);
+										}	break;
+										case 0 : {
+	                           				if(sw>1) {
+												desplazamiento=cen*sizeof(registro_obras);
+												fseek(canal,desplazamiento,0);
+												fwrite(&registro_obras,sizeof(registro_obras),1,canal);
+												printf("\nRegistro Modificado correctamente");
+												printf("\n\nPulse una tecla para continuar..");
+												getch();
+	                                       }
+										}	break;
+										default: 	printf("\nElija entre 0 - 4");	getch();
+									}
+								}while(seleccion!=0);
+							}
+						} else {
+							printf("Codigo de Obra no encontrado");
+							printf("\n\nPulse una tecla para continuar..");
+							getch();
+						}
+					} else {
+						if(cod<registro_obras.cod_obra)
+							der=cen-1;
+						else
+							izq=cen+1;
+					}
+				}while(!sw);
+			}
+		}while(cod!=0);
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_obras);
+		getch();
+	}
+	fclose(canal);
+}
