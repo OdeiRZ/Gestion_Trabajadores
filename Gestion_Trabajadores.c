@@ -3026,3 +3026,60 @@ void ordenacion_obras() {                         										  //metodo shell de 
 	}
    fclose(canal);
 }
+
+void creacion_ficheros() {
+	int i;
+	FILE *canal;                
+
+	canal=fopen(FICHERO_trabajadores,"rb");
+	if(canal==NULL) {
+		printf("No existe el fichero '%s', por lo que se creara uno nuevo..\n",FICHERO_trabajadores);
+		fclose(canal);
+		canal=fopen(FICHERO_trabajadores,"a+b");
+		fseek(canal,0L,0);
+		registro0_trabajadores.num_registros=0L;
+		for(i=0;i<sizeof(registro_trabajadores)-4;i++)
+			registro0_trabajadores.blancos[i]=' ';
+		fwrite(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal);getch();
+	}
+	fclose(canal);
+
+	canal=fopen(FICHERO_categorias,"rb");
+	if(canal==NULL) {
+		printf("No existe el fichero '%s', por lo que se creara uno nuevo..\n",FICHERO_categorias);
+		fclose(canal);
+		canal=fopen(FICHERO_categorias,"a+b");
+		fseek(canal,0L,0);
+		registro0_categorias.num_registros=0L;
+		for(i=0;i<sizeof(registro_categorias)-4;i++)
+			registro0_categorias.blancos[i]=' ';
+		fwrite(&registro0_categorias,sizeof(registro0_categorias),1,canal);getch();
+	}
+	fclose(canal);
+
+	canal=fopen(FICHERO_fichas,"rb");
+	if(canal==NULL) {
+		printf("No existe el fichero '%s', por lo que se creara uno nuevo..\n",FICHERO_fichas);
+		fclose(canal);
+		canal=fopen(FICHERO_fichas,"a+b");
+		fseek(canal,0L,0);
+		registro0_fichas.num_registros=0L;
+		for(i=0;i<sizeof(registro_fichas)-4;i++)
+			registro0_fichas.blancos[i]=' ';
+		fwrite(&registro0_fichas,sizeof(registro0_fichas),1,canal);getch();
+	}
+	fclose(canal);
+
+	canal=fopen(FICHERO_obras,"rb");
+	if(canal==NULL) {
+		printf("No existe el fichero '%s', por lo que se creara uno nuevo..\n",FICHERO_obras);
+		fclose(canal);
+		canal=fopen(FICHERO_obras,"a+b");
+		fseek(canal,0L,0);
+		registro0_obras.num_registros=0L;
+		for(i=0;i<sizeof(registro_obras)-4;i++)
+			registro0_obras.blancos[i]=' ';
+		fwrite(&registro0_obras,sizeof(registro0_obras),1,canal);getch();
+	}
+	fclose(canal);
+}
