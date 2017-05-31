@@ -2485,3 +2485,134 @@ void bajas_trabajadores() {
 	}
 	fclose(canal);
 }
+
+void bajas_categorias() {
+	FILE *canal,*canal2;
+	long N_categorias,N_aux,desplazamiento,cen,der,izq,categoria,i;
+	char eleccion;
+	int sw,sw2;
+
+	canal=fopen(FICHERO_categorias,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_categorias, sizeof(registro0_categorias),1,canal);
+ 	N_categorias=registro0_categorias.num_registros;
+
+	if(N_categorias>=1) {
+		do{
+			clrscr();
+			canal=fopen(FICHERO_categorias,"r+b");
+			printf("Introduce Codigo de Categoria a dar de Baja (Salir='0') => ");
+			scanf("%ld",&categoria);fflush(stdin);clrscr();
+
+			if(categoria!=0) {
+				sw=0;izq=1;der=N_categorias;
+				do{         
+					cen=(izq+der)/2;
+				  	desplazamiento=cen*sizeof(registro_categorias);
+					fseek(canal,desplazamiento,0);
+					fread(&registro_categorias,sizeof(registro_categorias),1,canal);
+
+					if(categoria==registro_categorias.cod_categoria || izq>=der) {
+					sw=1;
+						if(categoria==registro_categorias.cod_categoria) {
+							gotoxy(1,1);printf("Ficha");
+							gotoxy(8,1);printf("Nombre");
+							gotoxy(30,1);printf("Precio/Hora");
+							gotoxy(3,3);printf("%ld",registro_categorias.cod_categoria);
+							gotoxy(8,3);printf("%s",registro_categorias.nombre);
+							gotoxy(30,3);printf("%.2f",registro_categorias.precio_hora);
+
+							printf("\n\n¿Desea dar de Baja el Registro? (s/n): ");
+							scanf("%c",&eleccion);fflush(stdin);
+							if(eleccion=='s') {
+								sw2=0;
+								canal2=fopen(FICHERO_trabajadores,"rb");
+								fseek(canal2,0L,0);
+								fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
+								N_aux=registro0_trabajadores.num_registros;
+
+								for(i=1;i<=N_aux;i++) {  				  						  //comprobamos si la categoria existe en fichero trabajadores
+									desplazamiento=i*sizeof(registro_trabajadores);
+									fseek(canal2,desplazamiento,0);
+									fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+
+									if(registro_trabajadores.cod_categoria==categoria) {
+										printf("\nError. Categoria existente en Fichero Trabajadores");
+										getch();sw2=1;break;
+									}
+								}
+								fclose(canal2);
+                        
+								if(!sw2) {
+									desplazamiento=N_categorias*sizeof(registro_categorias);
+									fseek(canal,desplazamiento,0);
+									fread(&registro_categorias,sizeof(registro_categorias),1,canal);
+
+									desplazamiento=cen*sizeof(registro_categorias);
+									fseek(canal,desplazamiento,0);
+									fwrite(&registro_categorias,sizeof(registro_categorias),1,canal);
+
+									N_categorias--;
+									fseek(canal,0L,0);
+									registro0_categorias.num_registros=N_categorias;
+									for(i=0;i<sizeof(registro_categorias)-4;i++)
+										registro0_categorias.blancos[i]=' ';
+									fwrite(&registro0_categorias,sizeof(registro0_categorias),1,canal);
+
+									for(i=cen;i<=N_categorias;i++) {   	  					  //reducimos en 1 codigos de Categorias
+										desplazamiento=i*sizeof(registro_categorias);
+										fseek(canal,desplazamiento,0);
+										fread(&registro_categorias,sizeof(registro_categorias),1,canal);
+										registro_categorias.cod_categoria--;
+										desplazamiento=i*sizeof(registro_categorias);
+										fseek(canal,desplazamiento,0);
+										fwrite(&registro_categorias,sizeof(registro_categorias),1,canal);
+									}
+									fclose(canal);
+
+									canal2=fopen(FICHERO_trabajadores,"r+b");
+									fseek(canal2,0L,0);
+									fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
+									N_aux=registro0_trabajadores.num_registros;
+
+									for(i=1;i<=N_aux;i++) {    	  						  	  	  //reducimos en 1 categorias en Trabajadores (registros asociados)
+										desplazamiento=i*sizeof(registro_trabajadores);
+										fseek(canal2,desplazamiento,0);
+										fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+
+										if(registro_trabajadores.cod_categoria>=cen) {
+											registro_trabajadores.cod_categoria--;
+											desplazamiento=i*sizeof(registro_trabajadores);
+											fseek(canal2,desplazamiento,0);
+											fwrite(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+										}		
+									}
+									fclose(canal2);
+									printf("\nRegistro dado de Baja correctamente");
+									printf("\n\nPulse una tecla para continuar..");getch();
+							   
+									if(N_categorias>1)      					    			  //si eliminamos categoria y existe mas de una realizamos ordenacion
+										ordenacion_categorias();
+								}
+							}
+						} else {
+							printf("Categoria no encontrada");
+							printf("\n\nPulse una tecla para continuar..");
+							getch();
+						}
+					} else {
+						if(categoria<registro_categorias.cod_categoria)
+							der=cen-1;
+						else
+							izq=cen+1;
+					}
+				}while(!sw);
+			}
+		}while(categoria!=0);
+	} else {
+	  	clrscr();
+	  	printf("El fichero '%s' esta vacio",FICHERO_categorias);
+		getch();
+	}
+	fclose(canal);
+}
