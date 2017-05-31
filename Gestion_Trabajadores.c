@@ -724,7 +724,7 @@ void altas_obras() {
 				sw=1;break;
 			}
 		}
-		if(!sw) {
+		if(!sw){
 			printf("\n\nCapataz no encontrado");
 			printf("\n¿Desea dar de Alta al Trabajador? (s/n) ");
 			scanf("%c",&eleccion);fflush(stdin);
@@ -734,4 +734,51 @@ void altas_obras() {
 		fclose(canal2);fclose(canal);fflush(stdin);
 		printf("\n¿Quiere seguir dando de alta Obras? (s/n): ");
 	}while(getchar()=='s');
+}
+
+void listados_trabajadores() {
+	FILE *canal;
+	int i,j=1;
+	long N,desplazamiento;
+
+	clrscr();
+	canal=fopen(FICHERO_trabajadores,"rb");
+	fseek(canal,0L,0);
+	fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal);
+	N=registro0_trabajadores.num_registros;
+
+	if(N>=1){
+		gotoxy(1,1);printf("Ficha");
+		gotoxy(8,1);printf("DNI");
+		gotoxy(20,1);printf("Nombre");
+		gotoxy(42,1);printf("F.Nacim.");
+		gotoxy(55,1);printf("Telefono");
+		gotoxy(67,1);printf("Categoria");
+
+		for(i=1;i<=N;i++){
+			desplazamiento=i*sizeof(registro_trabajadores);
+			fseek(canal,desplazamiento,0);
+			fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+			if(j%21==0){  																			  //tabulador de registros en pantalla
+				printf("\n\nPulse una tecla para continuar..");
+				getch();clrscr();j=1;
+				gotoxy(1,1);printf("Ficha");
+				gotoxy(8,1);printf("DNI");
+				gotoxy(20,1);printf("Nombre");
+				gotoxy(42,1);printf("F.Nacim.");
+				gotoxy(55,1);printf("Telefono");
+				gotoxy(67,1);printf("Categoria");
+			}
+			gotoxy(3,j+2);printf("%d",i);
+			gotoxy(8,j+2);printf("%s",registro_trabajadores.dni);
+			gotoxy(20,j+2);printf("%s",registro_trabajadores.nombre);
+			gotoxy(42,j+2);printf("%s",registro_trabajadores.f_nacimiento);
+			gotoxy(55,j+2);printf("%s",registro_trabajadores.telefono);
+			gotoxy(70,j+2);printf("%ld",registro_trabajadores.cod_categoria);
+			j++;
+		}
+   }else
+		printf("El fichero '%s' esta vacio",FICHERO_trabajadores);
+	printf("\n\nPulse una tecla para continuar..");getch();
+	fclose(canal);
 }
