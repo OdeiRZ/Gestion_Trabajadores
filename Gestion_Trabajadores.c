@@ -306,7 +306,7 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 	char eleccion,dni[10],aux_cod_categoria[10];
 	long N_trabajadores,N_aux,desplazamiento;
 
-	do {
+	do{
 		sw=0;clrscr();fflush(stdin);
 		canal=fopen(FICHERO_trabajadores,"r+b");
 		fseek(canal,0L,0);
@@ -322,14 +322,14 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 		gotoxy(67,1);printf("Categoria");
 		gotoxy(3,3);printf("%ld",N_trabajadores);
 		if(strcmp(cod,"")==0) { 										//Comprobador de tipo de insercion enlazada
-			do {                                                        //nos aseguramos que el tamaño de DNI es correcto
+			do{                                                        //nos aseguramos que el tamaño de DNI es correcto
 				if(sw) {
 					gotoxy(8,3);
 					printf("                 ");
 				}
 				gotoxy(8,3);gets(dni);
 				sw=1;
-			} while(strlen(dni)!=9);
+			}while(strlen(dni)!=9);
 			sw=0;
 			if(N_trabajadores>1) {
 				for(i=1;i<=N_trabajadores;i++) { 						//comprobamos existencia de dni repetido secuencialmente
@@ -356,27 +356,27 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 		gotoxy(20,3);gets(registro_trabajadores.nombre);
 
 		sw=0;
-		do {                                                          	//nos aseguramos que el tamaño de la fecha no excede del maximo
+		do{                                                          	//nos aseguramos que el tamaño de la fecha no excede del maximo
         	if(sw) {
 				gotoxy(42,3);
 				printf("             ");
 			}
 			gotoxy(42,3);gets(registro_trabajadores.f_nacimiento);
 			sw=1;
-		} while(strlen(registro_trabajadores.f_nacimiento)!=10);
+		}while(strlen(registro_trabajadores.f_nacimiento)!=10);
 
 		sw=0;
-		do {                                                         	//nos aseguramos que el tamaño del telefono es el correcto
+		do{                                                         	//nos aseguramos que el tamaño del telefono es el correcto
         	if(sw) {
 				gotoxy(55,3);
 				printf("             ");
 			}
 			 gotoxy(55,3);gets(registro_trabajadores.telefono);
 			 sw=1;
-		} while(strlen(registro_trabajadores.telefono)!=9);
+		}while(strlen(registro_trabajadores.telefono)!=9);
 
 		sw=0;
-		do {                                                          	//nos aseguramos que la categoria es un digito
+		do{                                                          	//nos aseguramos que la categoria es un digito
         	if(sw) {
 				gotoxy(71,3);
 				printf("        ");
@@ -386,7 +386,7 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 			for(i=0;i<strlen(aux_cod_categoria);i++)
 				if(!isdigit(aux_cod_categoria[i]))                      //comprobacion caracter a caracter
 					sw=1;
-		} while(sw);
+		}while(sw);
 		registro_trabajadores.cod_categoria=atol(aux_cod_categoria);
 
 		sw=0;															//podriamos listar nombre categoria y codigo para poder introducirlo
@@ -425,7 +425,7 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 		fclose(canal2);fclose(canal);
 		cod="";fflush(stdin);
 		printf("\n¿Quiere seguir dando de alta Trabajadores? (s/n): ");
-	} while(getchar()=='s');
+	}while(getchar()=='s');
 
 	if(N_trabajadores>1)
 		ordenacion_trabajadores();
@@ -463,4 +463,185 @@ void altas_categorias() {
 		registro0_categorias.blancos[i]=' ';
 	fwrite(&registro0_categorias,sizeof(registro0_categorias),1,canal);
 	fclose(canal);
+}
+
+void altas_fichas() {
+	FILE *canal,*canal2;
+	int i,sw,h1,h2,m1,m2,sw_fecha;
+	char aux_cod_obra[10],eleccion,aux[2];
+	long N_fichas,N_aux,desplazamiento;
+                             
+	do{
+		clrscr();fflush(stdin);sw_fecha=0;
+		canal=fopen(FICHERO_fichas,"r+b");
+		fseek(canal,0L,0);
+		fread(&registro0_fichas,sizeof(registro0_fichas),1,canal);
+		N_fichas=registro0_fichas.num_registros;
+		N_fichas++;
+
+		printf("¿Desea usar la fecha de Sistema? (s/n): ");
+		if(getchar()=='s')
+			sw_fecha=1;
+         
+		clrscr();fflush(stdin);
+		gotoxy(1,1);printf("Ficha");
+		gotoxy(8,1);printf("DNI");
+		gotoxy(20,1);printf("Fecha");
+		gotoxy(32,1);printf("H.Inicio");
+		gotoxy(44,1);printf("H.Final");
+		gotoxy(56,1);printf("Obra");
+		gotoxy(3,3);printf("%ld",N_fichas);registro_fichas.cod_ficha=N_fichas;
+		if(sw_fecha){
+			obtener_fecha(registro_fichas.fecha);
+			gotoxy(20,3);printf("%s",registro_fichas.fecha);
+		}
+
+		sw=0;
+		do{                                                             //nos aseguramos que el tamaño de dni no excede del maximo
+        	if(sw){
+				gotoxy(8,3);
+				printf("             ");
+			}
+			gotoxy(8,3);gets(registro_fichas.dni);
+			sw=1;
+		}while(strlen(registro_fichas.dni)!=9);
+
+		sw=0;
+		canal2=fopen(FICHERO_trabajadores,"r+b");                                   
+		fseek(canal2,0L,0);
+		fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
+		N_aux=registro0_trabajadores.num_registros;
+
+		for(i=1;i<=N_aux;i++){   										//comprobamos si el codigo existe secuencialmente
+			desplazamiento=i*sizeof(registro_trabajadores);
+			fseek(canal2,desplazamiento,0);
+			fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+
+			if(strcmp(registro_trabajadores.dni,registro_fichas.dni)==0) {
+				sw=1;
+				break;
+			}
+		}
+		if(!sw){
+			printf("\n\nTrabajador no encontrado");
+			printf("\n¿Desea dar de Alta al Trabajador? (s/n) ");
+			scanf("%c",&eleccion);fflush(stdin);
+			if(eleccion=='s')
+				altas_trabajadores(registro_fichas.dni);
+			fclose(canal2);fclose(canal);break;
+		}
+
+		if(!sw_fecha){
+			sw=0;
+			do{                                                           //nos aseguramos que el tamaño de la fehca no excede del maximo
+	        	if(sw) {
+					gotoxy(20,3);
+					printf("             ");
+				}
+				gotoxy(20,3);gets(registro_fichas.fecha);
+				sw=1;
+			}while(strlen(registro_fichas.fecha)!=10);
+		}
+      
+		sw=0;
+		do{                                                               //nos aseguramos que la hora final no excede del maximo
+        	if(sw){
+				gotoxy(33,3);
+				printf("             ");
+			}
+			gotoxy(33,3);gets(registro_fichas.h_inicio);
+			sw=1;
+		}while(strlen(registro_fichas.h_inicio)!=5 && strlen(registro_fichas.h_inicio)!=0);
+
+		sw=0;
+		do{                                                               //nos aseguramos que la hora inicial excede del maximo
+        	if(sw){
+				gotoxy(45,3);
+				printf("             ");
+			}
+			gotoxy(45,3);gets(registro_fichas.h_final);
+			sw=1;
+		}while(strlen(registro_fichas.h_final)!=5 && strlen(registro_fichas.h_final)!=0);
+
+		if(strlen(registro_fichas.h_inicio)>0 && strlen(registro_fichas.h_final)>0){
+			aux[0]=registro_fichas.h_inicio[0];
+			aux[1]=registro_fichas.h_inicio[1];
+			aux[2]='\0';
+			h1=atoi(aux);
+			aux[0]=registro_fichas.h_inicio[3];
+			aux[1]=registro_fichas.h_inicio[4];
+			aux[2]='\0';
+			m1=atoi(aux);
+			aux[0]=registro_fichas.h_final[0];
+			aux[1]=registro_fichas.h_final[1];
+			aux[2]='\0';
+			h2=atoi(aux);
+			aux[0]=registro_fichas.h_final[3];
+			aux[1]=registro_fichas.h_final[4];
+			aux[2]='\0';
+			m2=atoi(aux);
+
+			if(h2==0)
+		     	h2=24;
+
+			if(h1>h2)
+		     	registro_fichas.tiempo=(24-h1+h2)*60+(m1-m2);
+			else
+		     	if(m1>m2)
+					registro_fichas.tiempo=(h2-h1-1)*60+(m1-m2-60);
+		     	else
+					registro_fichas.tiempo=(h2-h1-1)*60+(m2-m1+60);
+		}else
+			registro_fichas.tiempo=0;
+
+		sw=0;
+		do{                                                               	//nos aseguramos que la obra es un digito
+        	if(sw){
+				gotoxy(57,3);
+				printf("        ");
+			}
+			gotoxy(57,3);gets(aux_cod_obra);
+			sw=0;
+			for(i=0;i<strlen(aux_cod_obra);i++)
+				if(!isdigit(aux_cod_obra[i]))                             	//comprobacion caracter a caracter
+					sw=1;
+		}while(sw);
+		registro_fichas.cod_obra=atol(aux_cod_obra);
+
+		sw=0;fclose(canal2);											  	//podriamos listar nombre categoria y codigo para poder introducirlo
+		canal2=fopen(FICHERO_obras,"r+b");                                	//dando por hecho que las categorias no son muchas y entran en pantalla
+		fseek(canal2,0L,0);
+		fread(&registro0_obras,sizeof(registro0_obras),1,canal2);
+		N_aux=registro0_obras.num_registros;
+
+		for(i=1;i<=N_aux;i++) {  											//comprobamos si el codigo existe secuencialmente
+			desplazamiento=i*sizeof(registro_obras);
+			fseek(canal2,desplazamiento,0);
+			fread(&registro_obras,sizeof(registro_obras),1,canal2);
+
+			if(registro_obras.cod_obra==registro_fichas.cod_obra) {                 
+				desplazamiento=N_fichas*sizeof(registro_fichas);
+				fseek(canal,desplazamiento,0);
+				fwrite(&registro_fichas,sizeof(registro_fichas),1,canal);
+
+				desplazamiento=0L*sizeof(registro0_fichas);
+				fseek(canal,desplazamiento,0);
+				registro0_fichas.num_registros=N_fichas;
+				for(i=0;i<sizeof(registro0_fichas)-4;i++)
+					registro0_fichas.blancos[i]=' ';
+				fwrite(&registro0_fichas,sizeof(registro0_fichas),1,canal);
+
+				sw=1;break;
+			}
+		}
+		if(!sw) {
+			printf("\n\nObra no encontrada");
+			printf("\n¿Desea dar de Alta una nueva Obra? (s/n) ");
+			scanf("%c",&eleccion);fflush(stdin);
+			if(eleccion=='s')
+				altas_obras();
+		}
+		fclose(canal2);fclose(canal);fflush(stdin);
+		printf("\n¿Quiere seguir dando de alta Fichas? (s/n): ");
+	}while(getchar()=='s');
 }
