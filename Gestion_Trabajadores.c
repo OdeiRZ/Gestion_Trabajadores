@@ -1095,3 +1095,76 @@ void consultas_trabajadores() {
 	}
 	fclose(canal);                                    
 }
+
+void consultas_categorias() {
+	FILE *canal;
+	int seleccion=1,sw,j;
+	long N,desplazamiento,i;
+	char nom_categoria[25];
+
+	canal=fopen(FICHERO_categorias,"rb");
+	fseek(canal,0L,0);
+	fread(&registro0_categorias,sizeof(registro0_categorias),1,canal);
+ 	N=registro0_categorias.num_registros;
+
+	if(N>=1) {
+		while(seleccion!=0) {
+			clrscr();
+			printf("\n\n\n\n\n\n\n\t\t\t\tConsultas de Categorias\n\n");
+			printf("\t\t\t\t1. Nombre\n");
+			printf("\t\t\t\t0. Volver\n\n");
+			printf("\t\t\t\tOpcion => ");
+			scanf("%d",&seleccion);fflush(stdin);
+			switch(seleccion) {
+				case 1 : {
+					do{
+						clrscr();
+						printf("Introduce Nombre a Consultar ('Fin'=Salir) => ");
+						gets(nom_categoria);fflush(stdin);clrscr();
+
+						if(strncmp(nom_categoria,"Fin",strlen(nom_categoria))!=0) {
+							sw=0;j=1;
+							canal=fopen(FICHERO_categorias,"rb");
+							for(i=1;i<=N;i++) {
+								desplazamiento=i*sizeof(registro_categorias);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_categorias,sizeof(registro_categorias),1,canal);
+
+								if(strncmp(nom_categoria,registro_categorias.nombre,strlen(nom_categoria))==0) {
+									if(j%21==0) { 										  //tabulador de registros en pantalla
+										gotoxy(1,1);printf("Ficha");
+										gotoxy(8,1);printf("Nombre");
+										gotoxy(32,1);printf("Precio/Hora");
+										gotoxy(1,j+1);printf("\n\nPulse una tecla para continuar..");
+										getch();clrscr();j=1;
+									}
+									gotoxy(3,j+2);printf("%ld",registro_categorias.cod_categoria);
+									gotoxy(8,j+2);printf("%s",registro_categorias.nombre);
+									gotoxy(32,j+2);printf("%.2f",registro_categorias.precio_hora);
+									sw=1;j++;
+								}
+							}
+							if(sw) {
+								gotoxy(1,1);printf("Ficha");
+								gotoxy(8,1);printf("Nombre");
+								gotoxy(32,1);printf("Precio/Hora");
+							}
+							else
+								printf("Nombre de Categoria no encontrada");
+							gotoxy(1,j+3);printf("Pulse una tecla para continuar..");getch();
+							fclose(canal);
+						}
+					}while(strncmp(nom_categoria,"Fin",strlen(nom_categoria))!=0);
+				}	break;
+				case 0 : 	break;
+				default: 	printf("\n\t\t\t\tElija entre 0 - 1");	getch();
+			}
+		}
+	}
+	else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_trabajadores);
+		getch();
+	}
+	fclose(canal);
+}
