@@ -2858,3 +2858,171 @@ void bajas_obras() {
 	}
 	fclose(canal);
 }
+
+void ordenacion_trabajadores() {                         								  //metodo shell de ordenacion
+	FILE *canal;
+	tipo_trabajadores registro2;
+	long N,desplazamiento,i,d;
+	int sw;
+
+	canal=fopen(FICHERO_trabajadores,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal);
+	N=registro0_trabajadores.num_registros;
+
+	d=N;
+	while(d!=1) {
+		d=d/2;
+	 	sw=1;
+		while(sw) {
+			sw=0;
+			for(i=1;i<=N-d;i++) {
+				desplazamiento=i*sizeof(registro_trabajadores);
+				fseek(canal,desplazamiento,0);
+				fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+
+				desplazamiento=(i+d)*sizeof(registro2);
+				fseek(canal,desplazamiento,0);
+				fread(&registro2,sizeof(registro2),1,canal);
+
+				if(strcmp(registro2.dni,registro_trabajadores.dni)<0) {
+					desplazamiento=i*sizeof(registro2);
+					fseek(canal,desplazamiento,0);
+					fwrite(&registro2,sizeof(registro2),1,canal);
+
+					desplazamiento=(i+d)*sizeof(registro_trabajadores);
+					fseek(canal,desplazamiento,0);
+					fwrite(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+					sw=1;
+			  	}
+			}
+	 	}
+	}
+   fclose(canal);
+}
+
+void ordenacion_categorias() {                        									  //metodo shell de ordenacion
+	FILE *canal;
+	tipo_categorias registro2;
+	long N,desplazamiento,i,d;
+	int sw;
+
+	canal=fopen(FICHERO_categorias,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_categorias,sizeof(registro0_categorias),1,canal);
+	N=registro0_categorias.num_registros;
+
+	d=N;
+	while(d!=1) {
+		d=d/2;
+	 	sw=1;
+		while(sw) {
+			sw=0;
+			for(i=1;i<=N-d;i++) {
+				desplazamiento=i*sizeof(registro_categorias);
+				fseek(canal,desplazamiento,0);
+				fread(&registro_categorias,sizeof(registro_categorias),1,canal);
+
+				desplazamiento=(i+d)*sizeof(registro2);
+				fseek(canal,desplazamiento,0);
+				fread(&registro2,sizeof(registro2),1,canal);
+
+				if(registro2.cod_categoria<registro_categorias.cod_categoria) {
+					desplazamiento=i*sizeof(registro2);
+					fseek(canal,desplazamiento,0);
+					fwrite(&registro2,sizeof(registro2),1,canal);
+
+					desplazamiento=(i+d)*sizeof(registro_categorias);
+					fseek(canal,desplazamiento,0);
+					fwrite(&registro_categorias,sizeof(registro_categorias),1,canal);
+					sw=1;
+			  	}
+			}
+	 	}
+	}
+   fclose(canal);
+}
+
+void ordenacion_fichas() {                         										  //metodo shell de ordenacion
+	FILE *canal;
+	tipo_fichas registro2;
+	long N,desplazamiento,i,d;
+	int sw;
+
+	canal=fopen(FICHERO_fichas,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_fichas,sizeof(registro0_fichas),1,canal);
+	N=registro0_fichas.num_registros;
+
+	d=N;
+	while(d!=1) {
+		d=d/2;
+	 	sw=1;
+		while(sw) {
+			sw=0;
+			for(i=1;i<=N-d;i++) {
+				desplazamiento=i*sizeof(registro_fichas);
+				fseek(canal,desplazamiento,0);
+				fread(&registro_fichas,sizeof(registro_fichas),1,canal);
+
+				desplazamiento=(i+d)*sizeof(registro2);
+				fseek(canal,desplazamiento,0);
+				fread(&registro2,sizeof(registro2),1,canal);
+
+				if(registro2.cod_ficha<registro_fichas.cod_ficha) {
+					desplazamiento=i*sizeof(registro2);
+					fseek(canal,desplazamiento,0);
+					fwrite(&registro2,sizeof(registro2),1,canal);
+               
+					desplazamiento=(i+d)*sizeof(registro_fichas);
+					fseek(canal,desplazamiento,0);
+					fwrite(&registro_fichas,sizeof(registro_fichas),1,canal);
+					sw=1;
+			  	}
+			}
+	 	}
+	}
+   fclose(canal);
+}
+
+void ordenacion_obras() {                         										  //metodo shell de ordenacion
+	FILE *canal;
+	tipo_obras registro2;
+	long N,desplazamiento,i,d;
+	int sw;
+
+	canal=fopen(FICHERO_obras,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_obras,sizeof(registro0_obras),1,canal);
+	N=registro0_obras.num_registros;
+
+	d=N;
+	while(d!=1) {
+		d=d/2;
+	 	sw=1;
+		while(sw) {
+			sw=0;
+			for(i=1;i<=N-d;i++) {
+				desplazamiento=i*sizeof(registro_obras);
+				fseek(canal,desplazamiento,0);
+				fread(&registro_obras,sizeof(registro_obras),1,canal);
+
+				desplazamiento=(i+d)*sizeof(registro2);
+				fseek(canal,desplazamiento,0);
+				fread(&registro2,sizeof(registro2),1,canal);
+
+				if(registro2.cod_obra<registro_obras.cod_obra) {
+					desplazamiento=i*sizeof(registro2);
+					fseek(canal,desplazamiento,0);
+					fwrite(&registro2,sizeof(registro2),1,canal);
+
+					desplazamiento=(i+d)*sizeof(registro_obras);
+					fseek(canal,desplazamiento,0);
+					fwrite(&registro_obras,sizeof(registro_obras),1,canal);
+					sw=1;
+			  	}
+			}
+	 	}
+	}
+   fclose(canal);
+}
