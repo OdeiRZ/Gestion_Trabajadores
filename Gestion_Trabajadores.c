@@ -1498,3 +1498,139 @@ void consultas_fichas() {
 	}
 	fclose(canal);
 }
+
+void consultas_obras() {
+	FILE *canal;
+	int seleccion=1,sw,i,j,a,a_i,a_f;
+	long N,desplazamiento;
+	char dni[10],aux[4];
+
+	canal=fopen(FICHERO_obras,"rb");
+	fseek(canal,0L,0);
+	fread(&registro0_obras,sizeof(registro0_obras),1,canal);
+ 	N=registro0_obras.num_registros;
+
+	if(N>=1) {
+		while(seleccion!=0) {
+			clrscr();
+			printf("\n\n\n\n\n\n\n\t\t\t\tConsultas de Obras\n\n");
+			printf("\t\t\t\t1. Año\n");
+			printf("\t\t\t\t2. Capataz\n");
+			printf("\t\t\t\t0. Volver\n\n");
+			printf("\t\t\t\tOpcion => ");
+			scanf("%d",&seleccion);fflush(stdin);
+			switch(seleccion) {
+				case 1 : {
+					do{
+						clrscr();
+						printf("Introduce Año de Obra a Consultar ('0'=Salir) => ");
+						scanf("%d",&a);fflush(stdin);clrscr();
+
+						if(a!=0) {
+							sw=0;j=1;
+							canal=fopen(FICHERO_obras,"rb");
+							for(i=1;i<=N;i++) {
+								desplazamiento=i*sizeof(registro_obras);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_obras,sizeof(registro_obras),1,canal);
+
+								aux[0]=registro_obras.f_inicio[6];
+								aux[1]=registro_obras.f_inicio[7];
+								aux[2]=registro_obras.f_inicio[8];
+								aux[3]=registro_obras.f_inicio[9];
+								aux[4]='\0';        a_i=atoi(aux);             //Extracion de año inicial
+
+								aux[0]=registro_obras.f_final[6];
+								aux[1]=registro_obras.f_final[7];
+								aux[2]=registro_obras.f_final[8];
+								aux[3]=registro_obras.f_final[9];
+								aux[4]='\0';       a_f=atoi(aux);              //Extracion de año final
+
+								if(a>=a_i && a<=a_f) {
+									if(j%21==0) { 										  //tabulador de registros en pantalla
+										gotoxy(1,1);printf("Ficha");
+										gotoxy(8,1);printf("F.Inicio");
+										gotoxy(21,1);printf("F.Final");
+										gotoxy(34,1);printf("Estado");
+										gotoxy(54,1);printf("Capataz");
+										gotoxy(1,j+1);printf("\n\nPulse una tecla para continuar..");
+										getch();clrscr();j=1;
+									}
+									gotoxy(3,j+2);printf("%ld",registro_obras.cod_obra);
+									gotoxy(8,j+2);printf("%s",registro_obras.f_inicio);
+									gotoxy(21,j+2);printf("%s",registro_obras.f_final);
+									gotoxy(34,j+2);printf("%s",registro_obras.estado);
+									gotoxy(54,j+2);printf("%s",registro_obras.dni);
+									sw=1;j++;
+								}
+							}
+							if(sw) {
+								gotoxy(1,1);printf("Ficha");
+								gotoxy(8,1);printf("F.Inicio");
+								gotoxy(21,1);printf("F.Final");
+								gotoxy(34,1);printf("Estado");
+								gotoxy(54,1);printf("Capataz");
+							} else
+								printf("Año de Obra no encontrado en Rango");
+							gotoxy(1,j+3);printf("Pulse una tecla para continuar..");
+							getch();fclose(canal);
+						}
+					}while(a!=0);
+				}	break;
+				case 2 : {
+					do{
+						clrscr();
+						printf("Introduce DNI de Capataz a Consultar ('Fin'=Salir) => ");
+						gets(dni);fflush(stdin);clrscr();
+
+						if(strncmp(dni,"Fin",strlen(dni))!=0) {
+							sw=0;j=1;
+							canal=fopen(FICHERO_obras,"rb");
+							for(i=1;i<=N;i++)
+							{
+								desplazamiento=i*sizeof(registro_obras);
+								fseek(canal,desplazamiento,0);
+								fread(&registro_obras,sizeof(registro_obras),1,canal);
+
+								if(strncmp(dni,registro_obras.dni,strlen(dni))==0) {
+									if(j%21==0) { 										  //tabulador de registros en pantalla
+										gotoxy(1,1);printf("Ficha");
+										gotoxy(8,1);printf("F.Inicio");
+										gotoxy(21,1);printf("F.Final");
+										gotoxy(34,1);printf("Estado");
+										gotoxy(54,1);printf("Capataz");
+										gotoxy(1,j+1);printf("\n\nPulse una tecla para continuar..");
+										getch();clrscr();j=1;
+									}
+									gotoxy(3,j+2);printf("%ld",registro_obras.cod_obra);
+									gotoxy(8,j+2);printf("%s",registro_obras.f_inicio);
+									gotoxy(21,j+2);printf("%s",registro_obras.f_final);
+									gotoxy(34,j+2);printf("%s",registro_obras.estado);
+									gotoxy(54,j+2);printf("%s",registro_obras.dni);
+									sw=1;j++;
+								}
+							}
+							if(sw) {
+								gotoxy(1,1);printf("Ficha");
+								gotoxy(8,1);printf("F.Inicio");
+								gotoxy(21,1);printf("F.Final");
+								gotoxy(34,1);printf("Estado");
+								gotoxy(54,1);printf("Capataz");
+							} else
+								printf("Capataz no encontrado");
+							gotoxy(1,j+3);printf("Pulse una tecla para continuar..");
+							getch();fclose(canal);
+						}
+					}while(strncmp(dni,"Fin",strlen(dni))!=0);
+				} break;
+				case 0 : 	break;
+				default: 	printf("\n\t\t\t\tElija entre 0 - 2");	getch();
+			}
+		}
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_trabajadores);
+		getch();
+	}
+	fclose(canal);                                    
+}
