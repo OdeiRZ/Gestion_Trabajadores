@@ -125,12 +125,12 @@ void creacion_ficheros(void);                           //
  														//
 //////////////////////////////////////////////////////////
 
-int main() {
+int main(){
 	char pass[5];
 	int seleccion=1,seleccion2,i;
 	creacion_ficheros();
 
-	while(seleccion!=0) {
+	while(seleccion!=0){
 		clrscr();seleccion2=1;
 		gotoxy(68,1);printf("Log: Usuario");
 		printf("\n\n\n\n\n\n\t\t\t\tMenu Usuario\n\n");
@@ -139,9 +139,9 @@ int main() {
 		printf("\t\t\t\t0. Salir\n\n");
 		printf("\t\t\t\tOpcion => ");
 		scanf("%d",&seleccion);fflush(stdin);
-		switch(seleccion) {
+		switch(seleccion){
 			case 1 : {
-				while(seleccion2!=0) {
+				while(seleccion2!=0){
 					clrscr();
 					gotoxy(68,1);printf("Log: Usuario");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Fichas\n\n");
@@ -153,7 +153,7 @@ int main() {
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
 					scanf("%d",&seleccion2);fflush(stdin);
-					switch(seleccion2) {
+					switch(seleccion2){
 						case 1 : altas_fichas();						break;
 						case 2 : listados_fichas();     				break;
 						case 3 : consultas_fichas();     				break;
@@ -166,11 +166,11 @@ int main() {
 			}	break;
 			case 2 : {
 				printf("\n\t\t\t\tClave => ");
-				for(i=0;i<5;i++) {
+				for(i=0;i<5;i++){
 					pass[i]=getch();
 					printf("*");
 				}
-				if(strncmp(pass,"admin",5)==0) {
+				if(strncmp(pass,"admin",5)==0){
 					menu_admin();
 					return 0;
 				}
@@ -182,11 +182,11 @@ int main() {
 	return 0;
 }
 
-void menu_admin() {
+void menu_admin(){
 	int seleccion=1,seleccion2;
 	creacion_ficheros();
                            
-	while(seleccion!=0) {
+	while(seleccion!=0){
 		clrscr();seleccion2=1;
 		gotoxy(68,1);printf("Log: Admin");
 		printf("\n\n\n\n\n\n\t\t\t\tMenu Administrador\n\n");
@@ -197,9 +197,9 @@ void menu_admin() {
 		printf("\t\t\t\t0. Salir\n\n");
 		printf("\t\t\t\tOpcion => ");
 		scanf("%d",&seleccion);fflush(stdin);
-		switch(seleccion) {
+		switch(seleccion){
 			case 1 : {
-				while(seleccion2!=0) {
+				while(seleccion2!=0){
 					clrscr();
 					gotoxy(68,1);printf("Log: Admin");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Trabajadores\n\n");
@@ -211,7 +211,7 @@ void menu_admin() {
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
 					scanf("%d",&seleccion2);fflush(stdin);
-					switch(seleccion2) {
+					switch(seleccion2){
 						case 1 : altas_trabajadores("");				break;
 						case 2 : listados_trabajadores();     			break;
 						case 3 : consultas_trabajadores();     			break;
@@ -223,7 +223,7 @@ void menu_admin() {
 				}
 			}	break;
 			case 2 : {
-				while(seleccion2!=0) {
+				while(seleccion2!=0){
 					clrscr();
 					gotoxy(68,1);printf("Log: Admin");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Categorias\n\n");
@@ -235,7 +235,7 @@ void menu_admin() {
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
 					scanf("%d",&seleccion2);fflush(stdin);
-					switch(seleccion2) {
+					switch(seleccion2){
 						case 1 : altas_categorias();					break;
 						case 2 : listados_categorias();     			break;
 						case 3 : consultas_categorias();     			break;
@@ -247,7 +247,7 @@ void menu_admin() {
 				}
 			}	break;
 			case 3 : {
-				while(seleccion2!=0) {
+				while(seleccion2!=0){
 					clrscr();
 					gotoxy(68,1);printf("Log: Admin");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Fichas\n\n");
@@ -259,7 +259,7 @@ void menu_admin() {
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
 					scanf("%d",&seleccion2);fflush(stdin);
-					switch(seleccion2) {
+					switch(seleccion2){
 						case 1 : altas_fichas();						break;
 						case 2 : listados_fichas();     				break;
 						case 3 : consultas_fichas();     				break;
@@ -271,7 +271,7 @@ void menu_admin() {
 				}
 			}	break;
 			case 4 : {
-				while(seleccion2!=0) {
+				while(seleccion2!=0){
 					clrscr();
 					gotoxy(70,1);printf("Log: Admin");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Obras\n\n");
@@ -283,7 +283,7 @@ void menu_admin() {
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
 					scanf("%d",&seleccion2);fflush(stdin);
-					switch(seleccion2) {
+					switch(seleccion2){
 						case 1 : altas_obras();							break;
 						case 2 : listados_obras();     					break;
 						case 3 : consultas_obras();     				break;
@@ -300,7 +300,7 @@ void menu_admin() {
 	}
 }
 
-void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajador desde codigo
+void altas_trabajadores(char cod[]){									//revisar opcion creacion trabajador desde codigo
 	FILE *canal,*canal2;
 	int i,sw;
 	char eleccion,dni[10],aux_cod_categoria[10];
@@ -321,9 +321,9 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 		gotoxy(55,1);printf("Telefono");
 		gotoxy(67,1);printf("Categoria");
 		gotoxy(3,3);printf("%ld",N_trabajadores);
-		if(strcmp(cod,"")==0) { 										//Comprobador de tipo de insercion enlazada
-			do{                                                        //nos aseguramos que el tamaño de DNI es correcto
-				if(sw) {
+		if(strcmp(cod,"")==0){ 										//Comprobador de tipo de insercion enlazada
+			do{                                                        	//nos aseguramos que el tamaño de DNI es correcto
+				if(sw){
 					gotoxy(8,3);
 					printf("                 ");
 				}
@@ -331,18 +331,18 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 				sw=1;
 			}while(strlen(dni)!=9);
 			sw=0;
-			if(N_trabajadores>1) {
-				for(i=1;i<=N_trabajadores;i++) { 						//comprobamos existencia de dni repetido secuencialmente
+			if(N_trabajadores>1){
+				for(i=1;i<=N_trabajadores;i++){ 						//comprobamos existencia de dni repetido secuencialmente
 					desplazamiento=i*sizeof(registro_trabajadores);
 					fseek(canal,desplazamiento,0);
 					fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
 					
-					if(strcmp(registro_trabajadores.dni,dni)==0) {
+					if(strcmp(registro_trabajadores.dni,dni)==0){
 						sw=1;
 						break;
 					}
 				}
-				if(sw) {
+				if(sw){
 					printf("\n  El DNI introducido ya existe");
 					getch();fclose(canal);break;
 				}
@@ -357,7 +357,7 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 
 		sw=0;
 		do{                                                          	//nos aseguramos que el tamaño de la fecha no excede del maximo
-        	if(sw) {
+        	if(sw){
 				gotoxy(42,3);
 				printf("             ");
 			}
@@ -367,7 +367,7 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 
 		sw=0;
 		do{                                                         	//nos aseguramos que el tamaño del telefono es el correcto
-        	if(sw) {
+        	if(sw){
 				gotoxy(55,3);
 				printf("             ");
 			}
@@ -377,7 +377,7 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 
 		sw=0;
 		do{                                                          	//nos aseguramos que la categoria es un digito
-        	if(sw) {
+        	if(sw){
 				gotoxy(71,3);
 				printf("        ");
 			}
@@ -395,12 +395,12 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 		fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
 		N_aux=registro0_categorias.num_registros;
 
-		for(i=1;i<=N_aux;i++) {   										//comprobamos si el codigo existe secuencialmente
+		for(i=1;i<=N_aux;i++){   										//comprobamos si el codigo existe secuencialmente
 			desplazamiento=i*sizeof(registro_categorias);
 			fseek(canal2,desplazamiento,0);
 			fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
 
-			if(registro_categorias.cod_categoria==registro_trabajadores.cod_categoria) {                                     
+			if(registro_categorias.cod_categoria==registro_trabajadores.cod_categoria){                                     
 				desplazamiento=N_trabajadores*sizeof(registro_trabajadores);
 				fseek(canal,desplazamiento,0);
 				fwrite(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
@@ -415,7 +415,7 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 				sw=1;break;
 			}
 		}
-		if(!sw) {
+		if(!sw){
 			printf("\n\nCategoria no encontrada");
 			printf("\n¿Desea dar de Alta una nueva Categoria? (s/n) ");
          scanf("%c",&eleccion);fflush(stdin);
@@ -431,7 +431,7 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 		ordenacion_trabajadores();
 }
 
-void altas_categorias() {
+void altas_categorias(){
 	FILE *canal;
 	int i;
 	long N,desplazamiento;       										//discrepancia de tipos debido a uso de int y long
@@ -465,7 +465,7 @@ void altas_categorias() {
 	fclose(canal);
 }
 
-void altas_fichas() {
+void altas_fichas(){
 	FILE *canal,*canal2;
 	int i,sw,h1,h2,m1,m2,sw_fecha;
 	char aux_cod_obra[10],eleccion,aux[2];
@@ -517,7 +517,7 @@ void altas_fichas() {
 			fseek(canal2,desplazamiento,0);
 			fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 
-			if(strcmp(registro_trabajadores.dni,registro_fichas.dni)==0) {
+			if(strcmp(registro_trabajadores.dni,registro_fichas.dni)==0){
 				sw=1;
 				break;
 			}
@@ -533,8 +533,8 @@ void altas_fichas() {
 
 		if(!sw_fecha){
 			sw=0;
-			do{                                                           //nos aseguramos que el tamaño de la fehca no excede del maximo
-	        	if(sw) {
+			do{                                                         //nos aseguramos que el tamaño de la fehca no excede del maximo
+	        	if(sw){
 					gotoxy(20,3);
 					printf("             ");
 				}
@@ -544,7 +544,7 @@ void altas_fichas() {
 		}
       
 		sw=0;
-		do{                                                               //nos aseguramos que la hora final no excede del maximo
+		do{                                                             //nos aseguramos que la hora final no excede del maximo
         	if(sw){
 				gotoxy(33,3);
 				printf("             ");
@@ -554,7 +554,7 @@ void altas_fichas() {
 		}while(strlen(registro_fichas.h_inicio)!=5 && strlen(registro_fichas.h_inicio)!=0);
 
 		sw=0;
-		do{                                                               //nos aseguramos que la hora inicial excede del maximo
+		do{                                                             //nos aseguramos que la hora inicial excede del maximo
         	if(sw){
 				gotoxy(45,3);
 				printf("             ");
@@ -595,7 +595,7 @@ void altas_fichas() {
 			registro_fichas.tiempo=0;
 
 		sw=0;
-		do{                                                               	//nos aseguramos que la obra es un digito
+		do{                                                         	//nos aseguramos que la obra es un digito
         	if(sw){
 				gotoxy(57,3);
 				printf("        ");
@@ -603,23 +603,23 @@ void altas_fichas() {
 			gotoxy(57,3);gets(aux_cod_obra);
 			sw=0;
 			for(i=0;i<strlen(aux_cod_obra);i++)
-				if(!isdigit(aux_cod_obra[i]))                             	//comprobacion caracter a caracter
+				if(!isdigit(aux_cod_obra[i]))                          	//comprobacion caracter a caracter
 					sw=1;
 		}while(sw);
 		registro_fichas.cod_obra=atol(aux_cod_obra);
 
-		sw=0;fclose(canal2);											  	//podriamos listar nombre categoria y codigo para poder introducirlo
-		canal2=fopen(FICHERO_obras,"r+b");                                	//dando por hecho que las categorias no son muchas y entran en pantalla
+		sw=0;fclose(canal2);											//podriamos listar nombre categoria y codigo para poder introducirlo
+		canal2=fopen(FICHERO_obras,"r+b");                              //dando por hecho que las categorias no son muchas y entran en pantalla
 		fseek(canal2,0L,0);
 		fread(&registro0_obras,sizeof(registro0_obras),1,canal2);
 		N_aux=registro0_obras.num_registros;
 
-		for(i=1;i<=N_aux;i++) {  											//comprobamos si el codigo existe secuencialmente
+		for(i=1;i<=N_aux;i++){  										//comprobamos si el codigo existe secuencialmente
 			desplazamiento=i*sizeof(registro_obras);
 			fseek(canal2,desplazamiento,0);
 			fread(&registro_obras,sizeof(registro_obras),1,canal2);
 
-			if(registro_obras.cod_obra==registro_fichas.cod_obra) {                 
+			if(registro_obras.cod_obra==registro_fichas.cod_obra){                 
 				desplazamiento=N_fichas*sizeof(registro_fichas);
 				fseek(canal,desplazamiento,0);
 				fwrite(&registro_fichas,sizeof(registro_fichas),1,canal);
@@ -634,7 +634,7 @@ void altas_fichas() {
 				sw=1;break;
 			}
 		}
-		if(!sw) {
+		if(!sw){
 			printf("\n\nObra no encontrada");
 			printf("\n¿Desea dar de Alta una nueva Obra? (s/n) ");
 			scanf("%c",&eleccion);fflush(stdin);
@@ -646,7 +646,7 @@ void altas_fichas() {
 	}while(getchar()=='s');
 }
 
-void altas_obras() {
+void altas_obras(){
 	FILE *canal,*canal2;
 	int i,sw;
 	char eleccion;
@@ -667,8 +667,8 @@ void altas_obras() {
 		gotoxy(54,1);printf("Capataz");
 		gotoxy(3,3);printf("%ld",N_obras);registro_obras.cod_obra=N_obras;
 
-		do{                                                                    	  	//nos aseguramos que el tamaño de la fecha es correcto
-        	if(sw) {
+		do{                                                             //nos aseguramos que el tamaño de la fecha es correcto
+        	if(sw){
 				gotoxy(8,3);
 				printf("           ");
 			}
@@ -677,8 +677,8 @@ void altas_obras() {
 		}while(strlen(registro_obras.f_inicio)!=10);
 
 		sw=0;
-		do{                                                                    	  	//nos aseguramos que el tamaño de la fecha es correcto
-        	if(sw) {
+		do{                                                             //nos aseguramos que el tamaño de la fecha es correcto
+        	if(sw){
 				gotoxy(21,3);
 				printf("           ");
 			}
@@ -689,8 +689,8 @@ void altas_obras() {
 		gotoxy(34,3);gets(registro_obras.estado);
       
 		sw=0;
-		do{                                                                    	  	//nos aseguramos que el tamaño del dni es correcto
-        	if(sw) {
+		do{                                                             //nos aseguramos que el tamaño del dni es correcto
+        	if(sw){
 				gotoxy(54,3);
 				printf("           ");
 			}
@@ -704,12 +704,12 @@ void altas_obras() {
 		fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
 		N_aux=registro0_trabajadores.num_registros;
 
-		for(i=1;i<=N_aux;i++) {  													//comprobamos si el codigo existe secuencialmente
+		for(i=1;i<=N_aux;i++){  										//comprobamos si el codigo existe secuencialmente
 			desplazamiento=i*sizeof(registro_trabajadores);
 			fseek(canal2,desplazamiento,0);
 			fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 
-			if(strcmp(registro_trabajadores.dni,registro_obras.dni)==0) {
+			if(strcmp(registro_trabajadores.dni,registro_obras.dni)==0){
 				desplazamiento=N_obras*sizeof(registro_obras);
 				fseek(canal,desplazamiento,0);
 				fwrite(&registro_obras,sizeof(registro_obras),1,canal);
@@ -736,7 +736,7 @@ void altas_obras() {
 	}while(getchar()=='s');
 }
 
-void listados_trabajadores() {
+void listados_trabajadores(){
 	FILE *canal;
 	int i,j=1;
 	long N,desplazamiento;
@@ -759,7 +759,7 @@ void listados_trabajadores() {
 			desplazamiento=i*sizeof(registro_trabajadores);
 			fseek(canal,desplazamiento,0);
 			fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
-			if(j%21==0){  																			  //tabulador de registros en pantalla
+			if(j%21==0){  												//tabulador de registros en pantalla
 				printf("\n\nPulse una tecla para continuar..");
 				getch();clrscr();j=1;
 				gotoxy(1,1);printf("Ficha");
@@ -783,7 +783,7 @@ void listados_trabajadores() {
 	fclose(canal);
 }
 
-void listados_categorias() {
+void listados_categorias(){
 	FILE *canal;
 	int i,j=1;
 	long N,desplazamiento;
@@ -799,11 +799,11 @@ void listados_categorias() {
 		gotoxy(8,1);printf("Nombre");
 		gotoxy(30,1);printf("Precio/Hora");
       
-		for(i=1;i<=N;i++) {
+		for(i=1;i<=N;i++){
 			desplazamiento=i*sizeof(registro_categorias);
 			fseek(canal,desplazamiento,0);
 			fread(&registro_categorias,sizeof(registro_categorias),1,canal);
-			if(j%21==0) { 																			  //tabulador de registros en pantalla
+			if(j%21==0){ 												//tabulador de registros en pantalla
 				printf("\n\nPulse una tecla para continuar..");
 				getch();clrscr();j=1;
 				gotoxy(1,1);printf("Ficha");
@@ -821,7 +821,7 @@ void listados_categorias() {
 	fclose(canal);
 }
 
-void listados_fichas() {
+void listados_fichas(){
 	FILE *canal;
 	int i,j=1;
 	long N,desplazamiento;
@@ -832,7 +832,7 @@ void listados_fichas() {
 	fread(&registro0_fichas,sizeof(registro0_fichas),1,canal);
 	N=registro0_fichas.num_registros;
 
-	if(N>=1) {
+	if(N>=1){
 		gotoxy(1,1);printf("Ficha");
 		gotoxy(12,1);printf("DNI");
 		gotoxy(20,1);printf("Fecha");
@@ -841,11 +841,11 @@ void listados_fichas() {
 		gotoxy(65,1);printf("Tiempo");
 		gotoxy(72,1);printf("Obra");
 
-		for(i=1;i<=N;i++) {
+		for(i=1;i<=N;i++){
 			desplazamiento=i*sizeof(registro_fichas);
 			fseek(canal,desplazamiento,0);
 			fread(&registro_fichas,sizeof(registro_fichas),1,canal);
-			if(j%21==0) {  																			  //tabulador de registros en pantalla
+			if(j%21==0){  												//tabulador de registros en pantalla
 				printf("\n\nPulse una tecla para continuar..");
 				getch();clrscr();j=1;
 				gotoxy(1,1);printf("Ficha");
@@ -879,7 +879,7 @@ void listados_fichas() {
 	fclose(canal);
 }
 
-void listados_obras() {
+void listados_obras(){
 	FILE *canal;
 	int i,j=1;
 	long N,desplazamiento;
@@ -890,18 +890,18 @@ void listados_obras() {
 	fread(&registro0_obras,sizeof(registro0_obras),1,canal);
 	N=registro0_obras.num_registros;
 
-	if(N>=1) {
+	if(N>=1){
 		gotoxy(1,1);printf("Ficha");
 		gotoxy(8,1);printf("F.Inicio");
 		gotoxy(21,1);printf("F.Final");
 		gotoxy(34,1);printf("Estado");
 		gotoxy(54,1);printf("Capataz");
 
-		for(i=1;i<=N;i++) {
+		for(i=1;i<=N;i++){
 			desplazamiento=i*sizeof(registro_obras);
 			fseek(canal,desplazamiento,0);
 			fread(&registro_obras,sizeof(registro_obras),1,canal);
-			if(j%21==0) {  																			  //tabulador de registros en pantalla
+			if(j%21==0){  												//tabulador de registros en pantalla
 				printf("\n\nPulse una tecla para continuar..");
 				getch();clrscr();j=1;
 				gotoxy(1,1);printf("Ficha");
@@ -923,7 +923,7 @@ void listados_obras() {
 	fclose(canal);
 }
 
-void consultas_trabajadores() {
+void consultas_trabajadores(){
 	FILE *canal;
 	int seleccion=1,sw,i,j;
 	long N,desplazamiento,cen,der,izq,categoria;
@@ -934,7 +934,7 @@ void consultas_trabajadores() {
 	fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal);
  	N=registro0_trabajadores.num_registros;
 
-	if(N>=1) {
+	if(N>=1){
 		while(seleccion!=0){
 			clrscr();
 			printf("\n\n\n\n\n\n\n\t\t\t\tConsultas de Trabajador\n\n");
@@ -944,14 +944,14 @@ void consultas_trabajadores() {
 			printf("\t\t\t\t0. Volver\n\n");
 			printf("\t\t\t\tOpcion => ");
 			scanf("%d",&seleccion);fflush(stdin);
-			switch(seleccion) {
+			switch(seleccion){
 				case 1 : {
 					do{
 						clrscr();
 						printf("Introduce DNI a Consultar ('Fin'=Salir) => ");
 						gets(dni_trabajador);fflush(stdin);clrscr();
 
-						if(strncmp(dni_trabajador,"Fin",strlen(dni_trabajador))!=0) {
+						if(strncmp(dni_trabajador,"Fin",strlen(dni_trabajador))!=0){
 							sw=0;izq=1;der=N;
 							do{
 								cen=(izq+der)/2;
@@ -959,9 +959,9 @@ void consultas_trabajadores() {
 								fseek(canal,desplazamiento,0);
 								fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
 
-								if(strncmp(dni_trabajador,registro_trabajadores.dni,strlen(dni_trabajador))==0 || izq>=der) {
+								if(strncmp(dni_trabajador,registro_trabajadores.dni,strlen(dni_trabajador))==0 || izq>=der){
 									sw=1;
-									if(strncmp(dni_trabajador,registro_trabajadores.dni,strlen(dni_trabajador))==0) {
+									if(strncmp(dni_trabajador,registro_trabajadores.dni,strlen(dni_trabajador))==0){
 										gotoxy(1,1);printf("Ficha");
 										gotoxy(8,1);printf("DNI");
 										gotoxy(20,1);printf("Nombre");
@@ -994,16 +994,16 @@ void consultas_trabajadores() {
 						printf("Introduce Nombre a Consultar ('Fin'=Salir) => ");
 						gets(nom_trabajador);fflush(stdin);clrscr();
 
-						if(strncmp(nom_trabajador,"Fin",strlen(nom_trabajador))!=0) {
+						if(strncmp(nom_trabajador,"Fin",strlen(nom_trabajador))!=0){
 							sw=0;j=1;
 							canal=fopen(FICHERO_trabajadores,"rb");
-							for(i=1;i<=N;i++) {
+							for(i=1;i<=N;i++){
 								desplazamiento=i*sizeof(registro_trabajadores);
 								fseek(canal,desplazamiento,0);
 								fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
 
-								if(strncmp(nom_trabajador,registro_trabajadores.nombre,strlen(nom_trabajador))==0) {
-									if(j%21==0) { 										  //tabulador de registros en pantalla
+								if(strncmp(nom_trabajador,registro_trabajadores.nombre,strlen(nom_trabajador))==0){
+									if(j%21==0){ 						//tabulador de registros en pantalla
 										gotoxy(1,1);printf("Ficha");
 										gotoxy(8,1);printf("DNI");
 										gotoxy(20,1);printf("Nombre");
@@ -1022,7 +1022,7 @@ void consultas_trabajadores() {
 									sw=1;j++;
 								}
 							}
-							if(sw) {
+							if(sw){
 								gotoxy(1,1);printf("Ficha");
 								gotoxy(8,1);printf("DNI");
 								gotoxy(20,1);printf("Nombre");
@@ -1042,16 +1042,16 @@ void consultas_trabajadores() {
 						printf("Introduce Categoria a Consultar ('0'=Salir) => ");
 						scanf("%ld",&categoria);fflush(stdin);clrscr();
 
-						if(categoria!=0) {
+						if(categoria!=0){
 							sw=0;j=1;
 							canal=fopen(FICHERO_trabajadores,"rb");
-							for(i=1;i<=N;i++) {
+							for(i=1;i<=N;i++){
 								desplazamiento=i*sizeof(registro_trabajadores);
 								fseek(canal,desplazamiento,0);
 								fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
 
-								if(categoria==registro_trabajadores.cod_categoria) {
-									if(j%21==0) {  										  //tabulador de registros en pantalla
+								if(categoria==registro_trabajadores.cod_categoria){
+									if(j%21==0){  						//tabulador de registros en pantalla
 										gotoxy(1,1);printf("Ficha");
 										gotoxy(8,1);printf("DNI");
 										gotoxy(20,1);printf("Nombre");
@@ -1070,7 +1070,7 @@ void consultas_trabajadores() {
 									sw=1;j++;
 								}
 							}
-							if(sw) {
+							if(sw){
 								gotoxy(1,1);printf("Ficha");
 								gotoxy(8,1);printf("DNI");
 								gotoxy(20,1);printf("Nombre");
@@ -1096,7 +1096,7 @@ void consultas_trabajadores() {
 	fclose(canal);                                    
 }
 
-void consultas_categorias() {
+void consultas_categorias(){
 	FILE *canal;
 	int seleccion=1,sw,j;
 	long N,desplazamiento,i;
@@ -1107,31 +1107,31 @@ void consultas_categorias() {
 	fread(&registro0_categorias,sizeof(registro0_categorias),1,canal);
  	N=registro0_categorias.num_registros;
 
-	if(N>=1) {
-		while(seleccion!=0) {
+	if(N>=1){
+		while(seleccion!=0){
 			clrscr();
 			printf("\n\n\n\n\n\n\n\t\t\t\tConsultas de Categorias\n\n");
 			printf("\t\t\t\t1. Nombre\n");
 			printf("\t\t\t\t0. Volver\n\n");
 			printf("\t\t\t\tOpcion => ");
 			scanf("%d",&seleccion);fflush(stdin);
-			switch(seleccion) {
+			switch(seleccion){
 				case 1 : {
 					do{
 						clrscr();
 						printf("Introduce Nombre a Consultar ('Fin'=Salir) => ");
 						gets(nom_categoria);fflush(stdin);clrscr();
 
-						if(strncmp(nom_categoria,"Fin",strlen(nom_categoria))!=0) {
+						if(strncmp(nom_categoria,"Fin",strlen(nom_categoria))!=0){
 							sw=0;j=1;
 							canal=fopen(FICHERO_categorias,"rb");
-							for(i=1;i<=N;i++) {
+							for(i=1;i<=N;i++){
 								desplazamiento=i*sizeof(registro_categorias);
 								fseek(canal,desplazamiento,0);
 								fread(&registro_categorias,sizeof(registro_categorias),1,canal);
 
-								if(strncmp(nom_categoria,registro_categorias.nombre,strlen(nom_categoria))==0) {
-									if(j%21==0) { 										  //tabulador de registros en pantalla
+								if(strncmp(nom_categoria,registro_categorias.nombre,strlen(nom_categoria))==0){
+									if(j%21==0){ 						//tabulador de registros en pantalla
 										gotoxy(1,1);printf("Ficha");
 										gotoxy(8,1);printf("Nombre");
 										gotoxy(32,1);printf("Precio/Hora");
@@ -1144,7 +1144,7 @@ void consultas_categorias() {
 									sw=1;j++;
 								}
 							}
-							if(sw) {
+							if(sw){
 								gotoxy(1,1);printf("Ficha");
 								gotoxy(8,1);printf("Nombre");
 								gotoxy(32,1);printf("Precio/Hora");
@@ -1169,7 +1169,7 @@ void consultas_categorias() {
 	fclose(canal);
 }
 
-void consultas_fichas() {
+void consultas_fichas(){
 	FILE *canal,*canal2;
 	int seleccion=1,sw,i,j,a,a_f,k;
 	long N_fichas,N_aux,desplazamiento,obra,categoria;
@@ -1181,8 +1181,8 @@ void consultas_fichas() {
 	fread(&registro0_fichas,sizeof(registro0_fichas),1,canal);
  	N_fichas=registro0_fichas.num_registros;
 
-	if(N_fichas>=1) {
-		while(seleccion!=0) {
+	if(N_fichas>=1){
+		while(seleccion!=0){
 			clrscr();
 			printf("\n\n\n\n\n\n\n\t\t\t\tConsultas de Fichas\n\n");
 			printf("\t\t\t\t1. Año\n");
@@ -1191,17 +1191,17 @@ void consultas_fichas() {
 			printf("\t\t\t\t0. Volver\n\n");
 			printf("\t\t\t\tOpcion => ");
 			scanf("%d",&seleccion);fflush(stdin);
-			switch(seleccion) {
+			switch(seleccion){
 				case 1 : {
 					do{
 						clrscr();
 						printf("Introduce Año a Consultar ('0'=Salir) => ");
 						scanf("%d",&a);fflush(stdin);clrscr();
 
-						if(a!=0) {
+						if(a!=0){
 							sw=0;j=1;total_min=0,total_obra=0;;
 							canal=fopen(FICHERO_fichas,"rb");
-							for(i=1;i<=N_fichas;i++) {
+							for(i=1;i<=N_fichas;i++){
 								desplazamiento=i*sizeof(registro_fichas);
 								fseek(canal,desplazamiento,0);
 								fread(&registro_fichas,sizeof(registro_fichas),1,canal);
@@ -1210,10 +1210,10 @@ void consultas_fichas() {
 								aux[1]=registro_fichas.fecha[7];
 								aux[2]=registro_fichas.fecha[8];
 								aux[3]=registro_fichas.fecha[9];
-								aux[4]='\0';      a_f=atoi(aux);               //Extracion de año
+								aux[4]='\0';      a_f=atoi(aux);        //Extracion de año
 
-								if(a==a_f) {
-									if(j%17==0) { 										  //tabulador de registros en pantalla
+								if(a==a_f){
+									if(j%17==0){ 						//tabulador de registros en pantalla
 										gotoxy(1,1);printf("Ficha");
 										gotoxy(12,1);printf("DNI");
 										gotoxy(20,1);printf("Fecha");
@@ -1247,12 +1247,12 @@ void consultas_fichas() {
 									fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
 									N_aux=registro0_trabajadores.num_registros;
 
-									for(k=1;k<=N_aux;k++) {
+									for(k=1;k<=N_aux;k++){
 										desplazamiento=k*sizeof(registro_trabajadores);
 										fseek(canal2,desplazamiento,0);
 										fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 
-										if(strcmp(registro_trabajadores.dni,dni)==0) {
+										if(strcmp(registro_trabajadores.dni,dni)==0){
 											categoria=registro_trabajadores.cod_categoria;
 											fclose(canal2);
 											canal2=fopen(FICHERO_categorias,"rb");
@@ -1260,12 +1260,12 @@ void consultas_fichas() {
 											fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
 											N_aux=registro0_categorias.num_registros;
 
-											for(k=1;k<=N_aux;k++) {
+											for(k=1;k<=N_aux;k++){
 												desplazamiento=k*sizeof(registro_categorias);
 												fseek(canal2,desplazamiento,0);
 												fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
 
-												if(registro_categorias.cod_categoria==categoria) {
+												if(registro_categorias.cod_categoria==categoria){
 													total_obra+=registro_fichas.tiempo/60*registro_categorias.precio_hora;
 													break;
 												}
@@ -1276,7 +1276,7 @@ void consultas_fichas() {
 									fclose(canal2);
 								}
 							}
-							if(sw) {
+							if(sw){
 								gotoxy(1,1);printf("Ficha");
 								gotoxy(12,1);printf("DNI");
 								gotoxy(20,1);printf("Fecha");
@@ -1301,16 +1301,16 @@ void consultas_fichas() {
 						printf("Introduce Nº de Obra a Consultar ('0'=Salir) => ");
 						scanf("%ld",&obra);fflush(stdin);clrscr();
 
-						if(obra!=0) {
+						if(obra!=0){
 							sw=0;j=1;total_min=0,total_obra=0;;
 							canal=fopen(FICHERO_fichas,"rb");
-							for(i=1;i<=N_fichas;i++) {
+							for(i=1;i<=N_fichas;i++){
 								desplazamiento=i*sizeof(registro_fichas);
 								fseek(canal,desplazamiento,0);
 								fread(&registro_fichas,sizeof(registro_fichas),1,canal);
 
-								if(obra==registro_fichas.cod_obra) {
-									if(j%17==0) {  										  //tabulador de registros en pantalla
+								if(obra==registro_fichas.cod_obra){
+									if(j%17==0){  						//tabulador de registros en pantalla
 										gotoxy(1,1);printf("Ficha");
 										gotoxy(12,1);printf("DNI");
 										gotoxy(20,1);printf("Fecha");
@@ -1344,12 +1344,12 @@ void consultas_fichas() {
 									fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
 									N_aux=registro0_trabajadores.num_registros;
 
-									for(k=1;k<=N_aux;k++) {
+									for(k=1;k<=N_aux;k++){
 										desplazamiento=k*sizeof(registro_trabajadores);
 										fseek(canal2,desplazamiento,0);
 										fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 
-										if(strcmp(registro_trabajadores.dni,dni)==0) {
+										if(strcmp(registro_trabajadores.dni,dni)==0){
 											categoria=registro_trabajadores.cod_categoria;
 											fclose(canal2);
 											canal2=fopen(FICHERO_categorias,"rb");
@@ -1357,12 +1357,12 @@ void consultas_fichas() {
 											fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
 											N_aux=registro0_categorias.num_registros;
 
-											for(k=1;k<=N_aux;k++) {
+											for(k=1;k<=N_aux;k++){
 												desplazamiento=k*sizeof(registro_categorias);
 												fseek(canal2,desplazamiento,0);
 												fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
 
-												if(registro_categorias.cod_categoria==categoria) {
+												if(registro_categorias.cod_categoria==categoria){
 													total_obra+=registro_fichas.tiempo/60*registro_categorias.precio_hora;
 													break;
 												}
@@ -1373,7 +1373,7 @@ void consultas_fichas() {
 									fclose(canal2);
 								}
 							}
-							if(sw) {
+							if(sw){
 								gotoxy(1,1);printf("Ficha");
 								gotoxy(12,1);printf("DNI");
 								gotoxy(20,1);printf("Fecha");
@@ -1398,16 +1398,16 @@ void consultas_fichas() {
 						printf("Introduce DNI a Consultar ('Fin'=Salir) => ");
 						gets(dni);fflush(stdin);clrscr();
 
-						if(strncmp(dni,"Fin",strlen(dni))!=0) {
+						if(strncmp(dni,"Fin",strlen(dni))!=0){
 							sw=0;j=1;total_min=0;
 							canal=fopen(FICHERO_fichas,"rb");
-							for(i=1;i<=N_fichas;i++) {
+							for(i=1;i<=N_fichas;i++){
 								desplazamiento=i*sizeof(registro_fichas);
 								fseek(canal,desplazamiento,0);
 								fread(&registro_fichas,sizeof(registro_fichas),1,canal);
 
-								if(strncmp(dni,registro_fichas.dni,strlen(dni))==0) {
-									if(j%17==0) { 										  //tabulador de registros en pantalla
+								if(strncmp(dni,registro_fichas.dni,strlen(dni))==0){
+									if(j%17==0){ 						//tabulador de registros en pantalla
 										gotoxy(1,1);printf("Ficha");
 										gotoxy(12,1);printf("DNI");
 										gotoxy(20,1);printf("Fecha");
@@ -1437,7 +1437,7 @@ void consultas_fichas() {
 									sw=1;j++;total_min+=registro_fichas.tiempo;
 								}
 							}
-							if(sw) {
+							if(sw){
 								gotoxy(1,1);printf("Ficha");
 								gotoxy(12,1);printf("DNI");
 								gotoxy(20,1);printf("Fecha");
@@ -1451,24 +1451,24 @@ void consultas_fichas() {
 								fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
 								N_aux=registro0_trabajadores.num_registros;
 
-								for(k=1;k<=N_aux;k++) {
+								for(k=1;k<=N_aux;k++){
 									desplazamiento=k*sizeof(registro_trabajadores);
 									fseek(canal2,desplazamiento,0);
 									fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 						
-									if(strcmp(registro_trabajadores.dni,dni)==0) {
+									if(strcmp(registro_trabajadores.dni,dni)==0){
 										categoria=registro_trabajadores.cod_categoria;
 										canal2=fopen(FICHERO_categorias,"rb");
 										fseek(canal2,0L,0);
 										fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
 										N_aux=registro0_categorias.num_registros;
 
-										for(k=1;k<=N_aux;k++) {
+										for(k=1;k<=N_aux;k++){
 											desplazamiento=k*sizeof(registro_categorias);
 											fseek(canal2,desplazamiento,0);
 											fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
 
-											if(registro_categorias.cod_categoria==categoria) {
+											if(registro_categorias.cod_categoria==categoria){
 												gotoxy(65,j+2);printf("_____");
 												gotoxy(57,j+4);printf("Total => %.0f (%.1fh)",total_min,total_min/60);
 												gotoxy(65,j+5);printf("_____");
@@ -1499,7 +1499,7 @@ void consultas_fichas() {
 	fclose(canal);
 }
 
-void consultas_obras() {
+void consultas_obras(){
 	FILE *canal;
 	int seleccion=1,sw,i,j,a,a_i,a_f;
 	long N,desplazamiento;
@@ -1510,8 +1510,8 @@ void consultas_obras() {
 	fread(&registro0_obras,sizeof(registro0_obras),1,canal);
  	N=registro0_obras.num_registros;
 
-	if(N>=1) {
-		while(seleccion!=0) {
+	if(N>=1){
+		while(seleccion!=0){
 			clrscr();
 			printf("\n\n\n\n\n\n\n\t\t\t\tConsultas de Obras\n\n");
 			printf("\t\t\t\t1. Año\n");
@@ -1519,17 +1519,17 @@ void consultas_obras() {
 			printf("\t\t\t\t0. Volver\n\n");
 			printf("\t\t\t\tOpcion => ");
 			scanf("%d",&seleccion);fflush(stdin);
-			switch(seleccion) {
+			switch(seleccion){
 				case 1 : {
 					do{
 						clrscr();
 						printf("Introduce Año de Obra a Consultar ('0'=Salir) => ");
 						scanf("%d",&a);fflush(stdin);clrscr();
 
-						if(a!=0) {
+						if(a!=0){
 							sw=0;j=1;
 							canal=fopen(FICHERO_obras,"rb");
-							for(i=1;i<=N;i++) {
+							for(i=1;i<=N;i++){
 								desplazamiento=i*sizeof(registro_obras);
 								fseek(canal,desplazamiento,0);
 								fread(&registro_obras,sizeof(registro_obras),1,canal);
@@ -1538,16 +1538,16 @@ void consultas_obras() {
 								aux[1]=registro_obras.f_inicio[7];
 								aux[2]=registro_obras.f_inicio[8];
 								aux[3]=registro_obras.f_inicio[9];
-								aux[4]='\0';        a_i=atoi(aux);             //Extracion de año inicial
+								aux[4]='\0';        a_i=atoi(aux);      //Extracion de año inicial
 
 								aux[0]=registro_obras.f_final[6];
 								aux[1]=registro_obras.f_final[7];
 								aux[2]=registro_obras.f_final[8];
 								aux[3]=registro_obras.f_final[9];
-								aux[4]='\0';       a_f=atoi(aux);              //Extracion de año final
+								aux[4]='\0';       a_f=atoi(aux);       //Extracion de año final
 
-								if(a>=a_i && a<=a_f) {
-									if(j%21==0) { 										  //tabulador de registros en pantalla
+								if(a>=a_i && a<=a_f){
+									if(j%21==0){ 						//tabulador de registros en pantalla
 										gotoxy(1,1);printf("Ficha");
 										gotoxy(8,1);printf("F.Inicio");
 										gotoxy(21,1);printf("F.Final");
@@ -1564,7 +1564,7 @@ void consultas_obras() {
 									sw=1;j++;
 								}
 							}
-							if(sw) {
+							if(sw){
 								gotoxy(1,1);printf("Ficha");
 								gotoxy(8,1);printf("F.Inicio");
 								gotoxy(21,1);printf("F.Final");
@@ -1583,7 +1583,7 @@ void consultas_obras() {
 						printf("Introduce DNI de Capataz a Consultar ('Fin'=Salir) => ");
 						gets(dni);fflush(stdin);clrscr();
 
-						if(strncmp(dni,"Fin",strlen(dni))!=0) {
+						if(strncmp(dni,"Fin",strlen(dni))!=0){
 							sw=0;j=1;
 							canal=fopen(FICHERO_obras,"rb");
 							for(i=1;i<=N;i++)
@@ -1592,8 +1592,8 @@ void consultas_obras() {
 								fseek(canal,desplazamiento,0);
 								fread(&registro_obras,sizeof(registro_obras),1,canal);
 
-								if(strncmp(dni,registro_obras.dni,strlen(dni))==0) {
-									if(j%21==0) { 										  //tabulador de registros en pantalla
+								if(strncmp(dni,registro_obras.dni,strlen(dni))==0){
+									if(j%21==0){ 						//tabulador de registros en pantalla
 										gotoxy(1,1);printf("Ficha");
 										gotoxy(8,1);printf("F.Inicio");
 										gotoxy(21,1);printf("F.Final");
@@ -1610,7 +1610,7 @@ void consultas_obras() {
 									sw=1;j++;
 								}
 							}
-							if(sw) {
+							if(sw){
 								gotoxy(1,1);printf("Ficha");
 								gotoxy(8,1);printf("F.Inicio");
 								gotoxy(21,1);printf("F.Final");
@@ -1635,7 +1635,7 @@ void consultas_obras() {
 	fclose(canal);                                    
 }
 
-void modificaciones_trabajadores() {
+void modificaciones_trabajadores(){
 	FILE *canal,*canal2;
 	long N_trabajadores,N_aux,desplazamiento,cen,der,izq,cod;
 	char dni[10],dni_antiguo[10],eleccion;
@@ -1646,13 +1646,13 @@ void modificaciones_trabajadores() {
 	fread(&registro0_trabajadores, sizeof(registro0_trabajadores),1,canal);
  	N_trabajadores=registro0_trabajadores.num_registros;
 
-	if(N_trabajadores>=1) {
+	if(N_trabajadores>=1){
 		do{
 			clrscr();
 			printf("Introduce DNI de Trabajador a Modificar ('Fin'=Salir) => ");
 			gets(dni);fflush(stdin);clrscr();
 
-			if(strncmp(dni,"Fin",strlen(dni))!=0) {
+			if(strncmp(dni,"Fin",strlen(dni))!=0){
 				sw=0;izq=1;der=N_trabajadores;
 				do{
 					cen=(izq+der)/2;
@@ -1660,9 +1660,9 @@ void modificaciones_trabajadores() {
 					fseek(canal,desplazamiento,0);
 					fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
 
-					if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0 || izq>=der) {
+					if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0 || izq>=der){
 						sw=1;
-					 	if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0) {
+					 	if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0){
 							gotoxy(1,1);printf("Ficha");
 							gotoxy(8,1);printf("DNI");
 							gotoxy(20,1);printf("Nombre");
@@ -1678,7 +1678,7 @@ void modificaciones_trabajadores() {
 
 							printf("\n\n¿Desea Modificar el Registro? (s/n): ");
 							scanf("%c",&eleccion);fflush(stdin);
-							if(eleccion=='s') {
+							if(eleccion=='s'){
 								do{
 									sw2=0;clrscr();
 									gotoxy(1,1);printf("Ficha");
@@ -1702,9 +1702,9 @@ void modificaciones_trabajadores() {
 									printf("0. Volver\n\n");
 									printf("Opcion => ");
 									scanf("%d",&seleccion);fflush(stdin);
-									switch(seleccion) {
+									switch(seleccion){
 										case 1 : {
-											do{              							  //nos aseguramos que el tamaño de DNI es correcto
+											do{              			//nos aseguramos que el tamaño de DNI es correcto
 												if(sw2)
 													printf("Error. Tamaño incorrecto\n");
 												printf("\nInserte nuevo DNI => ");
@@ -1714,22 +1714,22 @@ void modificaciones_trabajadores() {
 
 											sw2=0;strcpy(dni_antiguo,registro_trabajadores.dni);
 											canal2=fopen(FICHERO_trabajadores,"rb");
-											for(i=1;i<=N_trabajadores;i++) {  	  //comprobamos si el dni existe secuencialmente
+											for(i=1;i<=N_trabajadores;i++){  	  //comprobamos si el dni existe secuencialmente
 												desplazamiento=i*sizeof(registro_trabajadores);
 												fseek(canal2,desplazamiento,0);
 												fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 
-												if(strcmp(dni_antiguo,dni)==0) {
+												if(strcmp(dni_antiguo,dni)==0){
 													sw2=1;
 													break;
 												}
 											}
-											if(sw2) {
+											if(sw2){
 												printf("\nError. DNI duplicado");
 												getch();break;
 											} else {
 												strcpy(registro_trabajadores.dni,dni);
-												sw=2;                              //comprobador de modificacion de clave de articulo
+												sw=2;                  	//comprobador de modificacion de clave de articulo
 											}
 
 											fclose(canal2);sw2=0;
@@ -1737,12 +1737,12 @@ void modificaciones_trabajadores() {
 											fseek(canal2,0L,0);
 											fread(&registro0_obras,sizeof(registro0_obras),1,canal2);
 											N_aux=registro0_obras.num_registros;
-											for(i=1;i<=N_aux;i++) {  	  			  //comprobamos si existen capataces con el mismo dni para actualizarlo
+											for(i=1;i<=N_aux;i++){  	  			  //comprobamos si existen capataces con el mismo dni para actualizarlo
 												desplazamiento=i*sizeof(registro_obras);
 												fseek(canal2,desplazamiento,0);
 												fread(&registro_obras,sizeof(registro_obras),1,canal2);
 
-												if(strcmp(registro_obras.dni,dni_antiguo)==0) {
+												if(strcmp(registro_obras.dni,dni_antiguo)==0){
 													strcpy(registro_obras.dni,dni);
 													desplazamiento=i*sizeof(registro_obras);
 													fseek(canal2,desplazamiento,0);
@@ -1750,7 +1750,7 @@ void modificaciones_trabajadores() {
 													sw2=1;
 												}
 											}
-											if(sw2) {
+											if(sw2){
 												printf("\nDNI de Capataz (Obras) Actualizado");
 												getch();
 											}
@@ -1760,12 +1760,12 @@ void modificaciones_trabajadores() {
 											fseek(canal2,0L,0);
 											fread(&registro0_fichas,sizeof(registro0_fichas),1,canal2);
 											N_aux=registro0_fichas.num_registros;
-											for(i=1;i<=N_aux;i++) {  	  			  //comprobamos si existen fichas con el mismo dni para actualizarlas
+											for(i=1;i<=N_aux;i++){  	//comprobamos si existen fichas con el mismo dni para actualizarlas
 												desplazamiento=i*sizeof(registro_fichas);
 												fseek(canal2,desplazamiento,0);
 												fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
 
-												if(strcmp(registro_fichas.dni,dni_antiguo)==0) {
+												if(strcmp(registro_fichas.dni,dni_antiguo)==0){
 													strcpy(registro_fichas.dni,dni);
 													desplazamiento=i*sizeof(registro_fichas);
 													fseek(canal2,desplazamiento,0);
@@ -1773,7 +1773,7 @@ void modificaciones_trabajadores() {
 													sw2=1;
 												}
 											}
-											if(sw2) {
+											if(sw2){
 												printf("\nDNI de Trabajador (Fichas) Actualizado");
 												getch();
 											}
@@ -1786,7 +1786,7 @@ void modificaciones_trabajadores() {
 											sw=3;
 										}	break;
 										case 3 : {
-                                    		do{                                	  //nos aseguramos que el tamaño es correcto
+                                    		do{                         //nos aseguramos que el tamaño es correcto
 												if(sw2)
 													printf("Error. Formato incorrecto (dd/mm/aaaa)\n");
 												printf("\nInserte nueva F.Nacim. => ");
@@ -1796,7 +1796,7 @@ void modificaciones_trabajadores() {
 												sw=3;
 										}	break;
 										case 4 : {
-                                    		do{                                	  //nos aseguramos que el tamaño es correcto
+                                    		do{                         //nos aseguramos que el tamaño es correcto
 												if(sw2)
 													printf("Error. Tamaño incorrecto\n");
 												printf("\nInserte nuevo Telefono => ");
@@ -1814,24 +1814,24 @@ void modificaciones_trabajadores() {
 											fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
 											N_aux=registro0_categorias.num_registros;
 
-											for(i=1;i<=N_aux;i++) {   				  //comprobamos si el dni existe secuencialmente
+											for(i=1;i<=N_aux;i++){   	//comprobamos si el dni existe secuencialmente
 												desplazamiento=i*sizeof(registro_categorias);
 												fseek(canal2,desplazamiento,0);
 												fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
 
-												if(registro_categorias.cod_categoria==cod) {
+												if(registro_categorias.cod_categoria==cod){
 													registro_trabajadores.cod_categoria=cod;
 													sw2=1;sw=3;break;
 												}
 											}
-											if(!sw2) {
+											if(!sw2){
 												printf("\nCodigo de Categoria no encontrado");
 												getch();
 											}
 											fclose(canal2);
 										}	break;
 										case 0 : {
-	                           				if(sw>=2) {
+	                           				if(sw>=2){
 												desplazamiento=cen*sizeof(registro_trabajadores);
 												fseek(canal,desplazamiento,0);
 												fwrite(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
@@ -1865,11 +1865,11 @@ void modificaciones_trabajadores() {
 	}
 	fclose(canal);
 
-	if(sw==2)           															//si modificamos dni realizamos ordenacion
+	if(sw==2)           												//si modificamos dni realizamos ordenacion
 		ordenacion_trabajadores();
 }
 
-void modificaciones_categorias() {
+void modificaciones_categorias(){
 	FILE *canal;
 	long N,desplazamiento,cen,der,izq,categoria;
 	char eleccion;
@@ -1880,13 +1880,13 @@ void modificaciones_categorias() {
 	fread(&registro0_categorias, sizeof(registro0_categorias),1,canal);
  	N=registro0_categorias.num_registros;
 
-	if(N>=1) {
+	if(N>=1){
 		do{
 			clrscr();
 			printf("Introduce Nº de Categoria a Modificar ('0'=Salir) => ");
 			scanf("%ld",&categoria);fflush(stdin);clrscr();
 
-			if(categoria!=0) {
+			if(categoria!=0){
 				sw=0;izq=1;der=N;
 				do{
 					cen=(izq+der)/2;
@@ -1894,9 +1894,9 @@ void modificaciones_categorias() {
 					fseek(canal,desplazamiento,0);
 					fread(&registro_categorias,sizeof(registro_categorias),1,canal);
 
-					if(categoria==registro_categorias.cod_categoria || izq>=der) {
+					if(categoria==registro_categorias.cod_categoria || izq>=der){
 						sw=1;
-					 	if(categoria==registro_categorias.cod_categoria) {
+					 	if(categoria==registro_categorias.cod_categoria){
 							gotoxy(1,1);printf("Ficha");
 							gotoxy(8,1);printf("Nombre");
 							gotoxy(30,1);printf("Precio/Hora");
@@ -1906,7 +1906,7 @@ void modificaciones_categorias() {
 
 							printf("\n\n¿Desea Modificar el Registro? (s/n): ");
 							scanf("%c",&eleccion);fflush(stdin);
-							if(eleccion=='s') {
+							if(eleccion=='s'){
 								do{
 									clrscr();
 									gotoxy(1,1);printf("Ficha");
@@ -1921,7 +1921,7 @@ void modificaciones_categorias() {
 									printf("0. Volver\n\n");
 									printf("Opcion => ");
 									scanf("%d",&seleccion);fflush(stdin);
-									switch(seleccion) {
+									switch(seleccion){
 										case 1 : {
 											fflush(stdin);
 											printf("\nInserte nuevo Nombre => ");
@@ -1935,7 +1935,7 @@ void modificaciones_categorias() {
 											sw=2;
 										}	break;
 										case 0 : {
-	                           				if(sw>1) {
+	                           				if(sw>1){
 												desplazamiento=cen*sizeof(registro_categorias);
 												fseek(canal,desplazamiento,0);
 												fwrite(&registro_categorias,sizeof(registro_categorias),1,canal);
@@ -1970,7 +1970,7 @@ void modificaciones_categorias() {
 	fclose(canal);
 }
 
-void modificaciones_fichas() {
+void modificaciones_fichas(){
 	FILE *canal,*canal2;
 	long N_fichas,N_aux,desplazamiento,cen,der,izq,cod;
 	char eleccion,dni[10],aux[2];
@@ -1981,13 +1981,13 @@ void modificaciones_fichas() {
 	fread(&registro0_fichas, sizeof(registro0_fichas),1,canal);
  	N_fichas=registro0_fichas.num_registros;
 
-	if(N_fichas>=1) {
+	if(N_fichas>=1){
 		do{
 			clrscr();
 			printf("Introduce Codigo de Ficha a Modificar ('0'=Salir) => ");
 			scanf("%ld",&cod);fflush(stdin);clrscr();
 
-			if(cod!=0) {
+			if(cod!=0){
 				sw=0;izq=1;der=N_fichas;
 				do{
 					cen=(izq+der)/2;
@@ -1995,7 +1995,7 @@ void modificaciones_fichas() {
 					fseek(canal,desplazamiento,0);
 					fread(&registro_fichas,sizeof(registro_fichas),1,canal);
 
-					if(cod==registro_fichas.cod_ficha || izq>=der) {
+					if(cod==registro_fichas.cod_ficha || izq>=der){
 						sw=1;
 						if(cod==registro_fichas.cod_ficha)
 						{
@@ -2016,7 +2016,7 @@ void modificaciones_fichas() {
 
 							printf("\n\n¿Desea Modificar el Registro? (s/n): ");
 							scanf("%c",&eleccion);fflush(stdin);
-							if(eleccion=='s') {
+							if(eleccion=='s'){
 								do{
 									clrscr();sw2=0;
 									gotoxy(1,1);printf("Ficha");
@@ -2050,9 +2050,9 @@ void modificaciones_fichas() {
 									printf("0. Volver\n\n");
 									printf("Opcion => ");
 									scanf("%d",&seleccion);fflush(stdin);
-									switch(seleccion) {
+									switch(seleccion){
 										case 1 : {
-											do{              							  //nos aseguramos que el tamaño de DNI es correcto
+											do{              			//nos aseguramos que el tamaño de DNI es correcto
 												if(sw2)
 													printf("Error. Tamaño incorrecto\n");
 												printf("\nInserte nuevo DNI => ");
@@ -2065,25 +2065,25 @@ void modificaciones_fichas() {
 											fseek(canal2,0L,0);
 											fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
 											N_aux=registro0_trabajadores.num_registros;
-											for(i=1;i<=N_aux;i++) {   	  			  //comprobamos si el dni existe secuencialmente
+											for(i=1;i<=N_aux;i++){   	  			  //comprobamos si el dni existe secuencialmente
 												desplazamiento=i*sizeof(registro_trabajadores);
 												fseek(canal2,desplazamiento,0);
 												fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 
-												if(strcmp(registro_trabajadores.dni,dni)==0) {
+												if(strcmp(registro_trabajadores.dni,dni)==0){
 													strcpy(registro_fichas.dni,dni);
 													printf("\nDNI de Fichas Actualizado");
 													getch();sw=2;sw2=1;break;
 												}
 											}
-											if(!sw2) {
+											if(!sw2){
 												printf("\nError. El DNI no existe");
 												getch();
 											}
 											fclose(canal2);
 										}	break;
 										case 2 : {
-                                    		do{                                	  //nos aseguramos que el tamaño es correcto
+                                    		do{                         //nos aseguramos que el tamaño es correcto
 												if(sw2)
 													printf("Error. Formato incorrecto (dd/mm/aaaa)\n");
 												printf("\nInserte nueva Fecha => ");
@@ -2093,7 +2093,7 @@ void modificaciones_fichas() {
 											sw=2;
 										}	break;
 										case 3 : {
-                                    		do{                                	  //nos aseguramos que la hora inicial no excede del maximo
+                                    		do{                         //nos aseguramos que la hora inicial no excede del maximo
 												if(sw2)
 													printf("Error. Formato incorrecto (hh:mm)\n");
 												printf("\nInserte nueva H.Inicio => ");
@@ -2103,7 +2103,7 @@ void modificaciones_fichas() {
 											sw=2;
 										}	break;
 										case 4 : {
-                                    		do{                                	  //nos aseguramos que la hora final no excede del maximo
+                                    		do{                         //nos aseguramos que la hora final no excede del maximo
 												if(sw2)
 													printf("Error. Formato incorrecto (hh:mm)\n");
 												printf("\nInserte nueva H.Final => ");
@@ -2122,25 +2122,25 @@ void modificaciones_fichas() {
 											fseek(canal2,0L,0);
 											fread(&registro0_obras,sizeof(registro0_obras),1,canal2);
 											N_aux=registro0_obras.num_registros;
-											for(i=1;i<=N_aux;i++) {  	  			  //comprobamos si existen capataces con el mismo dni para actualizarlo
+											for(i=1;i<=N_aux;i++){  	//comprobamos si existen capataces con el mismo dni para actualizarlo
 												desplazamiento=i*sizeof(registro_obras);
 												fseek(canal2,desplazamiento,0);
 												fread(&registro_obras,sizeof(registro_obras),1,canal2);
 
-												if(registro_obras.cod_obra==cod) {
+												if(registro_obras.cod_obra==cod){
 													registro_fichas.cod_obra=cod;
 													sw=2;sw2=1;break;
 												}
 											}
-											if(!sw2) {
+											if(!sw2){
 												printf("\nError. Codigo de Obra no encontrado");
 												getch();
 											}
 											fclose(canal2);
 										}	break;
 										case 0 : {
-	                           				if(sw>1) {
-												if(strlen(registro_fichas.h_inicio)>0 && strlen(registro_fichas.h_final)>0) {
+	                           				if(sw>1){
+												if(strlen(registro_fichas.h_inicio)>0 && strlen(registro_fichas.h_final)>0){
 													aux[0]=registro_fichas.h_inicio[0];
 													aux[1]=registro_fichas.h_inicio[1];
 													aux[2]='\0';          h1=atoi(aux);
@@ -2199,7 +2199,7 @@ void modificaciones_fichas() {
 	fclose(canal);
 }
 
-void modificaciones_obras() {
+void modificaciones_obras(){
 	FILE *canal,*canal2;
 	long N_obras,N_aux,desplazamiento,cen,der,izq,cod;
 	char eleccion,dni[10];
@@ -2210,13 +2210,13 @@ void modificaciones_obras() {
 	fread(&registro0_obras, sizeof(registro0_obras),1,canal);
  	N_obras=registro0_obras.num_registros;
 
-	if(N_obras>=1) {
+	if(N_obras>=1){
 		do{
 			clrscr();
 			printf("Introduce Codigo de Obra a Modificar ('0'=Salir) => ");
 			scanf("%ld",&cod);fflush(stdin);clrscr();
 
-			if(cod!=0) {
+			if(cod!=0){
 				sw=0;izq=1;der=N_obras;
 				do{
 					cen=(izq+der)/2;
@@ -2224,9 +2224,9 @@ void modificaciones_obras() {
 					fseek(canal,desplazamiento,0);
 					fread(&registro_obras,sizeof(registro_obras),1,canal);
 
-					if(cod==registro_obras.cod_obra || izq>=der) {
+					if(cod==registro_obras.cod_obra || izq>=der){
 						sw=1;
-						if(cod==registro_obras.cod_obra) {
+						if(cod==registro_obras.cod_obra){
 							gotoxy(1,1);printf("Ficha");
 							gotoxy(8,1);printf("F.Inicio");
 							gotoxy(21,1);printf("F.Final");
@@ -2240,7 +2240,7 @@ void modificaciones_obras() {
 
 							printf("\n\n¿Desea Modificar el Registro? (s/n): ");
 							scanf("%c",&eleccion);fflush(stdin);
-							if(eleccion=='s') {
+							if(eleccion=='s'){
 								do{
 									clrscr();sw2=0;
 									gotoxy(1,1);printf("Ficha");
@@ -2261,9 +2261,9 @@ void modificaciones_obras() {
 									printf("0. Volver\n\n");
 									printf("Opcion => ");
 									scanf("%d",&seleccion);fflush(stdin);
-									switch(seleccion) {
+									switch(seleccion){
 										case 1 : {
-                                    		do{                                	  //nos aseguramos que el tamaño de la fecha es correcto
+                                    		do{                          //nos aseguramos que el tamaño de la fecha es correcto
 												if(sw2)
 													printf("Error. Formato incorrecto (dd/mm/aaaa)\n");
 												printf("\nInserte nueva F.Inicio => ");
@@ -2273,7 +2273,7 @@ void modificaciones_obras() {
 											sw=2;
 										}	break;
 										case 2 : {
-                                    		do{                                	  //nos aseguramos que el tamaño de la fecha es correcto
+                                    		do{                           //nos aseguramos que el tamaño de la fecha es correcto
 												if(sw2)
 													printf("Error. Formato incorrecto (dd/mm/aaaa)\n");
 												printf("\nInserte nueva F.Final => ");
@@ -2289,7 +2289,7 @@ void modificaciones_obras() {
 		                                    sw=2;
 										}	break;
 										case 4 : {
-											do{              							  //nos aseguramos que el tamaño de DNI es correcto
+											do{              			  //nos aseguramos que el tamaño de DNI es correcto
 												if(sw2)
 													printf("Error. Tamaño incorrecto\n");
 												printf("\nInserte nuevo Capataz => ");
@@ -2303,24 +2303,24 @@ void modificaciones_obras() {
 											fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
 											N_aux=registro0_trabajadores.num_registros;
 
-											for(i=1;i<=N_aux;i++) {  				  //comprobamos si el dni existe secuencialmente
+											for(i=1;i<=N_aux;i++){  		//comprobamos si el dni existe secuencialmente
 												desplazamiento=i*sizeof(registro_trabajadores);
 												fseek(canal2,desplazamiento,0);
 												fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 								 
-												if(strcmp(registro_trabajadores.dni,dni)==0) {
+												if(strcmp(registro_trabajadores.dni,dni)==0){
 													strcpy(registro_obras.dni,dni);
 													sw2=1;sw=2;break;
 												}
 											}
-											if(!sw2) {
+											if(!sw2){
 												printf("\nDNI de Capataz no encontrado");
 												getch();
 											}
 											fclose(canal2);
 										}	break;
 										case 0 : {
-	                           				if(sw>1) {
+	                           				if(sw>1){
 												desplazamiento=cen*sizeof(registro_obras);
 												fseek(canal,desplazamiento,0);
 												fwrite(&registro_obras,sizeof(registro_obras),1,canal);
@@ -2355,7 +2355,7 @@ void modificaciones_obras() {
 	fclose(canal);
 }
 
-void bajas_trabajadores() {
+void bajas_trabajadores(){
 	FILE *canal,*canal2;
 	long N_trabajadores,N_aux,desplazamiento,cen,der,izq;
 	char dni[10],eleccion;
@@ -2366,14 +2366,14 @@ void bajas_trabajadores() {
 	fread(&registro0_trabajadores, sizeof(registro0_trabajadores),1,canal);
  	N_trabajadores=registro0_trabajadores.num_registros;
 
-	if(N_trabajadores>=1) {
+	if(N_trabajadores>=1){
 		do{
 			clrscr();
 			canal=fopen(FICHERO_trabajadores,"r+b");
 			printf("Introduce el DNI del Trabajador a dar de Baja (Salir='Fin') => ");
 			gets(dni);fflush(stdin);clrscr();
 
-			if(strncmp(dni,"Fin",strlen(dni))!=0) {
+			if(strncmp(dni,"Fin",strlen(dni))!=0){
 				sw=0;izq=1;der=N_trabajadores;
 				do{
 					cen=(izq+der)/2;
@@ -2381,9 +2381,9 @@ void bajas_trabajadores() {
 					fseek(canal,desplazamiento,0);
 					fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
 
-					if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0 || izq>=der) {
+					if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0 || izq>=der){
 						sw=1;
-						if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0) {
+						if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0){
 							gotoxy(1,1);printf("Ficha");
 							gotoxy(8,1);printf("DNI");
 							gotoxy(20,1);printf("Nombre");
@@ -2399,19 +2399,19 @@ void bajas_trabajadores() {
 
 							printf("\n\n¿Desea dar de Baja el Registro? (s/n): ");
 							scanf("%c",&eleccion);fflush(stdin);
-							if(eleccion=='s') {
+							if(eleccion=='s'){
 								sw2=0;
 								canal2=fopen(FICHERO_fichas,"rb");
 								fseek(canal2,0L,0);
 								fread(&registro0_fichas,sizeof(registro0_fichas),1,canal2);
 								N_aux=registro0_fichas.num_registros;
 
-								for(i=1;i<=N_aux;i++) {  				  						  //comprobamos si el trabajador tiene fichas asociadas
+								for(i=1;i<=N_aux;i++){  				  	//comprobamos si el trabajador tiene fichas asociadas
 									desplazamiento=i*sizeof(registro_fichas);
 									fseek(canal2,desplazamiento,0);
 									fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
 
-									if(strcmp(registro_fichas.dni,registro_trabajadores.dni)==0) {
+									if(strcmp(registro_fichas.dni,registro_trabajadores.dni)==0){
 										printf("\nError. DNI existente en Fichero Fichas");
 										getch();sw2=1;break;
 									}
@@ -2427,12 +2427,12 @@ void bajas_trabajadores() {
 								fread(&registro0_obras,sizeof(registro0_obras),1,canal2);
 								N_aux=registro0_obras.num_registros;
 
-								for(i=1;i<=N_aux;i++) {  				  						  //comprobamos si el trabajador es capataz de obra
+								for(i=1;i<=N_aux;i++){  				  	//comprobamos si el trabajador es capataz de obra
 									desplazamiento=i*sizeof(registro_obras);
 									fseek(canal2,desplazamiento,0);
 									fread(&registro_obras,sizeof(registro_obras),1,canal2);
 
-									if(strcmp(registro_obras.dni,registro_trabajadores.dni)==0) {
+									if(strcmp(registro_obras.dni,registro_trabajadores.dni)==0){
 										printf("\nError. DNI existente en Fichero Obras");
 										getch();sw2=1;break;
 									}
@@ -2461,7 +2461,7 @@ void bajas_trabajadores() {
 								printf("\nRegistro dado de Baja correctamente");
 								printf("\n\nPulse una tecla para continuar..");getch();
 
-								if(N_trabajadores>1)           								  //si eliminamos trabajador y existe mas de uno realizamos ordenacion
+								if(N_trabajadores>1)           				//si eliminamos trabajador y existe mas de uno realizamos ordenacion
 									ordenacion_trabajadores();
 							}
 						} else {
@@ -2486,7 +2486,7 @@ void bajas_trabajadores() {
 	fclose(canal);
 }
 
-void bajas_categorias() {
+void bajas_categorias(){
 	FILE *canal,*canal2;
 	long N_categorias,N_aux,desplazamiento,cen,der,izq,categoria,i;
 	char eleccion;
@@ -2497,14 +2497,14 @@ void bajas_categorias() {
 	fread(&registro0_categorias, sizeof(registro0_categorias),1,canal);
  	N_categorias=registro0_categorias.num_registros;
 
-	if(N_categorias>=1) {
+	if(N_categorias>=1){
 		do{
 			clrscr();
 			canal=fopen(FICHERO_categorias,"r+b");
 			printf("Introduce Codigo de Categoria a dar de Baja (Salir='0') => ");
 			scanf("%ld",&categoria);fflush(stdin);clrscr();
 
-			if(categoria!=0) {
+			if(categoria!=0){
 				sw=0;izq=1;der=N_categorias;
 				do{         
 					cen=(izq+der)/2;
@@ -2512,9 +2512,9 @@ void bajas_categorias() {
 					fseek(canal,desplazamiento,0);
 					fread(&registro_categorias,sizeof(registro_categorias),1,canal);
 
-					if(categoria==registro_categorias.cod_categoria || izq>=der) {
+					if(categoria==registro_categorias.cod_categoria || izq>=der){
 					sw=1;
-						if(categoria==registro_categorias.cod_categoria) {
+						if(categoria==registro_categorias.cod_categoria){
 							gotoxy(1,1);printf("Ficha");
 							gotoxy(8,1);printf("Nombre");
 							gotoxy(30,1);printf("Precio/Hora");
@@ -2524,26 +2524,26 @@ void bajas_categorias() {
 
 							printf("\n\n¿Desea dar de Baja el Registro? (s/n): ");
 							scanf("%c",&eleccion);fflush(stdin);
-							if(eleccion=='s') {
+							if(eleccion=='s'){
 								sw2=0;
 								canal2=fopen(FICHERO_trabajadores,"rb");
 								fseek(canal2,0L,0);
 								fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
 								N_aux=registro0_trabajadores.num_registros;
 
-								for(i=1;i<=N_aux;i++) {  				  						  //comprobamos si la categoria existe en fichero trabajadores
+								for(i=1;i<=N_aux;i++){  				  	//comprobamos si la categoria existe en fichero trabajadores
 									desplazamiento=i*sizeof(registro_trabajadores);
 									fseek(canal2,desplazamiento,0);
 									fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 
-									if(registro_trabajadores.cod_categoria==categoria) {
+									if(registro_trabajadores.cod_categoria==categoria){
 										printf("\nError. Categoria existente en Fichero Trabajadores");
 										getch();sw2=1;break;
 									}
 								}
 								fclose(canal2);
                         
-								if(!sw2) {
+								if(!sw2){
 									desplazamiento=N_categorias*sizeof(registro_categorias);
 									fseek(canal,desplazamiento,0);
 									fread(&registro_categorias,sizeof(registro_categorias),1,canal);
@@ -2559,7 +2559,7 @@ void bajas_categorias() {
 										registro0_categorias.blancos[i]=' ';
 									fwrite(&registro0_categorias,sizeof(registro0_categorias),1,canal);
 
-									for(i=cen;i<=N_categorias;i++) {   	  					  //reducimos en 1 codigos de Categorias
+									for(i=cen;i<=N_categorias;i++){   	  	//reducimos en 1 codigos de Categorias
 										desplazamiento=i*sizeof(registro_categorias);
 										fseek(canal,desplazamiento,0);
 										fread(&registro_categorias,sizeof(registro_categorias),1,canal);
@@ -2575,12 +2575,12 @@ void bajas_categorias() {
 									fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
 									N_aux=registro0_trabajadores.num_registros;
 
-									for(i=1;i<=N_aux;i++) {    	  						  	  	  //reducimos en 1 categorias en Trabajadores (registros asociados)
+									for(i=1;i<=N_aux;i++){    	  			//reducimos en 1 categorias en Trabajadores (registros asociados)
 										desplazamiento=i*sizeof(registro_trabajadores);
 										fseek(canal2,desplazamiento,0);
 										fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
 
-										if(registro_trabajadores.cod_categoria>=cen) {
+										if(registro_trabajadores.cod_categoria>=cen){
 											registro_trabajadores.cod_categoria--;
 											desplazamiento=i*sizeof(registro_trabajadores);
 											fseek(canal2,desplazamiento,0);
@@ -2591,7 +2591,7 @@ void bajas_categorias() {
 									printf("\nRegistro dado de Baja correctamente");
 									printf("\n\nPulse una tecla para continuar..");getch();
 							   
-									if(N_categorias>1)      					    			  //si eliminamos categoria y existe mas de una realizamos ordenacion
+									if(N_categorias>1)      				//si eliminamos categoria y existe mas de una realizamos ordenacion
 										ordenacion_categorias();
 								}
 							}
@@ -2617,7 +2617,7 @@ void bajas_categorias() {
 	fclose(canal);
 }
 
-void bajas_fichas() {
+void bajas_fichas(){
 	FILE *canal,*canal2;
 	long N_fichas,desplazamiento,cen,der,izq,ficha,i;
 	char eleccion;
@@ -2628,13 +2628,13 @@ void bajas_fichas() {
 	fread(&registro0_fichas,sizeof(registro0_fichas),1,canal);
  	N_fichas=registro0_fichas.num_registros;
 
-	if(N_fichas>=1) {
+	if(N_fichas>=1){
 		do{
 			clrscr();
 			printf("Introduce Codigo de Ficha a dar de Baja (Salir='0') => ");
 			scanf("%ld",&ficha);fflush(stdin);clrscr();
 
-			if(ficha!=0) {
+			if(ficha!=0){
 				sw=0;izq=1;der=N_fichas;
 				do{              				
 					cen=(izq+der)/2;                                                     
@@ -2642,9 +2642,9 @@ void bajas_fichas() {
 					fseek(canal,desplazamiento,0);
 					fread(&registro_fichas,sizeof(registro_fichas),1,canal);
 
-					if(ficha==registro_fichas.cod_ficha || izq>=der) {
+					if(ficha==registro_fichas.cod_ficha || izq>=der){
 						sw=1;
-						if(ficha==registro_fichas.cod_ficha) {
+						if(ficha==registro_fichas.cod_ficha){
 							gotoxy(1,1);printf("Ficha");
 							gotoxy(8,1);printf("DNI");
 							gotoxy(20,1);printf("Fecha");
@@ -2669,7 +2669,7 @@ void bajas_fichas() {
 
 							printf("\n\n¿Desea dar de Baja el Registro? (s/n): ");
 							scanf("%c",&eleccion);fflush(stdin);
-							if(eleccion=='s') {
+							if(eleccion=='s'){
 								desplazamiento=N_fichas*sizeof(registro_fichas);
 								fseek(canal,desplazamiento,0);
 								fread(&registro_fichas,sizeof(registro_fichas),1,canal);
@@ -2686,7 +2686,7 @@ void bajas_fichas() {
 								fwrite(&registro0_fichas,sizeof(registro0_fichas),1,canal);
 
 								canal2=fopen(FICHERO_fichas,"r+b");
-								for(i=cen;i<=N_fichas;i++)  {   	  						  	  //reducimos en 1 codigos de Obras
+								for(i=cen;i<=N_fichas;i++)  {   	  		//reducimos en 1 codigos de Obras
 									desplazamiento=i*sizeof(registro_fichas);
 									fseek(canal2,desplazamiento,0);
 									fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
@@ -2699,7 +2699,7 @@ void bajas_fichas() {
 								printf("\nRegistro dado de Baja correctamente");
 								printf("\n\nPulse una tecla para continuar..");getch();
                         
-								if(N_fichas>1)      												  //si eliminamos ficha y existe mas de una realizamos ordenacion
+								if(N_fichas>1)      						//si eliminamos ficha y existe mas de una realizamos ordenacion
 									ordenacion_fichas();
 							}
 						} else {
@@ -2724,7 +2724,7 @@ void bajas_fichas() {
 	fclose(canal);
 }
 
-void bajas_obras() {
+void bajas_obras(){
 	FILE *canal,*canal2;
 	long N_obras,N_aux,desplazamiento,cen,der,izq,obra,i;
 	char eleccion;
@@ -2735,14 +2735,14 @@ void bajas_obras() {
 	fread(&registro0_obras,sizeof(registro0_obras),1,canal);
  	N_obras=registro0_obras.num_registros;
 
-	if(N_obras>=1) {
+	if(N_obras>=1){
 	   do{
 			clrscr();
 			canal=fopen(FICHERO_obras,"r+b");
 			printf("Introduce Codigo de Obra a dar de Baja (Salir='0') => ");
 			scanf("%ld",&obra);fflush(stdin);clrscr();
 
-			if(obra!=0) {
+			if(obra!=0){
 				sw=0;izq=1;der=N_obras;
 				do{
 					cen=(izq+der)/2;
@@ -2750,9 +2750,9 @@ void bajas_obras() {
 					fseek(canal,desplazamiento,0);
 					fread(&registro_obras,sizeof(registro_obras),1,canal);
 
-					if(obra==registro_obras.cod_obra || izq>=der) {
+					if(obra==registro_obras.cod_obra || izq>=der){
 						sw=1;
-						if(obra==registro_obras.cod_obra) {
+						if(obra==registro_obras.cod_obra){
 							gotoxy(1,1);printf("Ficha");
 							gotoxy(8,1);printf("F.Inicio");
 							gotoxy(21,1);printf("F.Final");
@@ -2766,26 +2766,26 @@ void bajas_obras() {
 
 							printf("\n\n¿Desea dar de Baja el Registro? (s/n): ");
 							scanf("%c",&eleccion);fflush(stdin);
-							if(eleccion=='s') {
+							if(eleccion=='s'){
 								sw2=0;
 								canal2=fopen(FICHERO_fichas,"rb");
 								fseek(canal2,0L,0);
 								fread(&registro0_fichas,sizeof(registro0_fichas),1,canal2);
 								N_aux=registro0_fichas.num_registros;
 
-								for(i=1;i<=N_aux;i++) {  				  						  //comprobamos si la categoria existe en fichero trabajadores
+								for(i=1;i<=N_aux;i++){  				  	//comprobamos si la categoria existe en fichero trabajadores
 									desplazamiento=i*sizeof(registro_fichas);
 									fseek(canal2,desplazamiento,0);
 									fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
 
-									if(registro_fichas.cod_obra==obra) {
+									if(registro_fichas.cod_obra==obra){
 										printf("\nError. Obra existente en Fichero Fichas");
 										getch();sw2=1;break;
 									}
 								}
 								fclose(canal2);
                         
-								if(!sw2) {
+								if(!sw2){
 									desplazamiento=N_obras*sizeof(registro_obras);
 									fseek(canal,desplazamiento,0);
 									fread(&registro_obras,sizeof(registro_obras),1,canal);
@@ -2801,7 +2801,7 @@ void bajas_obras() {
 										registro0_obras.blancos[i]=' ';
 									fwrite(&registro0_obras,sizeof(registro0_obras),1,canal);
 
-									for(i=cen;i<=N_obras;i++) {    	  						  	  //reducimos en 1 codigos de Obras
+									for(i=cen;i<=N_obras;i++){    	  		//reducimos en 1 codigos de Obras
 										desplazamiento=i*sizeof(registro_obras);
 										fseek(canal,desplazamiento,0);
 										fread(&registro_obras,sizeof(registro_obras),1,canal);
@@ -2817,12 +2817,12 @@ void bajas_obras() {
 									fread(&registro0_fichas,sizeof(registro0_fichas),1,canal2);
 									N_aux=registro0_fichas.num_registros;
 
-									for(i=1;i<=N_aux;i++) {   	  						  	  	  //reducimos en 1 obras en Fichas (registros asociados)
+									for(i=1;i<=N_aux;i++){   	  			//reducimos en 1 obras en Fichas (registros asociados)
 										desplazamiento=i*sizeof(registro_fichas);
 										fseek(canal2,desplazamiento,0);
 										fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
 
-										if(registro_fichas.cod_obra>=cen) {
+										if(registro_fichas.cod_obra>=cen){
 											registro_fichas.cod_obra--;
 											desplazamiento=i*sizeof(registro_fichas);
 											fseek(canal2,desplazamiento,0);
@@ -2833,7 +2833,7 @@ void bajas_obras() {
 									printf("\nRegistro dado de Baja correctamente");
 									printf("\n\nPulse una tecla para continuar..");getch();
 
-									if(N_obras>1)   							  		  			  //si eliminamos obra y existe mas de una realizamos ordenacion
+									if(N_obras>1)   						//si eliminamos obra y existe mas de una realizamos ordenacion
 										ordenacion_obras();
 								}
 							}
@@ -2859,7 +2859,7 @@ void bajas_obras() {
 	fclose(canal);
 }
 
-void ordenacion_trabajadores() {                         								  //metodo shell de ordenacion
+void ordenacion_trabajadores(){                         					//metodo shell de ordenacion
 	FILE *canal;
 	tipo_trabajadores registro2;
 	long N,desplazamiento,i,d;
@@ -2871,12 +2871,12 @@ void ordenacion_trabajadores() {                         								  //metodo shel
 	N=registro0_trabajadores.num_registros;
 
 	d=N;
-	while(d!=1) {
+	while(d!=1){
 		d=d/2;
 	 	sw=1;
-		while(sw) {
+		while(sw){
 			sw=0;
-			for(i=1;i<=N-d;i++) {
+			for(i=1;i<=N-d;i++){
 				desplazamiento=i*sizeof(registro_trabajadores);
 				fseek(canal,desplazamiento,0);
 				fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
@@ -2885,7 +2885,7 @@ void ordenacion_trabajadores() {                         								  //metodo shel
 				fseek(canal,desplazamiento,0);
 				fread(&registro2,sizeof(registro2),1,canal);
 
-				if(strcmp(registro2.dni,registro_trabajadores.dni)<0) {
+				if(strcmp(registro2.dni,registro_trabajadores.dni)<0){
 					desplazamiento=i*sizeof(registro2);
 					fseek(canal,desplazamiento,0);
 					fwrite(&registro2,sizeof(registro2),1,canal);
@@ -2901,7 +2901,7 @@ void ordenacion_trabajadores() {                         								  //metodo shel
    fclose(canal);
 }
 
-void ordenacion_categorias() {                        									  //metodo shell de ordenacion
+void ordenacion_categorias(){                        						//metodo shell de ordenacion
 	FILE *canal;
 	tipo_categorias registro2;
 	long N,desplazamiento,i,d;
@@ -2913,12 +2913,12 @@ void ordenacion_categorias() {                        									  //metodo shell 
 	N=registro0_categorias.num_registros;
 
 	d=N;
-	while(d!=1) {
+	while(d!=1){
 		d=d/2;
 	 	sw=1;
-		while(sw) {
+		while(sw){
 			sw=0;
-			for(i=1;i<=N-d;i++) {
+			for(i=1;i<=N-d;i++){
 				desplazamiento=i*sizeof(registro_categorias);
 				fseek(canal,desplazamiento,0);
 				fread(&registro_categorias,sizeof(registro_categorias),1,canal);
@@ -2927,7 +2927,7 @@ void ordenacion_categorias() {                        									  //metodo shell 
 				fseek(canal,desplazamiento,0);
 				fread(&registro2,sizeof(registro2),1,canal);
 
-				if(registro2.cod_categoria<registro_categorias.cod_categoria) {
+				if(registro2.cod_categoria<registro_categorias.cod_categoria){
 					desplazamiento=i*sizeof(registro2);
 					fseek(canal,desplazamiento,0);
 					fwrite(&registro2,sizeof(registro2),1,canal);
@@ -2943,7 +2943,7 @@ void ordenacion_categorias() {                        									  //metodo shell 
    fclose(canal);
 }
 
-void ordenacion_fichas() {                         										  //metodo shell de ordenacion
+void ordenacion_fichas(){                         							//metodo shell de ordenacion
 	FILE *canal;
 	tipo_fichas registro2;
 	long N,desplazamiento,i,d;
@@ -2955,12 +2955,12 @@ void ordenacion_fichas() {                         										  //metodo shell de
 	N=registro0_fichas.num_registros;
 
 	d=N;
-	while(d!=1) {
+	while(d!=1){
 		d=d/2;
 	 	sw=1;
-		while(sw) {
+		while(sw){
 			sw=0;
-			for(i=1;i<=N-d;i++) {
+			for(i=1;i<=N-d;i++){
 				desplazamiento=i*sizeof(registro_fichas);
 				fseek(canal,desplazamiento,0);
 				fread(&registro_fichas,sizeof(registro_fichas),1,canal);
@@ -2969,7 +2969,7 @@ void ordenacion_fichas() {                         										  //metodo shell de
 				fseek(canal,desplazamiento,0);
 				fread(&registro2,sizeof(registro2),1,canal);
 
-				if(registro2.cod_ficha<registro_fichas.cod_ficha) {
+				if(registro2.cod_ficha<registro_fichas.cod_ficha){
 					desplazamiento=i*sizeof(registro2);
 					fseek(canal,desplazamiento,0);
 					fwrite(&registro2,sizeof(registro2),1,canal);
@@ -2985,7 +2985,7 @@ void ordenacion_fichas() {                         										  //metodo shell de
    fclose(canal);
 }
 
-void ordenacion_obras() {                         										  //metodo shell de ordenacion
+void ordenacion_obras(){                         							//metodo shell de ordenacion
 	FILE *canal;
 	tipo_obras registro2;
 	long N,desplazamiento,i,d;
@@ -2997,12 +2997,12 @@ void ordenacion_obras() {                         										  //metodo shell de 
 	N=registro0_obras.num_registros;
 
 	d=N;
-	while(d!=1) {
+	while(d!=1){
 		d=d/2;
 	 	sw=1;
-		while(sw) {
+		while(sw){
 			sw=0;
-			for(i=1;i<=N-d;i++) {
+			for(i=1;i<=N-d;i++){
 				desplazamiento=i*sizeof(registro_obras);
 				fseek(canal,desplazamiento,0);
 				fread(&registro_obras,sizeof(registro_obras),1,canal);
@@ -3011,7 +3011,7 @@ void ordenacion_obras() {                         										  //metodo shell de 
 				fseek(canal,desplazamiento,0);
 				fread(&registro2,sizeof(registro2),1,canal);
 
-				if(registro2.cod_obra<registro_obras.cod_obra) {
+				if(registro2.cod_obra<registro_obras.cod_obra){
 					desplazamiento=i*sizeof(registro2);
 					fseek(canal,desplazamiento,0);
 					fwrite(&registro2,sizeof(registro2),1,canal);
@@ -3027,12 +3027,12 @@ void ordenacion_obras() {                         										  //metodo shell de 
    fclose(canal);
 }
 
-void creacion_ficheros() {
+void creacion_ficheros(){
 	int i;
 	FILE *canal;                
 
 	canal=fopen(FICHERO_trabajadores,"rb");
-	if(canal==NULL) {
+	if(canal==NULL){
 		printf("No existe el fichero '%s', por lo que se creara uno nuevo..\n",FICHERO_trabajadores);
 		fclose(canal);
 		canal=fopen(FICHERO_trabajadores,"a+b");
@@ -3045,7 +3045,7 @@ void creacion_ficheros() {
 	fclose(canal);
 
 	canal=fopen(FICHERO_categorias,"rb");
-	if(canal==NULL) {
+	if(canal==NULL){
 		printf("No existe el fichero '%s', por lo que se creara uno nuevo..\n",FICHERO_categorias);
 		fclose(canal);
 		canal=fopen(FICHERO_categorias,"a+b");
@@ -3058,7 +3058,7 @@ void creacion_ficheros() {
 	fclose(canal);
 
 	canal=fopen(FICHERO_fichas,"rb");
-	if(canal==NULL) {
+	if(canal==NULL){
 		printf("No existe el fichero '%s', por lo que se creara uno nuevo..\n",FICHERO_fichas);
 		fclose(canal);
 		canal=fopen(FICHERO_fichas,"a+b");
@@ -3071,7 +3071,7 @@ void creacion_ficheros() {
 	fclose(canal);
 
 	canal=fopen(FICHERO_obras,"rb");
-	if(canal==NULL) {
+	if(canal==NULL){
 		printf("No existe el fichero '%s', por lo que se creara uno nuevo..\n",FICHERO_obras);
 		fclose(canal);
 		canal=fopen(FICHERO_obras,"a+b");
@@ -3084,8 +3084,8 @@ void creacion_ficheros() {
 	fclose(canal);
 }
 
-void obtener_fecha(char fecha[]) {
+void obtener_fecha(char fecha[]){
 	time_t tiempo=time(0);
 	struct tm *tlocal=localtime(&tiempo);
-	strftime(fecha,11,"%d/%m/%Y",tlocal);//strftime(fecha,18,"%d/%m/%y %H:%M:%S",tlocal);
+	strftime(fecha,11,"%d/%m/%Y",tlocal);
 }
