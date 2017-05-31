@@ -430,3 +430,37 @@ void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajad
 	if(N_trabajadores>1)
 		ordenacion_trabajadores();
 }
+
+void altas_categorias() {
+	FILE *canal;
+	int i;
+	long N,desplazamiento;       										//discrepancia de tipos debido a uso de int y long
+
+	canal=fopen(FICHERO_categorias,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_categorias,sizeof(registro0_categorias),1,canal);
+	N=registro0_categorias.num_registros;
+
+	do{
+		N++;fflush(stdin);clrscr();
+		gotoxy(1,1);printf("Ficha");
+		gotoxy(8,1);printf("Nombre");
+		gotoxy(32,1);printf("Precio/Hora");
+		gotoxy(3,3);printf("%ld",N);registro_categorias.cod_categoria=N;
+		gotoxy(8,3);gets(registro_categorias.nombre);
+		gotoxy(37,3);scanf("%f",&registro_categorias.precio_hora);fflush(stdin);
+
+		desplazamiento=N*sizeof(registro_categorias);
+		fseek(canal,desplazamiento,0);
+		fwrite(&registro_categorias,sizeof(registro_categorias),1,canal);
+		printf("\n¿Quiere seguir dando de alta Categorias? (s/n): ");
+	}while(getchar()=='s');
+
+	desplazamiento=0L*sizeof(registro0_categorias);
+	fseek(canal,desplazamiento,0);
+	registro0_categorias.num_registros=N;
+	for(i=0;i<sizeof(registro_categorias)-4;i++)
+		registro0_categorias.blancos[i]=' ';
+	fwrite(&registro0_categorias,sizeof(registro0_categorias),1,canal);
+	fclose(canal);
+}
