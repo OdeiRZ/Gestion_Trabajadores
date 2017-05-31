@@ -820,3 +820,61 @@ void listados_categorias() {
 	printf("\n\nPulse una tecla para continuar..");getch();
 	fclose(canal);
 }
+
+void listados_fichas() {
+	FILE *canal;
+	int i,j=1;
+	long N,desplazamiento;
+
+	clrscr();
+	canal=fopen(FICHERO_fichas,"rb");
+	fseek(canal,0L,0);
+	fread(&registro0_fichas,sizeof(registro0_fichas),1,canal);
+	N=registro0_fichas.num_registros;
+
+	if(N>=1) {
+		gotoxy(1,1);printf("Ficha");
+		gotoxy(12,1);printf("DNI");
+		gotoxy(20,1);printf("Fecha");
+		gotoxy(32,1);printf("H.Inicio");
+		gotoxy(48,1);printf("H.Final");
+		gotoxy(65,1);printf("Tiempo");
+		gotoxy(72,1);printf("Obra");
+
+		for(i=1;i<=N;i++) {
+			desplazamiento=i*sizeof(registro_fichas);
+			fseek(canal,desplazamiento,0);
+			fread(&registro_fichas,sizeof(registro_fichas),1,canal);
+			if(j%21==0) {  																			  //tabulador de registros en pantalla
+				printf("\n\nPulse una tecla para continuar..");
+				getch();clrscr();j=1;
+				gotoxy(1,1);printf("Ficha");
+				gotoxy(12,1);printf("DNI");
+				gotoxy(20,1);printf("Fecha");
+				gotoxy(32,1);printf("H.Inicio");
+				gotoxy(48,1);printf("H.Final");
+				gotoxy(65,1);printf("Tiempo");
+				gotoxy(72,1);printf("Obra");
+			}
+			gotoxy(3,j+2);printf("%ld",registro_fichas.cod_ficha);
+			gotoxy(8,j+2);printf("%s",registro_fichas.dni);
+			gotoxy(20,j+2);printf("%s",registro_fichas.fecha);
+			gotoxy(32,j+2);
+			if(strcmp(registro_fichas.h_inicio,"")!=0)
+				printf("%s",registro_fichas.h_inicio);
+			else
+				printf("  *");
+			gotoxy(48,j+2);
+			if(strcmp(registro_fichas.h_final,"")!=0)
+				printf("%s",registro_fichas.h_final);
+			else
+				printf("  *");
+			gotoxy(66,j+2);printf("%d",registro_fichas.tiempo);
+			gotoxy(73,j+2);printf("%ld",registro_fichas.cod_obra);
+			j++;
+		}
+   } else
+		printf("El fichero '%s' esta vacio",FICHERO_fichas);
+	printf("\n\nPulse una tecla para continuar..");getch();
+	fclose(canal);
+}
