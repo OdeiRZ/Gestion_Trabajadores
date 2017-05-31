@@ -1969,3 +1969,232 @@ void modificaciones_categorias() {
 	}
 	fclose(canal);
 }
+
+void modificaciones_fichas() {
+	FILE *canal,*canal2;
+	long N_fichas,N_aux,desplazamiento,cen,der,izq,cod;
+	char eleccion,dni[10],aux[2];
+	int seleccion=1,sw,sw2,i,h1,h2,m1,m2;
+
+	canal=fopen(FICHERO_fichas,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_fichas, sizeof(registro0_fichas),1,canal);
+ 	N_fichas=registro0_fichas.num_registros;
+
+	if(N_fichas>=1) {
+		do{
+			clrscr();
+			printf("Introduce Codigo de Ficha a Modificar ('0'=Salir) => ");
+			scanf("%ld",&cod);fflush(stdin);clrscr();
+
+			if(cod!=0) {
+				sw=0;izq=1;der=N_fichas;
+				do{
+					cen=(izq+der)/2;
+					desplazamiento=cen*sizeof(registro_fichas);
+					fseek(canal,desplazamiento,0);
+					fread(&registro_fichas,sizeof(registro_fichas),1,canal);
+
+					if(cod==registro_fichas.cod_ficha || izq>=der) {
+						sw=1;
+						if(cod==registro_fichas.cod_ficha)
+						{
+							gotoxy(1,1);printf("Ficha");
+							gotoxy(8,1);printf("DNI");
+							gotoxy(20,1);printf("Fecha");
+							gotoxy(32,1);printf("H.Inicio");
+							gotoxy(48,1);printf("H.Final");
+							gotoxy(65,1);printf("Tiempo");
+							gotoxy(72,1);printf("Obra");
+							gotoxy(3,3);printf("%ld",registro_fichas.cod_ficha);
+							gotoxy(8,3);printf("%s",registro_fichas.dni);
+							gotoxy(20,3);printf("%s",registro_fichas.fecha);
+							gotoxy(32,3);printf("%s",registro_fichas.h_inicio);
+							gotoxy(48,3);printf("%s",registro_fichas.h_final);
+							gotoxy(66,3);printf("%d",registro_fichas.tiempo);
+							gotoxy(73,3);printf("%ld",registro_fichas.cod_obra);
+
+							printf("\n\n¿Desea Modificar el Registro? (s/n): ");
+							scanf("%c",&eleccion);fflush(stdin);
+							if(eleccion=='s') {
+								do{
+									clrscr();sw2=0;
+									gotoxy(1,1);printf("Ficha");
+									gotoxy(8,1);printf("DNI");
+									gotoxy(20,1);printf("Fecha");
+									gotoxy(32,1);printf("H.Inicio");
+									gotoxy(48,1);printf("H.Final");
+									gotoxy(65,1);printf("Tiempo");
+									gotoxy(72,1);printf("Obra");
+									gotoxy(3,3);printf("%ld",registro_fichas.cod_ficha);
+									gotoxy(8,3);printf("%s",registro_fichas.dni);
+									gotoxy(20,3);printf("%s",registro_fichas.fecha);
+									gotoxy(32,3);
+									if(strcmp(registro_fichas.h_inicio,"")!=0)
+										printf("%s",registro_fichas.h_inicio);
+									else
+										printf("  *");
+									gotoxy(48,3);
+									if(strcmp(registro_fichas.h_final,"")!=0)
+										printf("%s",registro_fichas.h_final);
+									else
+										printf("  *");
+									gotoxy(66,3);printf("%d",registro_fichas.tiempo);
+									gotoxy(73,3);printf("%ld",registro_fichas.cod_obra);
+
+									printf("\n\n1. Modificar DNI\n");
+									printf("2. Modificar Fecha\n");
+									printf("3. Modificar H.Inicio\n");
+									printf("4. Modificar H.Final\n");
+									printf("5. Modificar Obra\n");
+									printf("0. Volver\n\n");
+									printf("Opcion => ");
+									scanf("%d",&seleccion);fflush(stdin);
+									switch(seleccion) {
+										case 1 : {
+											do{              							  //nos aseguramos que el tamaño de DNI es correcto
+												if(sw2)
+													printf("Error. Tamaño incorrecto\n");
+												printf("\nInserte nuevo DNI => ");
+												gets(dni);
+												fflush(stdin);sw2=1;
+											}while(strlen(dni)!=9);
+
+											sw2=0;
+											canal2=fopen(FICHERO_trabajadores,"rb");
+											fseek(canal2,0L,0);
+											fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal2);
+											N_aux=registro0_trabajadores.num_registros;
+											for(i=1;i<=N_aux;i++) {   	  			  //comprobamos si el dni existe secuencialmente
+												desplazamiento=i*sizeof(registro_trabajadores);
+												fseek(canal2,desplazamiento,0);
+												fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+
+												if(strcmp(registro_trabajadores.dni,dni)==0) {
+													strcpy(registro_fichas.dni,dni);
+													printf("\nDNI de Fichas Actualizado");
+													getch();sw=2;sw2=1;break;
+												}
+											}
+											if(!sw2) {
+												printf("\nError. El DNI no existe");
+												getch();
+											}
+											fclose(canal2);
+										}	break;
+										case 2 : {
+                                    		do{                                	  //nos aseguramos que el tamaño es correcto
+												if(sw2)
+													printf("Error. Formato incorrecto (dd/mm/aaaa)\n");
+												printf("\nInserte nueva Fecha => ");
+												gets(registro_fichas.fecha);
+												fflush(stdin);sw2=1;
+											}while(strlen(registro_trabajadores.f_nacimiento)!=10);
+											sw=2;
+										}	break;
+										case 3 : {
+                                    		do{                                	  //nos aseguramos que la hora inicial no excede del maximo
+												if(sw2)
+													printf("Error. Formato incorrecto (hh:mm)\n");
+												printf("\nInserte nueva H.Inicio => ");
+												gets(registro_fichas.h_inicio);
+												fflush(stdin);sw2=1;
+											}while(strlen(registro_fichas.h_inicio)!=5 && strlen(registro_fichas.h_inicio)!=0);
+											sw=2;
+										}	break;
+										case 4 : {
+                                    		do{                                	  //nos aseguramos que la hora final no excede del maximo
+												if(sw2)
+													printf("Error. Formato incorrecto (hh:mm)\n");
+												printf("\nInserte nueva H.Final => ");
+												gets(registro_fichas.h_final);
+												fflush(stdin);sw2=1;
+											}while(strlen(registro_fichas.h_final)!=5 && strlen(registro_fichas.h_final)!=0);
+											sw=2;
+										}	break;
+										case 5 : {
+											fflush(stdin);
+											printf("\nInserte nueva Obra => ");
+											scanf("%ld",&cod);
+
+											sw2=0;
+											canal2=fopen(FICHERO_obras,"r+b");
+											fseek(canal2,0L,0);
+											fread(&registro0_obras,sizeof(registro0_obras),1,canal2);
+											N_aux=registro0_obras.num_registros;
+											for(i=1;i<=N_aux;i++) {  	  			  //comprobamos si existen capataces con el mismo dni para actualizarlo
+												desplazamiento=i*sizeof(registro_obras);
+												fseek(canal2,desplazamiento,0);
+												fread(&registro_obras,sizeof(registro_obras),1,canal2);
+
+												if(registro_obras.cod_obra==cod) {
+													registro_fichas.cod_obra=cod;
+													sw=2;sw2=1;break;
+												}
+											}
+											if(!sw2) {
+												printf("\nError. Codigo de Obra no encontrado");
+												getch();
+											}
+											fclose(canal2);
+										}	break;
+										case 0 : {
+	                           				if(sw>1) {
+												if(strlen(registro_fichas.h_inicio)>0 && strlen(registro_fichas.h_final)>0) {
+													aux[0]=registro_fichas.h_inicio[0];
+													aux[1]=registro_fichas.h_inicio[1];
+													aux[2]='\0';          h1=atoi(aux);
+													aux[0]=registro_fichas.h_inicio[3];
+													aux[1]=registro_fichas.h_inicio[4];
+													aux[2]='\0';          m1=atoi(aux);
+													aux[0]=registro_fichas.h_final[0];
+													aux[1]=registro_fichas.h_final[1];
+													aux[2]='\0';   	   h2=atoi(aux);
+													aux[0]=registro_fichas.h_final[3];
+													aux[1]=registro_fichas.h_final[4];
+													aux[2]='\0';         m2=atoi(aux);
+
+													if(h2==0)
+														h2=24;
+
+													if(h1>h2)
+														registro_fichas.tiempo=(24-h1+h2)*60+(m1-m2);
+													else
+														if(m1>m2)
+															registro_fichas.tiempo=(h2-h1-1)*60+(m1-m2-60);
+														else
+															registro_fichas.tiempo=(h2-h1-1)*60+(m2-m1+60);
+												}
+												desplazamiento=cen*sizeof(registro_fichas);
+												fseek(canal,desplazamiento,0);
+												fwrite(&registro_fichas,sizeof(registro_fichas),1,canal);
+												printf("\nRegistro Modificado correctamente");
+												printf("\n\nPulse una tecla para continuar..");
+												getch();
+											}
+										}	break;
+										default: 	printf("\nElija entre 0 - 5");	getch();
+									}
+								}while(seleccion!=0);
+							}
+						} else {
+							printf("Codigo de Ficha no encontrado");
+							printf("\n\nPulse una tecla para continuar..");
+							getch();
+						}
+					} else {
+						if(cod<registro_fichas.cod_ficha)
+							der=cen-1;
+						else
+							izq=cen+1;
+					}
+				}while(!sw);
+			}
+		}while(cod!=0);
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_fichas);
+		getch();
+	}
+	fclose(canal);
+}
