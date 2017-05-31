@@ -1634,3 +1634,237 @@ void consultas_obras() {
 	}
 	fclose(canal);                                    
 }
+
+void modificaciones_trabajadores() {
+	FILE *canal,*canal2;
+	long N_trabajadores,N_aux,desplazamiento,cen,der,izq,cod;
+	char dni[10],dni_antiguo[10],eleccion;
+	int seleccion=1,sw,sw2,i;
+
+	canal=fopen(FICHERO_trabajadores,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_trabajadores, sizeof(registro0_trabajadores),1,canal);
+ 	N_trabajadores=registro0_trabajadores.num_registros;
+
+	if(N_trabajadores>=1) {
+		do{
+			clrscr();
+			printf("Introduce DNI de Trabajador a Modificar ('Fin'=Salir) => ");
+			gets(dni);fflush(stdin);clrscr();
+
+			if(strncmp(dni,"Fin",strlen(dni))!=0) {
+				sw=0;izq=1;der=N_trabajadores;
+				do{
+					cen=(izq+der)/2;
+				  	desplazamiento=cen*sizeof(registro_trabajadores);
+					fseek(canal,desplazamiento,0);
+					fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+
+					if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0 || izq>=der) {
+						sw=1;
+					 	if(strncmp(dni,registro_trabajadores.dni,strlen(dni))==0) {
+							gotoxy(1,1);printf("Ficha");
+							gotoxy(8,1);printf("DNI");
+							gotoxy(20,1);printf("Nombre");
+							gotoxy(42,1);printf("F.Nacim.");
+							gotoxy(55,1);printf("Telefono");
+							gotoxy(67,1);printf("Categoria");
+							gotoxy(3,3);printf("%ld",cen);
+							gotoxy(8,3);printf("%s",registro_trabajadores.dni);
+							gotoxy(20,3);printf("%s",registro_trabajadores.nombre);
+							gotoxy(42,3);printf("%s",registro_trabajadores.f_nacimiento);
+							gotoxy(55,3);printf("%s",registro_trabajadores.telefono);
+							gotoxy(70,3);printf("%ld",registro_trabajadores.cod_categoria);
+
+							printf("\n\n¿Desea Modificar el Registro? (s/n): ");
+							scanf("%c",&eleccion);fflush(stdin);
+							if(eleccion=='s') {
+								do{
+									sw2=0;clrscr();
+									gotoxy(1,1);printf("Ficha");
+									gotoxy(8,1);printf("DNI");
+									gotoxy(20,1);printf("Nombre");
+									gotoxy(42,1);printf("F.Nacim.");
+									gotoxy(55,1);printf("Telefono");
+									gotoxy(67,1);printf("Categoria");
+									gotoxy(3,3);printf("%ld",cen);
+									gotoxy(8,3);printf("%s",registro_trabajadores.dni);
+									gotoxy(20,3);printf("%s",registro_trabajadores.nombre);
+									gotoxy(42,3);printf("%s",registro_trabajadores.f_nacimiento);
+									gotoxy(55,3);printf("%s",registro_trabajadores.telefono);
+									gotoxy(70,3);printf("%ld",registro_trabajadores.cod_categoria);
+
+									printf("\n\n1. Modificar DNI\n");
+									printf("2. Modificar Nombre\n");
+									printf("3. Modificar F.Nacim.\n");
+									printf("4. Modificar Telefono\n");
+									printf("5. Modificar Categoria\n");
+									printf("0. Volver\n\n");
+									printf("Opcion => ");
+									scanf("%d",&seleccion);fflush(stdin);
+									switch(seleccion) {
+										case 1 : {
+											do{              							  //nos aseguramos que el tamaño de DNI es correcto
+												if(sw2)
+													printf("Error. Tamaño incorrecto\n");
+												printf("\nInserte nuevo DNI => ");
+												gets(dni);
+												fflush(stdin);sw2=1;
+											}while(strlen(dni)!=9);
+
+											sw2=0;strcpy(dni_antiguo,registro_trabajadores.dni);
+											canal2=fopen(FICHERO_trabajadores,"rb");
+											for(i=1;i<=N_trabajadores;i++) {  	  //comprobamos si el dni existe secuencialmente
+												desplazamiento=i*sizeof(registro_trabajadores);
+												fseek(canal2,desplazamiento,0);
+												fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal2);
+
+												if(strcmp(dni_antiguo,dni)==0) {
+													sw2=1;
+													break;
+												}
+											}
+											if(sw2) {
+												printf("\nError. DNI duplicado");
+												getch();break;
+											} else {
+												strcpy(registro_trabajadores.dni,dni);
+												sw=2;                              //comprobador de modificacion de clave de articulo
+											}
+
+											fclose(canal2);sw2=0;
+											canal2=fopen(FICHERO_obras,"r+b");
+											fseek(canal2,0L,0);
+											fread(&registro0_obras,sizeof(registro0_obras),1,canal2);
+											N_aux=registro0_obras.num_registros;
+											for(i=1;i<=N_aux;i++) {  	  			  //comprobamos si existen capataces con el mismo dni para actualizarlo
+												desplazamiento=i*sizeof(registro_obras);
+												fseek(canal2,desplazamiento,0);
+												fread(&registro_obras,sizeof(registro_obras),1,canal2);
+
+												if(strcmp(registro_obras.dni,dni_antiguo)==0) {
+													strcpy(registro_obras.dni,dni);
+													desplazamiento=i*sizeof(registro_obras);
+													fseek(canal2,desplazamiento,0);
+													fwrite(&registro_obras,sizeof(registro_obras),1,canal2);
+													sw2=1;
+												}
+											}
+											if(sw2) {
+												printf("\nDNI de Capataz (Obras) Actualizado");
+												getch();
+											}
+
+											fclose(canal2);sw2=0;
+											canal2=fopen(FICHERO_fichas,"r+b");
+											fseek(canal2,0L,0);
+											fread(&registro0_fichas,sizeof(registro0_fichas),1,canal2);
+											N_aux=registro0_fichas.num_registros;
+											for(i=1;i<=N_aux;i++) {  	  			  //comprobamos si existen fichas con el mismo dni para actualizarlas
+												desplazamiento=i*sizeof(registro_fichas);
+												fseek(canal2,desplazamiento,0);
+												fread(&registro_fichas,sizeof(registro_fichas),1,canal2);
+
+												if(strcmp(registro_fichas.dni,dni_antiguo)==0) {
+													strcpy(registro_fichas.dni,dni);
+													desplazamiento=i*sizeof(registro_fichas);
+													fseek(canal2,desplazamiento,0);
+													fwrite(&registro_fichas,sizeof(registro_fichas),1,canal2);
+													sw2=1;
+												}
+											}
+											if(sw2) {
+												printf("\nDNI de Trabajador (Fichas) Actualizado");
+												getch();
+											}
+											fclose(canal2);
+										} 	break;
+										case 2 : {
+											fflush(stdin);
+											printf("\nInserte nuevo Nombre => ");
+											gets(registro_trabajadores.nombre);
+											sw=3;
+										}	break;
+										case 3 : {
+                                    		do{                                	  //nos aseguramos que el tamaño es correcto
+												if(sw2)
+													printf("Error. Formato incorrecto (dd/mm/aaaa)\n");
+												printf("\nInserte nueva F.Nacim. => ");
+												gets(registro_trabajadores.f_nacimiento);
+												fflush(stdin);sw2=1;
+											}while(strlen(registro_trabajadores.f_nacimiento)!=10);
+												sw=3;
+										}	break;
+										case 4 : {
+                                    		do{                                	  //nos aseguramos que el tamaño es correcto
+												if(sw2)
+													printf("Error. Tamaño incorrecto\n");
+												printf("\nInserte nuevo Telefono => ");
+												gets(registro_trabajadores.telefono);
+												fflush(stdin);sw2=1;
+											}while(strlen(registro_trabajadores.telefono)!=9);
+											sw=3;
+										}	break;
+										case 5 : {
+											printf("\nInserte nueva Categoria => ");
+											scanf("%ld",&cod);
+
+											canal2=fopen(FICHERO_categorias,"rb");
+											fseek(canal2,0L,0);
+											fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
+											N_aux=registro0_categorias.num_registros;
+
+											for(i=1;i<=N_aux;i++) {   				  //comprobamos si el dni existe secuencialmente
+												desplazamiento=i*sizeof(registro_categorias);
+												fseek(canal2,desplazamiento,0);
+												fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
+
+												if(registro_categorias.cod_categoria==cod) {
+													registro_trabajadores.cod_categoria=cod;
+													sw2=1;sw=3;break;
+												}
+											}
+											if(!sw2) {
+												printf("\nCodigo de Categoria no encontrado");
+												getch();
+											}
+											fclose(canal2);
+										}	break;
+										case 0 : {
+	                           				if(sw>=2) {
+												desplazamiento=cen*sizeof(registro_trabajadores);
+												fseek(canal,desplazamiento,0);
+												fwrite(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+												printf("\nRegistro Modificado correctamente");
+												printf("\n\nPulse una tecla para continuar..");
+												getch();
+											}
+										}	break;
+										default: 	printf("\nElija entre 0 - 5");	getch();
+									}
+								}while(seleccion!=0);
+							}
+						} else {
+							printf("DNI de Trabajador no encontrado");
+							printf("\n\nPulse una tecla para continuar..");
+							getch();
+						}
+					} else {
+						if(strncmp(dni,registro_trabajadores.dni,strlen(dni))<0)
+							der=cen-1;
+						else
+							izq=cen+1;
+					}
+				}while(!sw);
+			}
+		}while(strncmp(dni,"Fin",strlen(dni))!=0);
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_trabajadores);
+		getch();
+	}
+	fclose(canal);
+
+	if(sw==2)           																			  //si modificamos dni realizamos ordenacion
+		ordenacion_trabajadores();
+}
