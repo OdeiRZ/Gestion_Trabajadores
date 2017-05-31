@@ -127,27 +127,23 @@ void creacion_ficheros(void);                           //
 
 int main() {
 	char pass[5];
-	int seleccion=1, seleccion2, i;
+	int seleccion=1,seleccion2,i;
 	creacion_ficheros();
 
-	while (seleccion != 0) {
-		clrscr();
-		seleccion2 = 1;
-		gotoxy(68, 1);
-		printf("Log: Usuario");
+	while(seleccion!=0) {
+		clrscr();seleccion2=1;
+		gotoxy(68,1);printf("Log: Usuario");
 		printf("\n\n\n\n\n\n\t\t\t\tMenu Usuario\n\n");
 		printf("\t\t\t\t1. Gestion de Fichas\n");
 		printf("\t\t\t\t2. Menu Administrador\n");
 		printf("\t\t\t\t0. Salir\n\n");
 		printf("\t\t\t\tOpcion => ");
-		scanf("%d", &seleccion);
-		fflush(stdin);
+		scanf("%d",&seleccion);fflush(stdin);
 		switch(seleccion) {
 			case 1 : {
-				while (seleccion2 != 0) {
+				while(seleccion2!=0) {
 					clrscr();
-					gotoxy(68, 1);
-					printf("Log: Usuario");
+					gotoxy(68,1);printf("Log: Usuario");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Fichas\n\n");
 					printf("\t\t\t\t1. Altas\n");
 					printf("\t\t\t\t2. Listado\n");
@@ -156,9 +152,8 @@ int main() {
 					printf("\t\t\t\t5. Bajas\n");
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
-					scanf("%d", &seleccion2);
-					fflush(stdin);
-					switch (seleccion2) {
+					scanf("%d",&seleccion2);fflush(stdin);
+					switch(seleccion2) {
 						case 1 : altas_fichas();						break;
 						case 2 : listados_fichas();     				break;
 						case 3 : consultas_fichas();     				break;
@@ -171,11 +166,11 @@ int main() {
 			}	break;
 			case 2 : {
 				printf("\n\t\t\t\tClave => ");
-				for (i=0; i<5; i++) {
-					pass[i] = getch();
+				for(i=0;i<5;i++) {
+					pass[i]=getch();
 					printf("*");
 				}
-				if (strncmp(pass,"admin",5) == 0) {
+				if(strncmp(pass,"admin",5)==0) {
 					menu_admin();
 					return 0;
 				}
@@ -188,14 +183,12 @@ int main() {
 }
 
 void menu_admin() {
-	int seleccion=1, seleccion2;
+	int seleccion=1,seleccion2;
 	creacion_ficheros();
                            
-	while (seleccion!=0) {
-		clrscr();
-		seleccion2 = 1;
-		gotoxy(68,1);
-		printf("Log: Admin");
+	while(seleccion!=0) {
+		clrscr();seleccion2=1;
+		gotoxy(68,1);printf("Log: Admin");
 		printf("\n\n\n\n\n\n\t\t\t\tMenu Administrador\n\n");
 		printf("\t\t\t\t1. Gestion de Trabajadores\n");
 		printf("\t\t\t\t2. Gestion de Categorias\n");
@@ -203,14 +196,12 @@ void menu_admin() {
 		printf("\t\t\t\t4. Gestion de Obras\n");
 		printf("\t\t\t\t0. Salir\n\n");
 		printf("\t\t\t\tOpcion => ");
-		scanf("%d", &seleccion);
-		fflush(stdin);
-		switch (seleccion) {
+		scanf("%d",&seleccion);fflush(stdin);
+		switch(seleccion) {
 			case 1 : {
-				while (seleccion2 != 0) {
+				while(seleccion2!=0) {
 					clrscr();
-					gotoxy(68, 1);
-					printf("Log: Admin");
+					gotoxy(68,1);printf("Log: Admin");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Trabajadores\n\n");
 					printf("\t\t\t\t1. Altas\n");
 					printf("\t\t\t\t2. Listado\n");
@@ -219,9 +210,8 @@ void menu_admin() {
 					printf("\t\t\t\t5. Bajas\n");
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
-					scanf("%d", &seleccion2);
-					fflush(stdin);
-					switch (seleccion2) {
+					scanf("%d",&seleccion2);fflush(stdin);
+					switch(seleccion2) {
 						case 1 : altas_trabajadores("");				break;
 						case 2 : listados_trabajadores();     			break;
 						case 3 : consultas_trabajadores();     			break;
@@ -233,10 +223,9 @@ void menu_admin() {
 				}
 			}	break;
 			case 2 : {
-				while (seleccion2 != 0) {
+				while(seleccion2!=0) {
 					clrscr();
-					gotoxy(68, 1);
-					printf("Log: Admin");
+					gotoxy(68,1);printf("Log: Admin");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Categorias\n\n");
 					printf("\t\t\t\t1. Altas\n");
 					printf("\t\t\t\t2. Listado\n");
@@ -245,9 +234,8 @@ void menu_admin() {
 					printf("\t\t\t\t5. Bajas\n");
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
-					scanf("%d", &seleccion2);
-					fflush(stdin);
-					switch (seleccion2) {
+					scanf("%d",&seleccion2);fflush(stdin);
+					switch(seleccion2) {
 						case 1 : altas_categorias();					break;
 						case 2 : listados_categorias();     			break;
 						case 3 : consultas_categorias();     			break;
@@ -259,10 +247,9 @@ void menu_admin() {
 				}
 			}	break;
 			case 3 : {
-				while(seleccion2 != 0) {
+				while(seleccion2!=0) {
 					clrscr();
-					gotoxy(68, 1);
-					printf("Log: Admin");
+					gotoxy(68,1);printf("Log: Admin");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Fichas\n\n");
 					printf("\t\t\t\t1. Altas\n");
 					printf("\t\t\t\t2. Listado\n");
@@ -271,9 +258,8 @@ void menu_admin() {
 					printf("\t\t\t\t5. Bajas\n");
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
-					scanf("%d", &seleccion2);
-					fflush(stdin);
-					switch (seleccion2) {
+					scanf("%d",&seleccion2);fflush(stdin);
+					switch(seleccion2) {
 						case 1 : altas_fichas();						break;
 						case 2 : listados_fichas();     				break;
 						case 3 : consultas_fichas();     				break;
@@ -285,9 +271,9 @@ void menu_admin() {
 				}
 			}	break;
 			case 4 : {
-				while (seleccion2 != 0) {
+				while(seleccion2!=0) {
 					clrscr();
-					gotoxy(70, 1);printf("Log: Admin");
+					gotoxy(70,1);printf("Log: Admin");
 					printf("\n\n\n\n\n\n\t\t\t\tGestion de Obras\n\n");
 					printf("\t\t\t\t1. Altas\n");
 					printf("\t\t\t\t2. Listado\n");
@@ -296,9 +282,8 @@ void menu_admin() {
 					printf("\t\t\t\t5. Bajas\n");
 					printf("\t\t\t\t0. Volver\n\n");
 					printf("\t\t\t\tOpcion => ");
-					scanf("%d", &seleccion2);
-					fflush(stdin);
-					switch (seleccion2) {
+					scanf("%d",&seleccion2);fflush(stdin);
+					switch(seleccion2) {
 						case 1 : altas_obras();							break;
 						case 2 : listados_obras();     					break;
 						case 3 : consultas_obras();     				break;
@@ -313,4 +298,135 @@ void menu_admin() {
 			default: printf("\n\t\t\t\tElija entre 0 - 4");				getch();
 		}
 	}
+}
+
+void altas_trabajadores(char cod[]) {									//revisar opcion creacion trabajador desde codigo
+	FILE *canal,*canal2;
+	int i,sw;
+	char eleccion,dni[10],aux_cod_categoria[10];
+	long N_trabajadores,N_aux,desplazamiento;
+
+	do {
+		sw=0;clrscr();fflush(stdin);
+		canal=fopen(FICHERO_trabajadores,"r+b");
+		fseek(canal,0L,0);
+		fread(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal);
+		N_trabajadores=registro0_trabajadores.num_registros;
+		N_trabajadores++;
+
+		gotoxy(1,1);printf("Ficha");
+		gotoxy(8,1);printf("DNI");
+		gotoxy(20,1);printf("Nombre");
+		gotoxy(42,1);printf("F.Nacim.");
+		gotoxy(55,1);printf("Telefono");
+		gotoxy(67,1);printf("Categoria");
+		gotoxy(3,3);printf("%ld",N_trabajadores);
+		if(strcmp(cod,"")==0) { 										//Comprobador de tipo de insercion enlazada
+			do {                                                        //nos aseguramos que el tamaño de DNI es correcto
+				if(sw) {
+					gotoxy(8,3);
+					printf("                 ");
+				}
+				gotoxy(8,3);gets(dni);
+				sw=1;
+			} while(strlen(dni)!=9);
+			sw=0;
+			if(N_trabajadores>1) {
+				for(i=1;i<=N_trabajadores;i++) { 						//comprobamos existencia de dni repetido secuencialmente
+					desplazamiento=i*sizeof(registro_trabajadores);
+					fseek(canal,desplazamiento,0);
+					fread(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+					
+					if(strcmp(registro_trabajadores.dni,dni)==0) {
+						sw=1;
+						break;
+					}
+				}
+				if(sw) {
+					printf("\n  El DNI introducido ya existe");
+					getch();fclose(canal);break;
+				}
+			}
+			strcpy(registro_trabajadores.dni,dni);
+		} else {
+			gotoxy(8,3);printf("%s",cod);
+			strcpy(registro_trabajadores.dni,cod);
+		}
+
+		gotoxy(20,3);gets(registro_trabajadores.nombre);
+
+		sw=0;
+		do {                                                          	//nos aseguramos que el tamaño de la fecha no excede del maximo
+        	if(sw) {
+				gotoxy(42,3);
+				printf("             ");
+			}
+			gotoxy(42,3);gets(registro_trabajadores.f_nacimiento);
+			sw=1;
+		} while(strlen(registro_trabajadores.f_nacimiento)!=10);
+
+		sw=0;
+		do {                                                         	//nos aseguramos que el tamaño del telefono es el correcto
+        	if(sw) {
+				gotoxy(55,3);
+				printf("             ");
+			}
+			 gotoxy(55,3);gets(registro_trabajadores.telefono);
+			 sw=1;
+		} while(strlen(registro_trabajadores.telefono)!=9);
+
+		sw=0;
+		do {                                                          	//nos aseguramos que la categoria es un digito
+        	if(sw) {
+				gotoxy(71,3);
+				printf("        ");
+			}
+			gotoxy(71,3);gets(aux_cod_categoria);
+			sw=0;
+			for(i=0;i<strlen(aux_cod_categoria);i++)
+				if(!isdigit(aux_cod_categoria[i]))                      //comprobacion caracter a caracter
+					sw=1;
+		} while(sw);
+		registro_trabajadores.cod_categoria=atol(aux_cod_categoria);
+
+		sw=0;															//podriamos listar nombre categoria y codigo para poder introducirlo
+		canal2=fopen(FICHERO_categorias,"r+b");                         //dando por hecho que las categorias no son muchas y entran en pantalla
+		fseek(canal2,0L,0);
+		fread(&registro0_categorias,sizeof(registro0_categorias),1,canal2);
+		N_aux=registro0_categorias.num_registros;
+
+		for(i=1;i<=N_aux;i++) {   										//comprobamos si el codigo existe secuencialmente
+			desplazamiento=i*sizeof(registro_categorias);
+			fseek(canal2,desplazamiento,0);
+			fread(&registro_categorias,sizeof(registro_categorias),1,canal2);
+
+			if(registro_categorias.cod_categoria==registro_trabajadores.cod_categoria) {                                     
+				desplazamiento=N_trabajadores*sizeof(registro_trabajadores);
+				fseek(canal,desplazamiento,0);
+				fwrite(&registro_trabajadores,sizeof(registro_trabajadores),1,canal);
+
+				desplazamiento=0L*sizeof(registro0_trabajadores);
+				fseek(canal,desplazamiento,0);
+				registro0_trabajadores.num_registros=N_trabajadores;
+				for(i=0;i<sizeof(registro_trabajadores)-4;i++)
+					registro0_trabajadores.blancos[i]=' ';
+				fwrite(&registro0_trabajadores,sizeof(registro0_trabajadores),1,canal);
+
+				sw=1;break;
+			}
+		}
+		if(!sw) {
+			printf("\n\nCategoria no encontrada");
+			printf("\n¿Desea dar de Alta una nueva Categoria? (s/n) ");
+         scanf("%c",&eleccion);fflush(stdin);
+         if(eleccion=='s')
+				altas_categorias();
+		}		
+		fclose(canal2);fclose(canal);
+		cod="";fflush(stdin);
+		printf("\n¿Quiere seguir dando de alta Trabajadores? (s/n): ");
+	} while(getchar()=='s');
+
+	if(N_trabajadores>1)
+		ordenacion_trabajadores();
 }
