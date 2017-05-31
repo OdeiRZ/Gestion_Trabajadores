@@ -782,3 +782,41 @@ void listados_trabajadores() {
 	printf("\n\nPulse una tecla para continuar..");getch();
 	fclose(canal);
 }
+
+void listados_categorias() {
+	FILE *canal;
+	int i,j=1;
+	long N,desplazamiento;
+
+	clrscr();
+	canal=fopen(FICHERO_categorias,"rb");
+	fseek(canal,0L,0);
+	fread(&registro0_categorias,sizeof(registro0_categorias),1,canal);
+	N=registro0_categorias.num_registros;
+
+	if(N>=1){
+		gotoxy(1,1);printf("Ficha");
+		gotoxy(8,1);printf("Nombre");
+		gotoxy(30,1);printf("Precio/Hora");
+      
+		for(i=1;i<=N;i++) {
+			desplazamiento=i*sizeof(registro_categorias);
+			fseek(canal,desplazamiento,0);
+			fread(&registro_categorias,sizeof(registro_categorias),1,canal);
+			if(j%21==0) { 																			  //tabulador de registros en pantalla
+				printf("\n\nPulse una tecla para continuar..");
+				getch();clrscr();j=1;
+				gotoxy(1,1);printf("Ficha");
+				gotoxy(8,1);printf("Nombre");
+				gotoxy(30,1);printf("Precio/Hora");
+			}
+			gotoxy(3,j+2);printf("%ld",registro_categorias.cod_categoria);
+			gotoxy(8,j+2);printf("%s",registro_categorias.nombre);
+			gotoxy(30,j+2);printf("%.2f",registro_categorias.precio_hora);
+			j++;
+		}
+   }else
+		printf("El FICHERO_categorias '%s' esta vacio",FICHERO_categorias);
+	printf("\n\nPulse una tecla para continuar..");getch();
+	fclose(canal);
+}
