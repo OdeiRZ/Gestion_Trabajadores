@@ -1865,6 +1865,107 @@ void modificaciones_trabajadores() {
 	}
 	fclose(canal);
 
-	if(sw==2)           																			  //si modificamos dni realizamos ordenacion
+	if(sw==2)           															//si modificamos dni realizamos ordenacion
 		ordenacion_trabajadores();
+}
+
+void modificaciones_categorias() {
+	FILE *canal;
+	long N,desplazamiento,cen,der,izq,categoria;
+	char eleccion;
+	int seleccion=1,sw;
+
+	canal=fopen(FICHERO_categorias,"r+b");
+	fseek(canal,0L,0);
+	fread(&registro0_categorias, sizeof(registro0_categorias),1,canal);
+ 	N=registro0_categorias.num_registros;
+
+	if(N>=1) {
+		do{
+			clrscr();
+			printf("Introduce Nº de Categoria a Modificar ('0'=Salir) => ");
+			scanf("%ld",&categoria);fflush(stdin);clrscr();
+
+			if(categoria!=0) {
+				sw=0;izq=1;der=N;
+				do{
+					cen=(izq+der)/2;
+				  	desplazamiento=cen*sizeof(registro_categorias);
+					fseek(canal,desplazamiento,0);
+					fread(&registro_categorias,sizeof(registro_categorias),1,canal);
+
+					if(categoria==registro_categorias.cod_categoria || izq>=der) {
+						sw=1;
+					 	if(categoria==registro_categorias.cod_categoria) {
+							gotoxy(1,1);printf("Ficha");
+							gotoxy(8,1);printf("Nombre");
+							gotoxy(30,1);printf("Precio/Hora");
+							gotoxy(3,3);printf("%ld",registro_categorias.cod_categoria);
+							gotoxy(8,3);printf("%s",registro_categorias.nombre);
+							gotoxy(30,3);printf("%.2f",registro_categorias.precio_hora);
+
+							printf("\n\n¿Desea Modificar el Registro? (s/n): ");
+							scanf("%c",&eleccion);fflush(stdin);
+							if(eleccion=='s') {
+								do{
+									clrscr();
+									gotoxy(1,1);printf("Ficha");
+									gotoxy(8,1);printf("Nombre");
+									gotoxy(30,1);printf("Precio/Hora");
+									gotoxy(3,3);printf("%ld",registro_categorias.cod_categoria);
+									gotoxy(8,3);printf("%s",registro_categorias.nombre);
+									gotoxy(30,3);printf("%.2f",registro_categorias.precio_hora);
+
+									printf("\n\n1. Modificar Nombre\n");
+									printf("2. Modificar Precio/Hora\n");
+									printf("0. Volver\n\n");
+									printf("Opcion => ");
+									scanf("%d",&seleccion);fflush(stdin);
+									switch(seleccion) {
+										case 1 : {
+											fflush(stdin);
+											printf("\nInserte nuevo Nombre => ");
+											gets(registro_categorias.nombre);
+											sw=2;
+										}	break;
+										case 2 : {
+											fflush(stdin);
+											printf("\nInserte nuevo Precio/Hora => ");
+											scanf("%f",&registro_categorias.precio_hora);
+											sw=2;
+										}	break;
+										case 0 : {
+	                           				if(sw>1) {
+												desplazamiento=cen*sizeof(registro_categorias);
+												fseek(canal,desplazamiento,0);
+												fwrite(&registro_categorias,sizeof(registro_categorias),1,canal);
+												printf("\nRegistro Modificado correctamente");
+												printf("\n\nPulse una tecla para continuar..");
+												getch();
+											}
+										}	break;
+										default: 	printf("\nElija entre 0 - 2");	getch();
+									}
+								}while(seleccion!=0);
+							}
+						} else {
+							printf("Categoria no encontrada");
+							printf("\n\nPulse una tecla para continuar..");
+							getch();
+						}
+					} else {
+						if(categoria<registro_categorias.cod_categoria)
+							der=cen-1;
+						else
+							izq=cen+1;
+					}
+				}while(!sw);
+			}
+		}while(categoria!=0);
+	} else {
+		clrscr();
+		printf("El fichero '%s' esta vacio",FICHERO_categorias);
+		getch();
+	}
+	fclose(canal);
 }
