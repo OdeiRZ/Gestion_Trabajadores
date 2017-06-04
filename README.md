@@ -1,4 +1,4 @@
-Gestión Trabajadores 0.95
+Gestión Trabajadores 0.96
 ================================
 
 Aplicación para la gestión y mantenimiento de trabajadores, categorías, fichas y obras desarrollada en C.
@@ -14,7 +14,7 @@ y tratamiento de datos de manera satisfactoria.
 - [CONIO] Librería conio.h usada en algunos métodos del programa
 
 ## Licencia
-Esta aplicación se ofrece bajo licencia [AGPL versión 3].
+Esta aplicación se ofrece bajo licencia [GPL versión 3].
 
-[AGPL versión 3]: http://www.gnu.org/licenses/agpl.html
+[GPL versión 3]: https://www.gnu.org/licenses/gpl-3.0.en.html
 [CONIO]: https://sourceforge.net/directory/os:windows/?q=conio.+c
