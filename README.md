@@ -1,7 +1,7 @@
 Gestión Trabajadores 0.96
 ================================
 
-Aplicación para la gestión y mantenimiento de trabajadores, categorías, fichas y obras desarrollada en C.
+Aplicación desarrollada en C para la gestión y mantenimiento de trabajadores, categorías, fichas y obras.
 Permite gestionar de manera completa e independientes la relación entre éstos a través de ficheros,
 para ello hacemos uso de una interfaz semi-gráfica para dotar al programa de mayor interactividad.
 
